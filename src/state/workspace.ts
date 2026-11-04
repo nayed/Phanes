@@ -36,9 +36,26 @@ export function onWorkspaceOpened(listener: Listener): void {
   openListeners.push(listener);
 }
 
-/** Make `path` the workspace: load its tree, remember it, restore its expanded folders. */
-export async function openWorkspace(path: string): Promise<void> {
+type Guard = () => Promise<boolean>;
+const changeGuards: Guard[] = [];
+
+/** Run before switching to another workspace; returning false cancels (e.g. unsaved tabs). */
+export function addWorkspaceChangeGuard(guard: Guard): void {
+  changeGuards.push(guard);
+}
+
+/**
+ * Make `path` the workspace: load its tree, remember it, restore its
+ * expanded folders and (through listeners) its tabs. Returns false if the
+ * switch was cancelled.
+ */
+export async function openWorkspace(path: string): Promise<boolean> {
   const root = await openWorkspaceDir(path);
+  const current = useWorkspace.getState().root;
+  if (current === root) return true;
+  if (current) {
+    for (const guard of changeGuards) if (!(await guard())) return false;
+  }
   const memory = useSettings.getState().workspaces[root] ?? emptyMemory();
   useWorkspace.setState({
     root,
@@ -51,6 +68,7 @@ export async function openWorkspace(path: string): Promise<void> {
   useSettings.getState().set({ lastWorkspace: root });
   await refreshTree();
   for (const listener of openListeners) await listener(root);
+  return true;
 }
 
 /** Ask for a folder with the GTK folder chooser and open it. */

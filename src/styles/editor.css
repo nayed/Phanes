@@ -1,0 +1,227 @@
+/* CodeMirror, styled like the designs. All colours are tokens. */
+
+.editor-host {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+}
+.editor-host .cm-editor {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  background: var(--window);
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-size: 14px;
+}
+.editor-host .cm-editor.cm-focused {
+  outline: none;
+}
+.editor-host .cm-scroller {
+  font-family: var(--font-mono);
+  line-height: 24px;
+  overflow: auto;
+}
+.editor-host .cm-content {
+  padding: 20px 0;
+  caret-color: var(--link);
+}
+.editor-host .cm-line {
+  padding: 0 24px 0 6px;
+}
+
+/* Gutter: 52 px, right-aligned muted numbers; the current one in the text colour. */
+.editor-host .cm-gutters {
+  background: var(--window);
+  border: 0;
+  color: var(--muted);
+}
+.editor-host .cm-lineNumbers .cm-gutterElement {
+  min-width: calc(var(--gutter-width) - 16px);
+  padding: 0 10px 0 0;
+  box-sizing: content-box;
+  text-align: right;
+}
+.editor-host .cm-lineNumbers {
+  min-width: var(--gutter-width);
+}
+.editor-host .cm-gutter.cm-lineNumbers .cm-gutterElement:first-child {
+  /* CodeMirror's sizing spacer */
+  padding-top: 0;
+}
+.editor-host .cm-activeLineGutter {
+  background: var(--current-line);
+  color: var(--fg);
+}
+.editor-host .cm-activeLine {
+  background: var(--current-line);
+}
+
+/* Cursor and selection */
+.editor-host .cm-cursor,
+.editor-host .cm-dropCursor {
+  border-left: 2px solid var(--link);
+}
+.editor-host .cm-selectionBackground,
+.editor-host .cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground,
+.editor-host .cm-content ::selection {
+  background: var(--selection) !important;
+}
+.editor-host .cm-selectionMatch {
+  background: var(--selection);
+}
+.editor-host .cm-searchMatch {
+  background: var(--search-match);
+  border-radius: 2px;
+}
+.editor-host .cm-searchMatch-selected {
+  outline: 1px solid var(--link);
+}
+
+/* ---------- Syntax ---------- */
+.tok-mark {
+  color: var(--syn-mark);
+  font-weight: 400;
+  font-style: normal;
+  text-decoration: none;
+}
+.tok-heading {
+  color: var(--syn-heading);
+  font-weight: 600;
+}
+.tok-heading.tok-mark {
+  color: var(--syn-mark);
+  font-weight: 600;
+}
+.tok-strong {
+  font-weight: 600;
+}
+.tok-emphasis {
+  font-style: italic;
+}
+.tok-strike {
+  text-decoration: line-through;
+}
+.tok-strong.tok-mark,
+.tok-emphasis.tok-mark,
+.tok-strike.tok-mark {
+  font-weight: 400;
+  font-style: normal;
+  text-decoration: none;
+}
+.tok-code {
+  color: var(--syn-code);
+}
+.tok-url {
+  color: var(--link);
+  text-decoration: underline;
+}
+.tok-image-url {
+  color: var(--syn-string);
+  text-decoration: none;
+}
+.tok-keyword {
+  color: var(--syn-keyword);
+}
+.tok-function {
+  color: var(--syn-function);
+}
+.tok-string {
+  color: var(--syn-string);
+}
+.tok-constant {
+  color: var(--syn-heading);
+}
+.tok-type {
+  color: var(--syn-code);
+}
+.tok-comment {
+  color: var(--muted);
+  font-style: italic;
+}
+.tok-invalid {
+  color: var(--danger);
+}
+
+.cm-alert-marker {
+  font-weight: 600;
+}
+.cm-alert-marker .tok-mark {
+  color: inherit;
+  font-weight: inherit;
+}
+.cm-alert-note { color: var(--alert-note); }
+.cm-alert-tip { color: var(--alert-tip); }
+.cm-alert-important { color: var(--alert-important); }
+.cm-alert-warning { color: var(--alert-warning); }
+.cm-alert-caution { color: var(--alert-caution); }
+
+/* ---------- Search panel ---------- */
+.editor-host .cm-panels {
+  background: var(--surface);
+  color: var(--fg);
+  border-color: var(--border);
+}
+.editor-host .cm-panels-bottom {
+  border-top: 1px solid var(--border);
+}
+.editor-host .cm-panel.cm-search {
+  padding: 8px 12px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.editor-host .cm-panel.cm-search br {
+  flex-basis: 100%;
+  height: 0;
+}
+.editor-host .cm-panel.cm-search input[type="checkbox"] {
+  accent-color: var(--link);
+}
+.editor-host .cm-textfield {
+  height: 30px;
+  padding: 0 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--window);
+  color: var(--fg);
+  font: 13px var(--font-ui);
+}
+.editor-host .cm-textfield:focus {
+  outline: 2px solid var(--link);
+  outline-offset: -1px;
+}
+.editor-host .cm-button {
+  height: 30px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--button);
+  background-image: none;
+  color: var(--fg);
+  font: 500 13px var(--font-ui);
+}
+.editor-host .cm-button:hover {
+  background: var(--menu-hover);
+}
+.editor-host .cm-panel.cm-search label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--muted);
+}
+.editor-host .cm-panel.cm-search [name="close"] {
+  position: static;
+  margin-left: auto;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: 18px;
+}
+.editor-host .cm-panel.cm-search [name="close"]:hover {
+  background: var(--button);
+}

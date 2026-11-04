@@ -1,0 +1,66 @@
+import type { EditorState } from "@codemirror/state";
+import type { ViewUpdate } from "@codemirror/view";
+import { create } from "zustand";
+import { getDocState } from "../editor/documents";
+
+/**
+ * What the status bar and the preview need from the active document:
+ * cursor position (immediate), and the text and word count (debounced).
+ */
+interface EditorStatus {
+  line: number;
+  col: number;
+  words: number;
+  /** The active document's text, updated ~150 ms after typing stops. */
+  text: string;
+  /** Increases on every text change, so the preview can tell documents apart. */
+  version: number;
+  fromUpdate: (update: ViewUpdate) => void;
+  reset: (tabId: string | null) => void;
+}
+
+const DEBOUNCE_MS = 150;
+let timer: number | undefined;
+
+export function countWords(text: string): number {
+  // Whitespace-separated, like `wc -w`, but markdown syntax on its own ("#", "-", "|") is not a word.
+  let n = 0;
+  for (const token of text.split(/\s+/)) if (/[\p{L}\p{N}]/u.test(token)) n++;
+  return n;
+}
+
+function cursorOf(state: EditorState) {
+  const head = state.selection.main.head;
+  const line = state.doc.lineAt(head);
+  return { line: line.number, col: head - line.from + 1 };
+}
+
+export const useEditorStatus = create<EditorStatus>((set, get) => ({
+  line: 1,
+  col: 1,
+  words: 0,
+  text: "",
+  version: 0,
+  fromUpdate: (update) => {
+    if (update.selectionSet || update.docChanged) set(cursorOf(update.state));
+    if (update.docChanged) {
+      const state = update.state;
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        const text = state.doc.toString();
+        set({ text, words: countWords(text), version: get().version + 1 });
+      }, DEBOUNCE_MS);
+    }
+  },
+  reset: (tabId) => {
+    window.clearTimeout(timer);
+    const state = tabId ? getDocState(tabId) : undefined;
+    const text = state ? state.doc.toString() : "";
+    set({
+      ...(state ? cursorOf(state) : { line: 1, col: 1 }),
+      text,
+      words: countWords(text),
+      version: get().version + 1,
+    });
+  },
+}));

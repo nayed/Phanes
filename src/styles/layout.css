@@ -11,3 +11,59 @@
   display: flex;
   flex-direction: column;
 }
+
+.panes {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+}
+.panes[hidden] {
+  display: none;
+}
+.pane {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--window);
+}
+
+/* ---------- Empty state ---------- */
+.empty-state {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 32px;
+  background: var(--window);
+  text-align: center;
+}
+.empty-icon {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 12px;
+  background: var(--muted);
+  opacity: 0.6;
+  mask-size: contain;
+  -webkit-mask-size: contain;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+}
+.empty-state h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+.empty-state p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+.empty-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}

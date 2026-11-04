@@ -44,9 +44,11 @@
 }
 .alert-dialog .dialog-buttons {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  gap: 12px;
   margin-top: 22px;
+}
+.alert-dialog .dialog-button {
+  flex: 1 1 0;
 }
 .dialog-button {
   height: 36px;

@@ -1,10 +1,12 @@
 import { quit } from "../app/lifecycle";
 import { showPanel } from "../state/dialogs";
 import { useSettings, type ColorSchemePreference, type ViewMode } from "../state/settings";
+import { closeTab, cycleTab, newUntitledTab, saveTab, saveTabAs, useTabs } from "../state/tabs";
 import { chooseWorkspace } from "../state/workspace";
 import { registerCommands, type Command } from "./registry";
 
 const settings = () => useSettings.getState();
+const hasActiveTab = () => useTabs.getState().activeId !== null;
 
 function viewCommand(id: Command["id"], label: string, shortcut: string, mode: ViewMode): Command {
   return {
@@ -29,6 +31,42 @@ function themeCommand(id: Command["id"], label: string, pref: ColorSchemePrefere
 export function registerAllCommands(): void {
   registerCommands([
     { id: "workspace.open", label: "Open Folder…", shortcut: "Ctrl+O", run: chooseWorkspace },
+    {
+      id: "file.save",
+      label: "Save",
+      shortcut: "Ctrl+S",
+      run: async () => void (await saveTab()),
+      isEnabled: hasActiveTab,
+    },
+    {
+      id: "file.saveAs",
+      label: "Save As…",
+      shortcut: "Shift+Ctrl+S",
+      run: async () => void (await saveTabAs()),
+      isEnabled: hasActiveTab,
+    },
+    { id: "tab.new", label: "New Document", shortcut: "Ctrl+T", run: () => newUntitledTab() },
+    {
+      id: "tab.close",
+      label: "Close Tab",
+      shortcut: "Ctrl+W",
+      run: async () => void (await closeTab()),
+      isEnabled: hasActiveTab,
+    },
+    {
+      id: "tab.next",
+      label: "Next Tab",
+      shortcut: "Ctrl+Tab",
+      altShortcuts: ["Ctrl+PageDown"],
+      run: () => cycleTab(1),
+    },
+    {
+      id: "tab.previous",
+      label: "Previous Tab",
+      shortcut: "Shift+Ctrl+Tab",
+      altShortcuts: ["Ctrl+PageUp"],
+      run: () => cycleTab(-1),
+    },
     viewCommand("view.editor", "Editor", "Ctrl+1", "editor"),
     viewCommand("view.split", "Split", "Ctrl+2", "split"),
     viewCommand("view.preview", "Preview", "Ctrl+3", "preview"),

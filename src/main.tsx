@@ -6,12 +6,15 @@ import "./styles/base.css";
 import "./styles/layout.css";
 import "./styles/header.css";
 import "./styles/sidebar.css";
+import "./styles/tabs.css";
+import "./styles/editor.css";
 import "./styles/menu.css";
 import "./styles/dialogs.css";
 import { App } from "./app/App";
 import { installCloseHandler, installMaximizeTracking } from "./app/lifecycle";
 import { startup } from "./app/startup";
 import { installTheme } from "./app/theme";
+import { wireStores } from "./app/wiring";
 import { installKeybindings } from "./commands/keybindings";
 import { registerAllCommands } from "./commands/definitions";
 import { setCommandErrorReporter } from "./commands/registry";
@@ -26,6 +29,7 @@ async function start() {
 
   await initSettings();
   installTheme();
+  wireStores();
   registerAllCommands();
   setCommandErrorReporter((err) => showToast(err instanceof Error ? err.message : String(err)));
   installKeybindings();
