@@ -1,0 +1,108 @@
+/*
+ * Design tokens. Every colour in the UI and the preview comes from these
+ * variables. A colorscheme is one `[data-scheme]` value with a light and a
+ * dark block; adding Catppuccin, Gruvbox… means adding two more blocks.
+ *
+ * <html data-scheme="github-default" data-mode="light|dark">
+ */
+
+:root {
+  /* Type */
+  --font-ui: "Inter", "Cantarell", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Sizes */
+  --header-height: 48px;
+  --sidebar-width: 264px;
+  --sidebar-min-width: 220px;
+  --tree-row-height: 30px;
+  --tree-indent: 18px;
+  --tab-height: 34px;
+  --status-height: 30px;
+  --gutter-width: 52px;
+  --preview-max-width: 720px;
+  --menu-width: 232px;
+  --window-radius: 12px;
+}
+
+/* ---------- GitHub Default — Light ---------- */
+:root[data-scheme="github-default"][data-mode="light"] {
+  color-scheme: light;
+
+  --desk: #d8dee4;
+  --window: #ffffff;
+  --surface: #f6f8fa;
+  --button: #e6eaef;
+  --fg: #1f2328;
+  --muted: #59636e;
+  --border: #d1d9e0;
+  --link: #0969da;
+  --active-bg: #ddf4ff;
+  --current-line: #f0f6ff;
+  --menu-bg: #ffffff;
+  --menu-hover: #eff2f5;
+  --danger: #d1242f;
+  --code-inline-bg: #eff2f5;
+
+  --syn-mark: #59636e;
+  --syn-heading: #0550ae;
+  --syn-code: #953800;
+  --syn-keyword: #cf222e;
+  --syn-function: #8250df;
+  --syn-string: #0a3069;
+
+  --alert-note: #0969da;
+  --alert-tip: #1a7f37;
+  --alert-important: #8250df;
+  --alert-warning: #9a6700;
+  --alert-caution: #d1242f;
+
+  --selection: rgba(9, 105, 218, 0.2);
+  --search-match: rgba(212, 167, 44, 0.4);
+  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-tab: 0 1px 2px rgba(0, 0, 0, 0.18);
+  --shadow-popover: 0 2px 6px rgba(0, 0, 0, 0.12), 0 12px 32px rgba(0, 0, 0, 0.22);
+  --scrim: rgba(0, 0, 0, 0.32);
+  --scrollbar: rgba(31, 35, 40, 0.28);
+}
+
+/* ---------- GitHub Default — Dark ---------- */
+:root[data-scheme="github-default"][data-mode="dark"] {
+  color-scheme: dark;
+
+  --desk: #010409;
+  --window: #0d1117;
+  --surface: #151b23;
+  --button: #262c36;
+  --fg: #f0f6fc;
+  --muted: #9198a1;
+  --border: #3d444d;
+  --link: #4493f8;
+  --active-bg: #152842;
+  --current-line: #151b23;
+  --menu-bg: #212830;
+  --menu-hover: #2f3742;
+  --danger: #ff7b72;
+  --code-inline-bg: #212830;
+
+  --syn-mark: #9198a1;
+  --syn-heading: #58a6ff;
+  --syn-code: #ffa657;
+  --syn-keyword: #ff7b72;
+  --syn-function: #d2a8ff;
+  --syn-string: #a5d6ff;
+
+  --alert-note: #4493f8;
+  --alert-tip: #3fb950;
+  --alert-important: #ab7df8;
+  --alert-warning: #d29922;
+  --alert-caution: #f85149;
+
+  --selection: rgba(56, 139, 253, 0.3);
+  --search-match: rgba(187, 128, 9, 0.45);
+  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-tab: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-popover: 0 2px 6px rgba(0, 0, 0, 0.35), 0 12px 32px rgba(0, 0, 0, 0.5);
+  --scrim: rgba(1, 4, 9, 0.6);
+  --scrollbar: rgba(240, 246, 252, 0.28);
+}

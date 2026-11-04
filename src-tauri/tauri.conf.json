@@ -18,7 +18,11 @@
         "width": 1440,
         "height": 900,
         "minWidth": 720,
-        "minHeight": 480
+        "minHeight": 480,
+        "visible": false,
+        "transparent": true,
+        "decorations": true,
+        "center": true
       }
     ],
     "security": {
@@ -27,7 +31,10 @@
   },
   "bundle": {
     "active": true,
-    "targets": ["deb", "appimage"],
+    "targets": [
+      "deb",
+      "appimage"
+    ],
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",

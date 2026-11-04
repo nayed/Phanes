@@ -1,0 +1,6 @@
+/* The area between the header bar and the status bar. */
+.workbench {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+}

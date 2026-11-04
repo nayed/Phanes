@@ -1,0 +1,88 @@
+/* GNOME-style popover menus (main menu, tree context menu). */
+.popover-menu {
+  position: fixed;
+  z-index: 100;
+  width: var(--menu-width);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  border-radius: 12px;
+  background: var(--menu-bg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-popover);
+  font-size: 13px;
+  color: var(--fg);
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 32px;
+  flex-shrink: 0;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--fg);
+  font: 400 13px var(--font-ui);
+  text-align: left;
+}
+.menu-item[data-active] {
+  background: var(--menu-hover);
+}
+.menu-item:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: -2px;
+}
+.menu-item.danger {
+  color: var(--danger);
+}
+.menu-item[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: default;
+}
+.menu-item[aria-disabled="true"][data-active] {
+  background: transparent;
+}
+
+.menu-label {
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.menu-shortcut {
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.menu-trailing,
+.menu-check {
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.menu-check {
+  width: 14px;
+  display: flex;
+  color: var(--fg);
+}
+
+.menu-back {
+  font-weight: 600;
+}
+.menu-back .menu-label {
+  text-align: center;
+  padding-right: 24px;
+}
+.menu-back-icon {
+  color: var(--muted);
+}
+
+.menu-separator {
+  height: 1px;
+  margin: 5px 6px;
+  background: var(--border);
+  flex-shrink: 0;
+}

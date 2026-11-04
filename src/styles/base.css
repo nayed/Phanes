@@ -1,0 +1,115 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+html,
+body {
+  /* The GTK window is transparent so the app frame can have rounded corners. */
+  background: transparent;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: default;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Keyboard focus is always visible, in the link colour. */
+:focus {
+  outline: none;
+}
+:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: -2px;
+}
+
+/* The app frame: fills the GTK window, rounded unless maximised or tiled. */
+.window-frame {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--window);
+  border-radius: var(--window-radius);
+}
+:root[data-maximized="true"] .window-frame {
+  border-radius: 0;
+}
+
+/* ---------- Shared controls ---------- */
+
+.icon-button {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--fg);
+}
+.icon-button:hover {
+  background: var(--button);
+}
+.icon-button[aria-pressed="true"],
+.icon-button[aria-expanded="true"] {
+  background: var(--button);
+}
+.icon-button.small {
+  width: 32px;
+  height: 32px;
+}
+
+/* Thin, unobtrusive scrollbars that follow the colorscheme. */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar);
+  border: 3px solid transparent;
+  border-radius: 6px;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
