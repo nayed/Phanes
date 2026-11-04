@@ -123,6 +123,16 @@ function AboutDialog() {
   );
 }
 
+/** Keys handled by CodeMirror itself rather than the command registry. */
+const EDITOR_KEYS: Array<[string, string]> = [
+  ["Find and Replace", "Ctrl+F"],
+  ["Go to Line", "Alt+Ctrl+G"],
+  ["Undo", "Ctrl+Z"],
+  ["Redo", "Shift+Ctrl+Z"],
+  ["Indent", "Tab"],
+  ["Unindent", "Shift+Tab"],
+];
+
 function ShortcutsDialog() {
   const commands = listCommands().filter((c) => c.shortcut);
   return (
@@ -134,14 +144,22 @@ function ShortcutsDialog() {
         </button>
       </div>
       <dl className="shortcuts-list">
-        {commands.map((c) => (
-          <div key={c.id} className="shortcuts-row">
+        {[
+          ...commands.map((c) => ({
+            key: c.id,
+            label: c.label,
+            scope: c.scope === "tree" ? "in the file tree" : null,
+            shortcut: c.shortcut!,
+          })),
+          ...EDITOR_KEYS.map(([label, shortcut]) => ({ key: label, label, scope: "in the editor", shortcut })),
+        ].map((row) => (
+          <div key={row.key} className="shortcuts-row">
             <dt>
-              {c.label}
-              {c.scope === "tree" && <span className="shortcuts-scope"> (in the file tree)</span>}
+              {row.label}
+              {row.scope && <span className="shortcuts-scope"> ({row.scope})</span>}
             </dt>
             <dd>
-              {c.shortcut!.split("+").map((k, i) => (
+              {row.shortcut.split("+").map((k, i) => (
                 <kbd key={i}>{k}</kbd>
               ))}
             </dd>

@@ -2,7 +2,7 @@
  * Every editor behaviour is a CodeMirror extension configured here.
  * Later features (vim mode, focus mode…) are added to `editorExtensions`.
  */
-import { defaultKeymap, history, historyKeymap, indentWithTab } from "@codemirror/commands";
+import { defaultKeymap, history, historyKeymap, indentWithTab, redo } from "@codemirror/commands";
 import { markdown, markdownKeymap, markdownLanguage } from "@codemirror/lang-markdown";
 import { indentUnit, syntaxHighlighting } from "@codemirror/language";
 import { languages } from "@codemirror/language-data";
@@ -124,7 +124,15 @@ export function editorExtensions(hooks: EditorHooks): Extension[] {
     alertMarkers,
     search({ top: false }),
     highlightSelectionMatches(),
-    keymap.of([...markdownKeymap, ...defaultKeymap, ...historyKeymap, ...searchKeymap, indentWithTab]),
+    keymap.of([
+      // GNOME's redo shortcut, next to CodeMirror's Ctrl+Y.
+      { key: "Mod-Shift-z", run: redo, preventDefault: true },
+      ...markdownKeymap,
+      ...defaultKeymap,
+      ...historyKeymap,
+      ...searchKeymap,
+      indentWithTab,
+    ]),
     EditorView.contentAttributes.of({ spellcheck: "false", "aria-label": "Markdown source" }),
     EditorView.updateListener.of(hooks.onUpdate),
   ];

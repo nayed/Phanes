@@ -163,18 +163,12 @@
 .markdown-body li > ol {
   margin: 4px 0 0;
 }
-.markdown-body .contains-task-list {
-  list-style: none;
-  padding-left: 0;
-}
-.markdown-body .contains-task-list .contains-task-list {
-  padding-left: 1.6em;
-}
-.markdown-body li > .contains-task-list {
-  padding-left: 1.6em;
-}
+/* Task items lose their marker and hang their checkbox where the marker was;
+   plain items in the same list keep their bullet. */
 .markdown-body .task-list-item {
   position: relative;
+  list-style: none;
+  margin-left: -2em;
   padding-left: 26px;
 }
 .markdown-body .task-list-item input[type="checkbox"] {
@@ -185,9 +179,6 @@
   height: 16px;
   margin: 0;
   accent-color: var(--link);
-}
-.markdown-body ol .task-list-item {
-  list-style: none;
 }
 
 /* Blockquotes */
