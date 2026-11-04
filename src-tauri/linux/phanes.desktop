@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Phanes
+Comment=Write and read markdown
+Exec=phanes %F
+Icon=io.nayed.Phanes
+Terminal=false
+Type=Application
+Categories=Utility;TextEditor;
+MimeType=text/markdown;text/x-markdown;
+StartupWMClass=phanes

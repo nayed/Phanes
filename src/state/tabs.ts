@@ -278,7 +278,7 @@ function rememberSession(): void {
   const s = useTabs.getState();
   const active = activeTab(s);
   useSettings.getState().rememberWorkspace(root, {
-    tabs: s.tabs.flatMap((t) => (t.path && t.path !== null ? [t.path] : [])),
+    tabs: s.tabs.flatMap((t) => (t.path ? [t.path] : [])),
     active: active?.path ?? null,
   });
 }

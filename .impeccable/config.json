@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "src/styles/preview.css"
+        ],
+        "createdAt": "2026-11-04T23:07:06.191Z",
+        "reason": "Claude: GitHub blockquote and alert left rules are mandated by docs/PHANES.md (Preview: 'coloured left rule') and shown in design screens 01/05"
+      }
+    ]
+  }
+}

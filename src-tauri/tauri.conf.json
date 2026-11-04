@@ -51,9 +51,29 @@
     ],
     "icon": [
       "icons/32x32.png",
+      "icons/64x64.png",
       "icons/128x128.png",
-      "icons/128x128@2x.png",
       "icons/icon.png"
-    ]
+    ],
+    "category": "Utility",
+    "shortDescription": "Write and read markdown",
+    "longDescription": "A desktop markdown editor and reader: write markdown on the left and see GitHub-style rendering on the right, inside a workspace folder.",
+    "copyright": "Nayed Saïd Ali",
+    "publisher": "Nayed Saïd Ali",
+    "linux": {
+      "deb": {
+        "desktopTemplate": "linux/phanes.desktop",
+        "files": {
+          "/usr/share/icons/hicolor/scalable/apps/io.nayed.Phanes.svg": "../docs/icons/io.nayed.Phanes.svg",
+          "/usr/share/icons/hicolor/symbolic/apps/io.nayed.Phanes-symbolic.svg": "../docs/icons/io.nayed.Phanes-symbolic.svg"
+        }
+      },
+      "appimage": {
+        "files": {
+          "/usr/share/icons/hicolor/scalable/apps/io.nayed.Phanes.svg": "../docs/icons/io.nayed.Phanes.svg",
+          "/usr/share/icons/hicolor/symbolic/apps/io.nayed.Phanes-symbolic.svg": "../docs/icons/io.nayed.Phanes-symbolic.svg"
+        }
+      }
+    }
   }
 }
