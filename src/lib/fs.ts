@@ -1,4 +1,4 @@
-import { invoke } from "@tauri-apps/api/core";
+import { convertFileSrc, invoke } from "@tauri-apps/api/core";
 
 /**
  * The only module that talks to Rust about files (src-tauri/src/fs.rs).
@@ -47,3 +47,6 @@ export const revealPath = (path: string) => call<void>("reveal_path", { path });
 export const openWorkspaceDir = (path: string) => call<string>("open_workspace", { path });
 /** Allows the preview to load images from a folder outside the workspace. */
 export const allowAssetDir = (path: string) => call<void>("allow_asset_dir", { path });
+
+/** URL that loads a local file in the webview (Tauri's asset protocol). */
+export const assetUrl = (path: string) => convertFileSrc(path);

@@ -55,7 +55,6 @@ export function mockImageUrl(path: string): string | undefined {
 }
 
 export function installMockFs(add: (handlers: Handlers) => void): void {
-  (window as unknown as { __PHANES_MOCK_IMAGE__: typeof mockImageUrl }).__PHANES_MOCK_IMAGE__ = mockImageUrl;
   add({
     "plugin:path|resolve_directory": () => MOCK_HOME,
     "plugin:dialog|open": () => MOCK_ROOT,

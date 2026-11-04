@@ -21,7 +21,7 @@ export function addMockHandlers(more: Record<string, Handler>): void {
 
 export async function installBrowserMock(): Promise<void> {
   mockWindows("main");
-  const { installMockFs } = await import("./mockFs");
+  const { installMockFs, mockImageUrl } = await import("./mockFs");
   installMockFs(addMockHandlers);
   mockIPC(
     (cmd, payload) => {
@@ -33,4 +33,8 @@ export async function installBrowserMock(): Promise<void> {
     },
     { shouldMockEvents: true },
   );
+  // Images of the sample workspace are served by Vite instead of the asset protocol.
+  const internals = (window as unknown as { __TAURI_INTERNALS__: { convertFileSrc: (p: string) => string } })
+    .__TAURI_INTERNALS__;
+  internals.convertFileSrc = (path) => mockImageUrl(path) ?? path;
 }

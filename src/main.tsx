@@ -8,6 +8,7 @@ import "./styles/header.css";
 import "./styles/sidebar.css";
 import "./styles/tabs.css";
 import "./styles/editor.css";
+import "./styles/preview.css";
 import "./styles/menu.css";
 import "./styles/dialogs.css";
 import { App } from "./app/App";

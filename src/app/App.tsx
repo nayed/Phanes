@@ -4,6 +4,7 @@ import { HeaderBar } from "../components/HeaderBar";
 import { Sidebar } from "../components/Sidebar";
 import { TabStrip } from "../components/TabStrip";
 import { Editor } from "../editor/Editor";
+import { Preview } from "../markdown/Preview";
 import { dirname, tildify } from "../lib/path";
 import { useSettings } from "../state/settings";
 import { activeTab, openFile, useTabs } from "../state/tabs";
@@ -11,6 +12,7 @@ import { useWorkspace } from "../state/workspace";
 
 export function App() {
   const sidebarVisible = useSettings((s) => s.sidebarVisible);
+  const viewMode = useSettings((s) => s.viewMode);
   const root = useWorkspace((s) => s.root);
   const tab = useTabs(activeTab);
   const hasTabs = useTabs((s) => s.tabs.length > 0);
@@ -27,9 +29,12 @@ export function App() {
           {sidebarVisible && <Sidebar activePath={tab?.path ?? null} onOpenFile={(p) => void openFile(p)} />}
           <div className="main-column">
             {hasTabs && <TabStrip />}
-            <div className="panes" hidden={!hasTabs}>
+            <div className="panes" hidden={!hasTabs} data-view={viewMode}>
               <section className="pane pane-editor" aria-label="Markdown source">
                 <Editor />
+              </section>
+              <section className="pane pane-preview" aria-label="Preview">
+                <Preview />
               </section>
             </div>
             {!hasTabs && <EmptyState />}

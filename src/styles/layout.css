@@ -20,6 +20,15 @@
 .panes[hidden] {
   display: none;
 }
+/* Split: editor and preview 50/50 with a 1 px border. The editor stays mounted
+   in every mode so it keeps its state; hidden panes are display: none. */
+.panes[data-view="split"] .pane-editor {
+  border-right: 1px solid var(--border);
+}
+.panes[data-view="editor"] .pane-preview,
+.panes[data-view="preview"] .pane-editor {
+  display: none;
+}
 .pane {
   flex: 1 1 0;
   min-width: 0;
