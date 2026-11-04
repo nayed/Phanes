@@ -1,4 +1,5 @@
 mod app_state;
+mod cli;
 mod fs;
 mod window;
 
@@ -7,6 +8,7 @@ use tauri::Manager;
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .manage(cli::parse())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_clipboard_manager::init())
@@ -20,6 +22,7 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             app_state::load_app_state,
             app_state::save_app_state,
+            cli::launch_paths,
             fs::list_dir,
             fs::path_info,
             fs::read_text_file,

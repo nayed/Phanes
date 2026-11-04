@@ -10,6 +10,7 @@ type Handler = (args: Record<string, unknown>) => unknown;
 const handlers: Record<string, Handler> = {
   load_app_state: () => JSON.parse(localStorage.getItem("phanes-state") ?? "null"),
   save_app_state: ({ state }) => localStorage.setItem("phanes-state", JSON.stringify(state)),
+  launch_paths: () => [],
   "plugin:window|is_maximized": () => false,
   "plugin:window|is_fullscreen": () => false,
 };
