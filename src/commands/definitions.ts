@@ -1,12 +1,14 @@
 import { quit } from "../app/lifecycle";
 import { showPanel } from "../state/dialogs";
 import { useSettings, type ColorSchemePreference, type ViewMode } from "../state/settings";
-import { closeTab, cycleTab, newUntitledTab, saveTab, saveTabAs, useTabs } from "../state/tabs";
-import { chooseWorkspace } from "../state/workspace";
-import { registerCommands, type Command } from "./registry";
+import { copyPath, createItem, duplicateItem, revealItem, startRename, trashItem } from "../state/fileOps";
+import { activeTab, closeTab, cycleTab, newUntitledTab, saveTab, saveTabAs, useTabs } from "../state/tabs";
+import { chooseWorkspace, useWorkspace } from "../state/workspace";
+import { registerCommands, type Command, type CommandContext } from "./registry";
 
 const settings = () => useSettings.getState();
 const hasActiveTab = () => useTabs.getState().activeId !== null;
+const hasTarget = (ctx: CommandContext) => !!ctx.target;
 
 function viewCommand(id: Command["id"], label: string, shortcut: string, mode: ViewMode): Command {
   return {
@@ -31,6 +33,50 @@ function themeCommand(id: Command["id"], label: string, pref: ColorSchemePrefere
 export function registerAllCommands(): void {
   registerCommands([
     { id: "workspace.open", label: "Open Folder…", shortcut: "Ctrl+O", run: chooseWorkspace },
+    { id: "file.new", label: "New File", shortcut: "Ctrl+N", run: (ctx) => createItem("file", ctx) },
+    {
+      id: "folder.new",
+      label: "New Folder",
+      shortcut: "Shift+Ctrl+N",
+      run: (ctx) => createItem("folder", ctx),
+      isEnabled: () => useWorkspace.getState().root !== null,
+    },
+    {
+      id: "item.rename",
+      label: "Rename",
+      shortcut: "F2",
+      scope: "tree",
+      run: (ctx) => startRename(ctx.target!.path),
+      isEnabled: hasTarget,
+    },
+    {
+      id: "item.duplicate",
+      label: "Duplicate",
+      run: (ctx) => duplicateItem(ctx.target!.path),
+      isEnabled: hasTarget,
+    },
+    {
+      id: "item.copyPath",
+      label: "Copy Path",
+      shortcut: "Shift+Ctrl+C",
+      run: copyPath,
+      isEnabled: (ctx) => !!ctx.target || !!activeTab()?.path,
+    },
+    {
+      id: "item.reveal",
+      label: "Open in Files",
+      run: (ctx) => revealItem(ctx.target!.path),
+      isEnabled: hasTarget,
+    },
+    {
+      id: "item.trash",
+      label: "Move to Trash",
+      shortcut: "Delete",
+      scope: "tree",
+      danger: true,
+      run: (ctx) => trashItem(ctx.target!.path),
+      isEnabled: hasTarget,
+    },
     {
       id: "file.save",
       label: "Save",

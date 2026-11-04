@@ -75,6 +75,10 @@ export function getView(): EditorView | null {
   return view;
 }
 
+export function focusEditor(): void {
+  requestAnimationFrame(() => view?.focus());
+}
+
 /** Put the document of `id` into the editor view, keeping the previous one's scroll. */
 export function showDoc(id: string | null): void {
   if (view && activeId && docs.has(activeId) && activeId !== id) {

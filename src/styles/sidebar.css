@@ -129,3 +129,19 @@
   background: var(--link);
   color: var(--window);
 }
+
+.tree-rename {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 24px;
+  margin-left: -4px;
+  padding: 0 4px;
+  border: 1px solid var(--link);
+  border-radius: 5px;
+  background: var(--window);
+  color: var(--fg);
+  font: 400 13px var(--font-ui);
+  outline: none;
+  user-select: text;
+  -webkit-user-select: text;
+}
