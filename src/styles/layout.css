@@ -76,3 +76,48 @@
   gap: 8px;
   margin-top: 16px;
 }
+
+/* ---------- Status bar ---------- */
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: var(--status-height);
+  flex-shrink: 0;
+  padding: 0 16px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+}
+.status-strong {
+  font-weight: 600;
+  color: var(--fg);
+}
+.status-spacer {
+  flex-grow: 1;
+  margin-left: -20px;
+}
+.status-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 22px;
+  margin: 0 -6px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  font: 400 12px var(--font-ui);
+}
+.status-toggle:hover {
+  background: var(--button);
+  color: var(--fg);
+}
+.status-toggle[aria-pressed="false"] {
+  text-decoration: line-through;
+  opacity: 0.7;
+}

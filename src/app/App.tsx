@@ -1,14 +1,18 @@
+import { useEffect, useRef } from "react";
 import { DialogHost } from "../components/Dialogs";
 import { EmptyState } from "../components/EmptyState";
 import { HeaderBar } from "../components/HeaderBar";
 import { Sidebar } from "../components/Sidebar";
+import { StatusBar } from "../components/StatusBar";
 import { TabStrip } from "../components/TabStrip";
+import { getView } from "../editor/documents";
 import { Editor } from "../editor/Editor";
 import { Preview } from "../markdown/Preview";
 import { dirname, tildify } from "../lib/path";
 import { useSettings } from "../state/settings";
 import { activeTab, openFile, useTabs } from "../state/tabs";
 import { useWorkspace } from "../state/workspace";
+import { installSyncScroll } from "./syncScroll";
 
 export function App() {
   const sidebarVisible = useSettings((s) => s.sidebarVisible);
@@ -16,6 +20,13 @@ export function App() {
   const root = useWorkspace((s) => s.root);
   const tab = useTabs(activeTab);
   const hasTabs = useTabs((s) => s.tabs.length > 0);
+  const syncScroll = useSettings((s) => s.syncScroll);
+  const previewRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!syncScroll || viewMode !== "split" || !hasTabs || !previewRef.current) return;
+    return installSyncScroll(getView, previewRef.current);
+  }, [syncScroll, viewMode, hasTabs]);
 
   const place = root ? tildify(root) : tab?.path ? tildify(dirname(tab.path)) : null;
   const state = !tab ? null : tab.dirty ? "Unsaved changes" : tab.path ? "Saved" : "New document";
@@ -34,12 +45,13 @@ export function App() {
                 <Editor />
               </section>
               <section className="pane pane-preview" aria-label="Preview">
-                <Preview />
+                <Preview ref={previewRef} />
               </section>
             </div>
             {!hasTabs && <EmptyState />}
           </div>
         </div>
+        <StatusBar />
       </div>
       <DialogHost />
     </>
