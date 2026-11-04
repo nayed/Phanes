@@ -1,0 +1,131 @@
+.sidebar {
+  flex: 0 0 var(--sidebar-width);
+  min-width: var(--sidebar-min-width);
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 12px 10px 16px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.sidebar-heading {
+  flex-grow: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+.sidebar-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.sidebar-path {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.file-tree {
+  padding: 8px 6px;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.tree-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: var(--tree-row-height);
+  flex-shrink: 0;
+  padding-right: 8px;
+  border-radius: 6px;
+  color: var(--fg);
+}
+.tree-row:hover {
+  background: var(--menu-hover);
+}
+.tree-row[data-menu-target] {
+  background: var(--button);
+}
+.tree-row[data-active] {
+  background: var(--active-bg);
+  color: var(--link);
+  font-weight: 600;
+}
+.tree-row:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: -2px;
+}
+.tree-chevron {
+  width: 14px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  color: var(--muted);
+}
+.tree-icon {
+  flex-shrink: 0;
+  color: var(--muted);
+}
+.tree-row[data-active] .tree-icon {
+  color: var(--link);
+}
+.tree-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-empty {
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.sidebar-empty p {
+  margin: 0;
+}
+
+.pill-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--button);
+  color: var(--fg);
+  font: 600 13px var(--font-ui);
+}
+.pill-button:hover {
+  background: var(--menu-hover);
+}
+.pill-button.suggested {
+  background: var(--link);
+  color: var(--window);
+}

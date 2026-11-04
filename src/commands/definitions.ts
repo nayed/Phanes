@@ -1,6 +1,7 @@
 import { quit } from "../app/lifecycle";
 import { showPanel } from "../state/dialogs";
 import { useSettings, type ColorSchemePreference, type ViewMode } from "../state/settings";
+import { chooseWorkspace } from "../state/workspace";
 import { registerCommands, type Command } from "./registry";
 
 const settings = () => useSettings.getState();
@@ -27,6 +28,7 @@ function themeCommand(id: Command["id"], label: string, pref: ColorSchemePrefere
 /** Register every command of the app. Called once at startup. */
 export function registerAllCommands(): void {
   registerCommands([
+    { id: "workspace.open", label: "Open Folder…", shortcut: "Ctrl+O", run: chooseWorkspace },
     viewCommand("view.editor", "Editor", "Ctrl+1", "editor"),
     viewCommand("view.split", "Split", "Ctrl+2", "split"),
     viewCommand("view.preview", "Preview", "Ctrl+3", "preview"),

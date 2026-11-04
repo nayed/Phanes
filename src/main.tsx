@@ -5,10 +5,12 @@ import "./styles/tokens.css";
 import "./styles/base.css";
 import "./styles/layout.css";
 import "./styles/header.css";
+import "./styles/sidebar.css";
 import "./styles/menu.css";
 import "./styles/dialogs.css";
 import { App } from "./app/App";
 import { installCloseHandler, installMaximizeTracking } from "./app/lifecycle";
+import { startup } from "./app/startup";
 import { installTheme } from "./app/theme";
 import { installKeybindings } from "./commands/keybindings";
 import { registerAllCommands } from "./commands/definitions";
@@ -34,6 +36,8 @@ async function start() {
     const t = e.target as HTMLElement;
     if (!t.closest("input, textarea, .cm-content")) e.preventDefault();
   });
+
+  await startup();
 
   createRoot(document.getElementById("root")!).render(
     <StrictMode>

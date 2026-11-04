@@ -4,3 +4,10 @@
   min-height: 0;
   display: flex;
 }
+
+.main-column {
+  flex: 999 1 640px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
