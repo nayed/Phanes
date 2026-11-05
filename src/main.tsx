@@ -1,3 +1,4 @@
+import { getCurrentWindow } from "@tauri-apps/api/window";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles/fonts";
@@ -29,7 +30,7 @@ async function start() {
   }
 
   await initSettings();
-  installTheme();
+  await installTheme();
   wireStores();
   registerAllCommands();
   setCommandErrorReporter((err) => showToast(err instanceof Error ? err.message : String(err)));
@@ -49,6 +50,10 @@ async function start() {
       <App />
     </StrictMode>,
   );
+
+  // The window starts hidden; show it once the first frame is painted in the
+  // right colors, so there is no white flash in dark mode.
+  requestAnimationFrame(() => requestAnimationFrame(() => void getCurrentWindow().show()));
 }
 
 void start();

@@ -1,4 +1,5 @@
-import { useSyncExternalStore } from "react";
+import { invoke } from "@tauri-apps/api/core";
+import { listen } from "@tauri-apps/api/event";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { useSettings, type ColorSchemePreference } from "../state/settings";
 
@@ -7,55 +8,46 @@ export const COLORSCHEME = { id: "github-default", name: "GitHub Default" } as c
 
 export type Mode = "light" | "dark";
 
-const systemDark = window.matchMedia("(prefers-color-scheme: dark)");
+/**
+ * GNOME's light/dark preference, from the desktop portal via Rust
+ * (src-tauri/src/system_theme.rs). WebKitGTK's `prefers-color-scheme` can't
+ * be used for this: it only mirrors the GTK setting Phanes itself sets below.
+ */
+let systemMode: Mode = "light";
 
 export function resolveMode(pref: ColorSchemePreference): Mode {
-  if (pref === "system") return systemDark.matches ? "dark" : "light";
-  return pref;
+  return pref === "system" ? systemMode : pref;
 }
 
-function apply(pref: ColorSchemePreference): void {
+function apply(): void {
+  const mode = resolveMode(useSettings.getState().colorScheme);
   const root = document.documentElement;
   root.dataset.scheme = COLORSCHEME.id;
-  root.dataset.mode = resolveMode(pref);
-  // Keep GTK (window shadow, native dialogs) in step with a forced choice.
-  // When following the system, GNOME's preference already applies.
+  root.dataset.mode = mode;
+  // Tell GTK which variant to use, so the window shadow, native dialogs and
+  // WebKit's own controls (checkboxes, scrollbars) match the app.
   void getCurrentWindow()
-    .setTheme(pref === "system" ? null : pref)
+    .setTheme(mode)
     .catch(() => {});
 }
 
-/**
- * Follow the setting and, when it is "system", GNOME's dark style preference,
- * which WebKitGTK exposes through `prefers-color-scheme`.
- */
-export function installTheme(): () => void {
-  apply(useSettings.getState().colorScheme);
-  const unsubscribe = useSettings.subscribe((s, prev) => {
-    if (s.colorScheme !== prev.colorScheme) apply(s.colorScheme);
+/** Apply the setting now and whenever it, or the system preference, changes. */
+export async function installTheme(): Promise<void> {
+  try {
+    systemMode = await invoke<Mode>("system_color_scheme");
+  } catch {
+    systemMode = "light";
+  }
+  apply();
+  useSettings.subscribe((s, prev) => {
+    if (s.colorScheme !== prev.colorScheme) apply();
   });
-  const onSystemChange = () => apply(useSettings.getState().colorScheme);
-  systemDark.addEventListener("change", onSystemChange);
-  return () => {
-    unsubscribe();
-    systemDark.removeEventListener("change", onSystemChange);
-  };
-}
-
-/** Current resolved mode, re-rendering when it changes. */
-export function useMode(): Mode {
-  const pref = useSettings((s) => s.colorScheme);
-  const dark = useSystemDark();
-  if (pref === "system") return dark ? "dark" : "light";
-  return pref;
-}
-
-function useSystemDark(): boolean {
-  return useSyncExternalStore(
-    (cb) => {
-      systemDark.addEventListener("change", cb);
-      return () => systemDark.removeEventListener("change", cb);
-    },
-    () => systemDark.matches,
-  );
+  await listen<Mode>("system-color-scheme", (event) => {
+    systemMode = event.payload;
+    apply();
+    // The window layer (tao) reacts to the same portal signal by setting GTK
+    // to the system variant; re-assert ours once it has, in case Light or
+    // Dark is forced in the menu.
+    window.setTimeout(apply, 300);
+  });
 }

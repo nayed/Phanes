@@ -3,14 +3,19 @@
  * Tauri backend, so the UI can be checked against the design screens without
  * building the Rust side. Never included in a production build.
  */
+import { emit } from "@tauri-apps/api/event";
 import { mockIPC, mockWindows } from "@tauri-apps/api/mocks";
 
 type Handler = (args: Record<string, unknown>) => unknown;
+
+/** In the browser, the system preference comes from prefers-color-scheme. */
+const systemDark = window.matchMedia("(prefers-color-scheme: dark)");
 
 const handlers: Record<string, Handler> = {
   load_app_state: () => JSON.parse(localStorage.getItem("phanes-state") ?? "null"),
   save_app_state: ({ state }) => localStorage.setItem("phanes-state", JSON.stringify(state)),
   launch_paths: () => [],
+  system_color_scheme: () => (systemDark.matches ? "dark" : "light"),
   "plugin:window|is_maximized": () => false,
   "plugin:window|is_fullscreen": () => false,
 };
@@ -34,6 +39,9 @@ export async function installBrowserMock(): Promise<void> {
     },
     { shouldMockEvents: true },
   );
+  systemDark.addEventListener("change", () => {
+    void emit("system-color-scheme", systemDark.matches ? "dark" : "light");
+  });
   // Images of the sample workspace are served by Vite instead of the asset protocol.
   const internals = (window as unknown as { __TAURI_INTERNALS__: { convertFileSrc: (p: string) => string } })
     .__TAURI_INTERNALS__;

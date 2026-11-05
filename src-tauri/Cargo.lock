@@ -2587,6 +2587,7 @@ dependencies = [
 name = "phanes"
 version = "0.1.0"
 dependencies = [
+ "dbus",
  "gtk",
  "serde",
  "serde_json",

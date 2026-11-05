@@ -1,6 +1,7 @@
 mod app_state;
 mod cli;
 mod fs;
+mod system_theme;
 mod window;
 
 use tauri::Manager;
@@ -14,15 +15,25 @@ pub fn run() {
         .plugin(tauri_plugin_clipboard_manager::init())
         .setup(|app| {
             if let Some(main) = app.get_webview_window("main") {
+                // Shown by the frontend once it has painted in the right colors;
+                // shown anyway after a few seconds if the frontend never says so.
                 window::setup(&main);
-                main.show()?;
+                let fallback = main.clone();
+                std::thread::spawn(move || {
+                    std::thread::sleep(std::time::Duration::from_secs(4));
+                    if !fallback.is_visible().unwrap_or(true) {
+                        let _ = fallback.show();
+                    }
+                });
             }
+            system_theme::watch(app.handle());
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
             app_state::load_app_state,
             app_state::save_app_state,
             cli::launch_paths,
+            system_theme::system_color_scheme,
             fs::list_dir,
             fs::path_info,
             fs::read_text_file,
