@@ -3,6 +3,8 @@ import { loadAppState, saveAppState } from "../lib/appState";
 
 export type ViewMode = "editor" | "split" | "preview";
 export type ColorSchemePreference = "system" | "light" | "dark";
+/** Which colorscheme: GitHub Default, or colors read from the GTK theme. */
+export type SchemeId = "github-default" | "gtk";
 
 /** What Phanes remembers about one workspace between launches. */
 export interface WorkspaceMemory {
@@ -15,6 +17,8 @@ export interface WorkspaceMemory {
 }
 
 export interface Settings {
+  scheme: SchemeId;
+  /** Light/dark: follow GNOME, or forced. */
   colorScheme: ColorSchemePreference;
   viewMode: ViewMode;
   sidebarVisible: boolean;
@@ -24,6 +28,7 @@ export interface Settings {
 }
 
 const defaults: Settings = {
+  scheme: "github-default",
   colorScheme: "system",
   viewMode: "split",
   sidebarVisible: true,
@@ -57,6 +62,7 @@ export function emptyMemory(): WorkspaceMemory {
 
 function snapshot(s: SettingsStore): Settings {
   return {
+    scheme: s.scheme,
     colorScheme: s.colorScheme,
     viewMode: s.viewMode,
     sidebarVisible: s.sidebarVisible,

@@ -21,6 +21,9 @@ const mainMenu: MenuEntry[] = [
     kind: "submenu",
     label: "Color Scheme",
     entries: [
+      { kind: "command", id: "scheme.githubDefault" },
+      { kind: "command", id: "scheme.gtk" },
+      { kind: "separator" },
       { kind: "command", id: "theme.system" },
       { kind: "command", id: "theme.light" },
       { kind: "command", id: "theme.dark" },
@@ -120,13 +123,13 @@ function WindowControls() {
   const win = getCurrentWindow();
   return (
     <div className="window-controls">
-      <button type="button" aria-label="Minimize" onClick={() => void win.minimize()}>
+      <button type="button" className="wc-minimize" aria-label="Minimize" onClick={() => void win.minimize()}>
         <Minus size={12} strokeWidth={2.5} aria-hidden />
       </button>
-      <button type="button" aria-label="Maximize" onClick={() => void win.toggleMaximize()}>
+      <button type="button" className="wc-maximize" aria-label="Maximize" onClick={() => void win.toggleMaximize()}>
         <Square size={11} strokeWidth={2.5} aria-hidden />
       </button>
-      <button type="button" aria-label="Close window" onClick={() => void runCommand("app.quit")}>
+      <button type="button" className="wc-close" aria-label="Close window" onClick={() => void runCommand("app.quit")}>
         <X size={12} strokeWidth={2.5} aria-hidden />
       </button>
     </div>

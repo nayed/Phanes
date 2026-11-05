@@ -69,14 +69,21 @@
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background: var(--button);
-  color: var(--fg);
+  color: var(--wc-fg);
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.window-controls button:hover {
-  background: var(--menu-hover);
+.window-controls .wc-minimize { background: var(--wc-minimize-bg); }
+.window-controls .wc-maximize { background: var(--wc-maximize-bg); }
+.window-controls .wc-close { background: var(--wc-close-bg); }
+.window-controls .wc-minimize:hover { background: var(--wc-minimize-hover-bg); }
+.window-controls .wc-maximize:hover { background: var(--wc-maximize-hover-bg); }
+.window-controls .wc-close:hover { background: var(--wc-close-hover-bg); }
+/* Some GTK themes hide the icons until hover; show them for keyboard focus too. */
+.window-controls button:hover,
+.window-controls button:focus-visible {
+  color: var(--wc-hover-fg);
   filter: brightness(0.94);
 }
 :root[data-mode="dark"] .window-controls button:hover {

@@ -25,6 +25,8 @@ export type CommandId =
   | "view.preview"
   | "view.toggleSidebar"
   | "view.toggleSyncScroll"
+  | "scheme.githubDefault"
+  | "scheme.gtk"
   | "theme.system"
   | "theme.light"
   | "theme.dark"

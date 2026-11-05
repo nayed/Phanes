@@ -67,7 +67,7 @@
 }
 .dialog-button.suggested {
   background: var(--link);
-  color: var(--window);
+  color: var(--on-link);
 }
 .dialog-button.destructive {
   color: var(--danger);
