@@ -29,7 +29,7 @@ The screens:
 | `03-workspace-context-menu` | Right-click menu open on a folder in the sidebar. |
 | `04-editor-only` | Editor view mode. |
 | `05-preview-only` | Preview (reading) view mode, document centred. |
-| `06-app-icon-directions` | Icon exploration; the chosen icon is "Heading # of light" (marked Pick). Use the files in `icons/`, not this image. |
+| `06-app-icon-directions` | Icon exploration; the chosen icon is "navy cosmic egg (A2)" (marked Pick). Use the files in `icons/`, not this image. |
 
 ---
 
