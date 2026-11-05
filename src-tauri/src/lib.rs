@@ -38,6 +38,7 @@ pub fn run() {
             cli::launch_paths,
             system_theme::system_color_scheme,
             gtk_theme::gtk_theme_colors,
+            gtk_theme::set_gtk_dark,
             fs::list_dir,
             fs::path_info,
             fs::read_text_file,

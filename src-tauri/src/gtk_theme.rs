@@ -125,6 +125,14 @@ mod imp {
         out
     }
 
+    pub fn set_dark(dark: bool) {
+        if let Some(settings) = gtk::Settings::default() {
+            if settings.is_gtk_application_prefer_dark_theme() != dark {
+                settings.set_gtk_application_prefer_dark_theme(dark);
+            }
+        }
+    }
+
     /// Tell the frontend when the theme or its light/dark variant changes.
     pub fn watch<R: Runtime>(app: &AppHandle<R>) {
         let Some(settings) = gtk::Settings::default() else {
@@ -149,6 +157,21 @@ pub fn gtk_theme_colors() -> HashMap<String, String> {
     return imp::read();
     #[cfg(not(target_os = "linux"))]
     HashMap::new()
+}
+
+/// Make GTK use the light or dark variant of its theme. The window shadow,
+/// native dialogs and WebKit's own controls (scrollbars, checkboxes) follow
+/// it, and so do the colors `gtk_theme_colors` reads.
+///
+/// GTK reloads its whole theme each time this setting is written, even with
+/// the value it already has (~45 ms with a large theme), so it is only
+/// written when it differs.
+#[tauri::command]
+pub fn set_gtk_dark(dark: bool) {
+    #[cfg(target_os = "linux")]
+    imp::set_dark(dark);
+    #[cfg(not(target_os = "linux"))]
+    let _ = dark;
 }
 
 /// Must be called on the main thread (e.g. from the Tauri `setup` hook).

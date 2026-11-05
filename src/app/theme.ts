@@ -1,6 +1,5 @@
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
-import { getCurrentWindow } from "@tauri-apps/api/window";
 import { create } from "zustand";
 import { useSettings, type ColorSchemePreference, type SchemeId } from "../state/settings";
 
@@ -70,9 +69,7 @@ function apply(): Promise<void> {
   // Tell GTK which variant to use, so the window shadow, native dialogs and
   // WebKit's own controls (checkboxes, scrollbars) match the app. With the
   // GTK scheme, this also picks the theme's light or dark colors.
-  const gtkVariant = getCurrentWindow()
-    .setTheme(mode)
-    .catch(() => {});
+  const gtkVariant = invoke<void>("set_gtk_dark", { dark: mode === "dark" }).catch(() => {});
   if (scheme === "gtk") return gtkVariant.then(loadGtkColors);
   clearGtkColors();
   useThemeInfo.setState({ label: COLORSCHEMES[scheme].name });

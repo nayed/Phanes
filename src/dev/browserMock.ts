@@ -36,8 +36,9 @@ const handlers: Record<string, Handler> = {
   launch_paths: () => [],
   system_color_scheme: () => (systemDark.matches ? "dark" : "light"),
   gtk_theme_colors: () => (gtkDark ? GRUVBOX_DARK : GRUVBOX_LIGHT),
-  "plugin:window|set_theme": ({ value }) => {
-    gtkDark = value === "dark";
+  set_gtk_dark: ({ dark }) => {
+    if (gtkDark === dark) return;
+    gtkDark = dark === true;
     void emit("gtk-theme-changed");
   },
   "plugin:window|is_maximized": () => false,
