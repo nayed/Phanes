@@ -16,8 +16,9 @@ pub fn run() {
         .plugin(tauri_plugin_clipboard_manager::init())
         .setup(|app| {
             if let Some(main) = app.get_webview_window("main") {
-                // Shown by the frontend once it has painted in the right colors;
-                // shown anyway after a few seconds if the frontend never says so.
+                // Shown by the frontend once its first render is in place; shown
+                // anyway after a few seconds if the frontend never says so (it
+                // failed to start), so there is something on screen to look at.
                 window::setup(&main);
                 let fallback = main.clone();
                 std::thread::spawn(move || {

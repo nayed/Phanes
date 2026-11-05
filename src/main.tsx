@@ -1,5 +1,6 @@
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { StrictMode } from "react";
+import { flushSync } from "react-dom";
 import { createRoot } from "react-dom/client";
 import "./styles/fonts";
 import "./styles/tokens.css";
@@ -45,15 +46,19 @@ async function start() {
 
   await startup();
 
-  createRoot(document.getElementById("root")!).render(
-    <StrictMode>
-      <App />
-    </StrictMode>,
+  // The window starts hidden so that its first frame already has the right
+  // colors. Render synchronously, then show it. (Waiting for an animation
+  // frame instead would wait forever: WebKit doesn't run them while the
+  // window is hidden.)
+  const root = createRoot(document.getElementById("root")!);
+  flushSync(() =>
+    root.render(
+      <StrictMode>
+        <App />
+      </StrictMode>,
+    ),
   );
-
-  // The window starts hidden; show it once the first frame is painted in the
-  // right colors, so there is no white flash in dark mode.
-  requestAnimationFrame(() => requestAnimationFrame(() => void getCurrentWindow().show()));
+  void getCurrentWindow().show();
 }
 
 void start();

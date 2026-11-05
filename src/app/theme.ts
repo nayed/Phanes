@@ -60,7 +60,8 @@ function clearGtkColors(): void {
 
 /* ---------- Applying ---------- */
 
-function apply(): void {
+/** Apply the settings; resolves once GTK uses the right variant and, for the GTK scheme, its colors are in. */
+function apply(): Promise<void> {
   const { scheme, colorScheme } = useSettings.getState();
   const mode = resolveMode(colorScheme);
   const root = document.documentElement;
@@ -72,34 +73,35 @@ function apply(): void {
   const gtkVariant = getCurrentWindow()
     .setTheme(mode)
     .catch(() => {});
-  if (scheme === "gtk") {
-    void gtkVariant.then(loadGtkColors);
-  } else {
-    clearGtkColors();
-    useThemeInfo.setState({ label: COLORSCHEMES[scheme].name });
-  }
+  if (scheme === "gtk") return gtkVariant.then(loadGtkColors);
+  clearGtkColors();
+  useThemeInfo.setState({ label: COLORSCHEMES[scheme].name });
+  return gtkVariant;
 }
 
 let gtkTimer: number | undefined;
 
-/** Apply the settings now and whenever they, the system preference or the GTK theme change. */
+/**
+ * Apply the settings now and whenever they, the system preference or the GTK
+ * theme change. Resolves once the first frame can be drawn in final colors.
+ */
 export async function installTheme(): Promise<void> {
   try {
     systemMode = await invoke<Mode>("system_color_scheme");
   } catch {
     systemMode = "light";
   }
-  apply();
+  await apply();
   useSettings.subscribe((s, prev) => {
-    if (s.colorScheme !== prev.colorScheme || s.scheme !== prev.scheme) apply();
+    if (s.colorScheme !== prev.colorScheme || s.scheme !== prev.scheme) void apply();
   });
   await listen<Mode>("system-color-scheme", (event) => {
     systemMode = event.payload;
-    apply();
+    void apply();
     // The window layer (tao) reacts to the same portal signal by setting GTK
     // to the system variant; re-assert ours once it has, in case Light or
     // Dark is forced in the menu.
-    window.setTimeout(apply, 300);
+    window.setTimeout(() => void apply(), 300);
   });
   // The GTK theme, or its light/dark variant, changed: re-read its colors.
   await listen("gtk-theme-changed", () => {
