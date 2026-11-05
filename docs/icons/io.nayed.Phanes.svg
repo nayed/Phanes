@@ -1,18 +1,36 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
   <defs>
-    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#f6d32d" stop-opacity="0.55"/>
+    <clipPath id="egg"><path d="M64 10C92 10 108 52 108 80C108 106 88 122 64 122C40 122 20 106 20 80C20 52 36 10 64 10Z"/></clipPath>
+    <clipPath id="bottom"><polygon points="0,76 40,62 64,78 88,62 128,76 128,128 0,128"/></clipPath>
+    <clipPath id="top"><polygon points="0,0 128,0 128,76 88,62 64,78 40,62 0,76"/></clipPath>
+    <linearGradient id="shell" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#22457f"/>
+      <stop offset="1" stop-color="#0d2347"/>
+    </linearGradient>
+    <linearGradient id="beam" x1="74" y1="76" x2="96" y2="20" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f6d32d" stop-opacity="0.95"/>
       <stop offset="1" stop-color="#f6d32d" stop-opacity="0"/>
-    </radialGradient>
+    </linearGradient>
+    <linearGradient id="ray" x1="80" y1="72" x2="96" y2="18" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fffbd6"/>
+      <stop offset="1" stop-color="#fffbd6" stop-opacity="0"/>
+    </linearGradient>
   </defs>
-  <rect x="8" y="12" width="112" height="112" rx="26" fill="#07142b"/>
-  <rect x="8" y="8" width="112" height="112" rx="26" fill="#0d2347"/>
-  <circle cx="64" cy="64" r="50" fill="url(#glow)"/>
-  <path d="M52 26L44 102M84 26L76 102M28 50H100M24 78H96" fill="none" stroke="#f6d32d" stroke-width="12" stroke-linecap="round"/>
-  <g fill="#fffbd6">
-    <circle cx="49.5" cy="50" r="5"/>
-    <circle cx="81.5" cy="50" r="5"/>
-    <circle cx="46.5" cy="78" r="5"/>
-    <circle cx="78.5" cy="78" r="5"/>
+  <g transform="translate(64 70) scale(0.84) translate(-64 -64)">
+    <polygon points="46,74 104,74 118,24 78,12" fill="url(#beam)"/>
+    <path d="M64 70L76 12M82 72L100 20M98 74L118 36" fill="none" stroke="url(#ray)" stroke-width="6" stroke-linecap="round"/>
+    <g clip-path="url(#egg)">
+      <ellipse cx="68" cy="72" rx="38" ry="11" fill="#f6d32d"/>
+      <ellipse cx="68" cy="72" rx="22" ry="5.5" fill="#fffbd6"/>
+    </g>
+    <g clip-path="url(#bottom)">
+      <path d="M64 10C92 10 108 52 108 80C108 106 88 122 64 122C40 122 20 106 20 80C20 52 36 10 64 10Z" fill="url(#shell)" stroke="#5a86cc" stroke-width="2.5"/>
+    </g>
+    <g transform="translate(-3,-5) rotate(-24 20 72)">
+      <g clip-path="url(#top)">
+        <path d="M64 10C92 10 108 52 108 80C108 106 88 122 64 122C40 122 20 106 20 80C20 52 36 10 64 10Z" fill="url(#shell)" stroke="#5a86cc" stroke-width="2.5"/>
+        <ellipse cx="50" cy="34" rx="6" ry="12" fill="#ffffff" opacity="0.2"/>
+      </g>
+    </g>
   </g>
 </svg>
