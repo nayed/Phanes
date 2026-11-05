@@ -101,7 +101,7 @@ Dragging the header moves the window; double-clicking it toggles maximise.
 
 264 px wide, separated from the editor by a 1 px border. Matches `01-main-light`.
 
-- **Header**: a small uppercase "Workspace" label, the workspace path below it (`~/notes`), and a button on the right to choose a different folder (opens the GTK folder chooser via the Tauri dialog plugin).
+- **Header**: a small uppercase "Workspace" label, the workspace path below it (`~/notes`), and a button on the right to choose a different folder (opens GNOME's own folder chooser through the desktop portal, via the Tauri dialog plugin).
 - **File tree** of the workspace folder: folders first, then files, each alphabetical and case-insensitive. Hide dotfiles and `.git`, `node_modules`. Folders expand and collapse with a chevron; remember which are expanded per workspace.
 - Show markdown files (`.md`, `.markdown`) with a file-text icon and images with an image icon. Other files can be hidden in version 1.
 - Rows are 30 px tall, indented 18 px per level. The file open in the active tab is highlighted (accent tint background, accent text, semi-bold).

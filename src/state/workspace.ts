@@ -71,7 +71,7 @@ export async function openWorkspace(path: string): Promise<boolean> {
   return true;
 }
 
-/** Ask for a folder with the GTK folder chooser and open it. */
+/** Ask for a folder with GNOME's folder chooser (through the desktop portal) and open it. */
 export async function chooseWorkspace(): Promise<void> {
   const current = useWorkspace.getState().root;
   const picked = await open({
