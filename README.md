@@ -1,13 +1,13 @@
 # Phanes
-![Phanes](./docs/images/Phanes.png "Phanes bringing light")
+![Phanes, the primordial god of light, hatching from the cosmic egg](./docs/images/Phanes.png "Phanes bringing light")
 
-In Orphic mythology, **Phanes** is the primordial god hatched from the cosmic egg — the **first light that makes everything appear**. The Greek verb *phaínein* (φαίνω) literally means **"to bring to light, to make visible"** which is exactly what **Phanes** (this app) is: it makes your plain text *appear* as a beautiful document.
+In Orphic mythology, **Phanes** is the primordial god hatched from the cosmic egg — the **first light that makes everything appear**. The Greek verb *phaínein* (φαίνω) literally means **"to bring to light, to make visible"**, which is exactly what **Phanes** (this app) is: it makes your plain text *appear* as a beautiful document.
 
 ---
 
 **Phanes** is a desktop markdown editor and reader: write markdown on the left, read **GitHub Flavored Markdown** rendering on the right, inside a workspace folder shown as a file tree.
 
-![Phanes](./docs/images/Screenshot.png "Phanes bringing light")
+![Phanes in split view: the workspace tree, markdown in the editor and its GitHub-style preview](./docs/images/Screenshot.png "Phanes in split view")
 
 ## Features
 
@@ -22,23 +22,23 @@ In Orphic mythology, **Phanes** is the primordial god hatched from the cosmic eg
 - **Local images** with paths relative to the open file.
 - **Links** open in your default browser. Links to other `.md` files open them in a new tab.
 - **Safe by default**: the preview is sanitized, so no script in a document ever runs.
-- **GitHub alerts**: blockquotes that start with `[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]` or `[!CAUTION]` become colored callouts with an icon.
+- **GitHub alerts**: blockquotes that start with `[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]` or `[!CAUTION]` become colored callouts with an icon. They look like this:
 
-### Exemples
 > [!NOTE]
 > Phanes renders this as a blue callout with an info icon.
 
 > [!TIP]
-> Phanes renders this as a green callout with an lightbulb icon.
+> Phanes renders this as a green callout with a lightbulb icon.
 
 > [!IMPORTANT]
-> Phanes renders this as a purple callout with a ! icon.
+> Phanes renders this as a purple callout with a speech-bubble icon.
 
 > [!WARNING]
-> Phanes renders this as an orange with a warning triangle icon.
+> Phanes renders this as an orange callout with a warning triangle icon.
 
 > [!CAUTION]
-> Phanes renders this as a red callout with a stop signal icon.
+> Phanes renders this as a red callout with a stop sign icon.
+
 
 ### A real editor
 - Built on **CodeMirror 6**, with markdown syntax highlighting, including highlighting inside fenced code blocks.
@@ -75,6 +75,7 @@ In Orphic mythology, **Phanes** is the primordial god hatched from the cosmic eg
   - **GTK Theme**, which takes its colors and window buttons from your current GTK theme (Gruvbox, Adwaita…).
 - Opens and saves through **GNOME's own file chooser** (the desktop portal).
 - Fast startup: the window shows up in about a second, already in the right colors.
+- Installs a desktop entry, so Phanes appears in the app grid and Files can use it to open `.md` files.
 
 ### Command line
 ```bash
@@ -91,30 +92,43 @@ Every action has a shortcut. Press `Ctrl+?` to see them all.
 ### Private
 No accounts, no telemetry and no network access. The fonts (Inter and JetBrains Mono) ship with the app.
 
-
-Phanes also installs a desktop entry, so it appears in the app grid and Files can use it to open `.md` files.
-
 ---
 ## Screenshots
 #### Dark Theme
-![Phanes](./docs/images/Dark-mode.png "Dark Theme")
+![Phanes in GitHub Dark Default](./docs/images/Dark-mode.png "Dark theme")
 #### GTK Theme
-![Phanes](./docs/images/GTK-mode.png "Phanes take you GTK Theme")
+![Phanes with the GTK Theme colorscheme, taking its colors from a Gruvbox GTK theme](./docs/images/GTK-mode.png "Phanes takes on your GTK theme")
+
+---
+## Install
+
+There are no prebuilt releases yet: build Phanes from source as described under [Build](#build), then install the `.deb` (Debian) or run the AppImage (Arch and other distributions).
 
 ---
 ## For developers
 
 ### Requirements
-- Node.js
-- Rust
+- [Node.js](https://nodejs.org) 22 or later, with npm
+- A Rust toolchain, installed with [rustup](https://rustup.rs)
+- The system libraries below
 
-#### Debian 
+#### Debian
 ```bash
 sudo apt install build-essential curl file libwebkit2gtk-4.1-dev libssl-dev libgtk-3-dev librsvg2-dev libxdo-dev
 ```
-#### Arch linux 
+#### Arch Linux
 ```bash
 sudo pacman -S --needed base-devel curl file openssl webkit2gtk-4.1 gtk3 librsvg xdotool
+```
+
+Arch also packages Node.js and rustup:
+
+```bash
+sudo pacman -S --needed nodejs npm rustup
+```
+
+```bash
+rustup default stable
 ```
 
 ### Develop
@@ -145,7 +159,19 @@ cargo test --manifest-path src-tauri/Cargo.toml
 npm run tauri build
 ```
 
-This produces `src-tauri/target/release/bundle/deb/Phanes_*.deb` and `src-tauri/target/release/bundle/appimage/Phanes_*.AppImage`. Install the `.deb` with `sudo apt install ./Phanes_*.deb`.
+This produces `src-tauri/target/release/bundle/deb/Phanes_*.deb` and `src-tauri/target/release/bundle/appimage/Phanes_*.AppImage`. On Debian, install the `.deb`:
+
+```bash
+sudo apt install ./src-tauri/target/release/bundle/deb/Phanes_*.deb
+```
+
+On Arch, or any other distribution, make the AppImage executable and run it:
+
+```bash
+chmod +x src-tauri/target/release/bundle/appimage/Phanes_*.AppImage
+```
+
+The AppImage is much larger (about 120 MB against 8 MB) because it bundles WebKitGTK and its libraries instead of using the system's.
 
 ### Layout
 
@@ -160,3 +186,8 @@ This produces `src-tauri/target/release/bundle/deb/Phanes_*.deb` and `src-tauri/
 | `src/state/` | Settings, workspace, tabs, file operations |
 | `src/styles/` | `tokens.css` (colorschemes) and the rest of the CSS |
 | `src-tauri/src/` | `fs.rs` (all file access), `cli.rs`, `window.rs`, `app_state.rs` |
+
+---
+## License
+
+[MIT](./LICENSE) © 2026 Nayed Saïd Ali
