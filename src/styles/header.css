@@ -58,14 +58,14 @@
 
 .window-controls {
   display: flex;
-  gap: 10px;
+  gap: var(--wc-gap);
   align-items: center;
   margin-left: 10px;
   margin-right: 2px;
 }
 .window-controls button {
-  width: 24px;
-  height: 24px;
+  width: var(--wc-size);
+  height: var(--wc-size);
   padding: 0;
   border: 0;
   border-radius: 50%;
@@ -73,6 +73,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.window-controls svg {
+  width: var(--wc-icon);
+  height: var(--wc-icon);
 }
 .window-controls .wc-minimize { background: var(--wc-minimize-bg); }
 .window-controls .wc-maximize { background: var(--wc-maximize-bg); }

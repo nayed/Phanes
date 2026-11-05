@@ -96,6 +96,24 @@ mod imp {
             out.insert("wc-hover-fg".into(), c);
         }
 
+        // Themes that draw the buttons as colored discs (macOS-like, Gruvbox…)
+        // size them explicitly: take that size (min size + padding + border)
+        // and the header's spacing. Themes with flat, icon-sized buttons
+        // (Adwaita) keep the design's own size.
+        if out.contains_key("wc-close-bg") {
+            let int = |prop: &str| ctx.style_property_for_state(prop, normal).get::<i32>().unwrap_or(0);
+            let (pad, border) = (ctx.padding(normal), ctx.border(normal));
+            let width = int("min-width") + i32::from(pad.left + pad.right + border.left + border.right);
+            let height = int("min-height") + i32::from(pad.top + pad.bottom + border.top + border.bottom);
+            let size = width.max(height);
+            if size >= 10 {
+                out.insert("wc-size".into(), format!("{}px", size.min(36)));
+                let margin = ctx.margin(normal);
+                let gap = header.spacing() + i32::from(margin.left + margin.right);
+                out.insert("wc-gap".into(), format!("{}px", gap.clamp(2, 24)));
+            }
+        }
+
         if let Some(settings) = gtk::Settings::default() {
             if let Some(name) = settings.gtk_theme_name() {
                 out.insert("name".into(), name.to_string());

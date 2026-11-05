@@ -15,7 +15,7 @@ const GRUVBOX_LIGHT = {
   "selected-bg": "#45707a", "selected-fg": "#fbf1c7", borders: "rgba(40, 40, 40, 0.12)",
   error: "#ea6962", "view-bg": "#ebdbb2", "header-bg": "#fbf1c7",
   "wc-minimize-bg": "#c35e0a", "wc-maximize-bg": "#6c782e", "wc-close-bg": "#c14a4a",
-  "wc-fg": "rgba(0, 0, 0, 0)", "wc-hover-fg": "#282828",
+  "wc-fg": "rgba(0, 0, 0, 0)", "wc-hover-fg": "#282828", "wc-size": "16px", "wc-gap": "6px",
 };
 const GRUVBOX_DARK = {
   name: "Gruvbox-Light-Medium (mock)",
@@ -23,7 +23,7 @@ const GRUVBOX_DARK = {
   "selected-bg": "#7daea3", "selected-fg": "rgba(40, 40, 40, 0.87)", borders: "rgba(251, 241, 199, 0.12)",
   error: "#c14a4a", "view-bg": "#282524", "header-bg": "#282828",
   "wc-minimize-bg": "#e78a4e", "wc-maximize-bg": "#a9b665", "wc-close-bg": "#ea6962",
-  "wc-fg": "rgba(0, 0, 0, 0)", "wc-hover-fg": "#282828",
+  "wc-fg": "rgba(0, 0, 0, 0)", "wc-hover-fg": "#282828", "wc-size": "16px", "wc-gap": "6px",
 };
 let gtkDark = false;
 

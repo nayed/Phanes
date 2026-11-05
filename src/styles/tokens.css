@@ -38,6 +38,9 @@
   --wc-close-hover-bg: var(--menu-hover);
   --wc-fg: var(--fg);
   --wc-hover-fg: var(--fg);
+  --wc-size: 24px;
+  --wc-gap: 10px;
+  --wc-icon: 12px;
 
   /* Text on an accent (link-colored) background. */
   --on-link: var(--window);
@@ -167,6 +170,9 @@
   --wc-close-hover-bg: var(--gtk-wc-close-hover-bg, var(--menu-hover));
   --wc-fg: var(--gtk-wc-fg, var(--fg));
   --wc-hover-fg: var(--gtk-wc-hover-fg, var(--fg));
+  --wc-size: var(--gtk-wc-size, 24px);
+  --wc-gap: var(--gtk-wc-gap, 10px);
+  --wc-icon: min(12px, calc(var(--wc-size) * 0.6));
 }
 
 /* GitHub Default values the GTK scheme falls back to. */
