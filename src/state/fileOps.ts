@@ -132,16 +132,16 @@ export async function trashItem(path: string): Promise<void> {
     });
     if (choice !== "trash") return;
   }
-  // Keep keyboard focus in the tree on a neighbour.
-  const neighbour = neighbourOf(path);
+  // Keep keyboard focus in the tree on a neighbor.
+  const neighbor = neighborOf(path);
   await trashPath(path);
   dropTabsInside(path);
-  useWorkspace.setState({ selected: neighbour });
+  useWorkspace.setState({ selected: neighbor });
   await refreshTree();
   showToast(`Moved “${basename(path)}” to the trash`);
 }
 
-function neighbourOf(path: string): string | null {
+function neighborOf(path: string): string | null {
   const rows = document.querySelectorAll<HTMLElement>("[data-tree] [role=treeitem]");
   const list = [...rows].map((r) => r.dataset.path ?? "");
   const i = list.indexOf(path);

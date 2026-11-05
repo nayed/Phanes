@@ -38,7 +38,7 @@ button {
   cursor: pointer;
 }
 
-/* Keyboard focus is always visible, in the link colour. */
+/* Keyboard focus is always visible, in the link color. */
 :focus {
   outline: none;
 }
@@ -47,7 +47,7 @@ button {
   outline-offset: -2px;
 }
 
-/* The app frame: fills the GTK window, rounded unless maximised or tiled. */
+/* The app frame: fills the GTK window, rounded unless maximized or tiled. */
 .window-frame {
   height: 100%;
   display: flex;

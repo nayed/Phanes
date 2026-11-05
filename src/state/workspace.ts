@@ -47,7 +47,7 @@ export function addWorkspaceChangeGuard(guard: Guard): void {
 /**
  * Make `path` the workspace: load its tree, remember it, restore its
  * expanded folders and (through listeners) its tabs. Returns false if the
- * switch was cancelled.
+ * switch was canceled.
  */
 export async function openWorkspace(path: string): Promise<boolean> {
   const root = await openWorkspaceDir(path);

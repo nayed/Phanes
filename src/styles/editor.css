@@ -1,4 +1,4 @@
-/* CodeMirror, styled like the designs. All colours are tokens. */
+/* CodeMirror, styled like the designs. All colors are tokens. */
 
 .editor-host {
   flex: 1 1 auto;
@@ -30,7 +30,7 @@
   padding: 0 24px 0 6px;
 }
 
-/* Gutter: 52 px, right-aligned muted numbers; the current one in the text colour. */
+/* Gutter: 52 px, right-aligned muted numbers; the current one in the text color. */
 .editor-host .cm-gutters {
   background: var(--window);
   border: 0;

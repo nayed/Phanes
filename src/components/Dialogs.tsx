@@ -50,7 +50,7 @@ interface ModalProps {
   children: ReactNode;
 }
 
-/** A centred modal over a scrim. Traps focus and suspends app shortcuts while open. */
+/** A centered modal over a scrim. Traps focus and suspends app shortcuts while open. */
 function Modal({ label, onEscape, className, children }: ModalProps) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -118,7 +118,7 @@ function AboutDialog() {
       <p className="dialog-body">
         Write markdown on the left, read it on the right. A personal editor for GNOME.
       </p>
-      <p className="about-meta">Colour scheme: {COLORSCHEME.name}</p>
+      <p className="about-meta">Color scheme: {COLORSCHEME.name}</p>
     </Modal>
   );
 }

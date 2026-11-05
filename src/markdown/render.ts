@@ -17,13 +17,13 @@ import { rehypeSourceLines } from "./plugins/sourceLines";
  *
  * - remark plugins work on the markdown tree (before `remarkRehype`);
  * - rehype plugins before `rehypeSanitize` see untrusted HTML;
- * - rehype plugins after it only ever see sanitised HTML, and may add
+ * - rehype plugins after it only ever see sanitized HTML, and may add
  *   markup of their own (alerts, highlighting).
  */
 export const pipeline: PluggableList = [
   remarkGfm, // tables, task lists, strikethrough, autolinks, footnotes
   [remarkRehype, { allowDangerousHtml: true, clobberPrefix: "" }],
-  rehypeRaw, // parse raw HTML in the document, so it can be sanitised like GitHub does
+  rehypeRaw, // parse raw HTML in the document, so it can be sanitized like GitHub does
   rehypeSourceLines, // data-line on blocks, for synced scroll
   [rehypeSanitize, sanitizeSchema], // GitHub's schema: no scripts, ever
   rehypeAlerts, // > [!NOTE] …
@@ -38,7 +38,7 @@ export interface RenderOptions {
   baseDir?: string;
 }
 
-/** Render markdown to sanitised HTML. */
+/** Render markdown to sanitized HTML. */
 export async function renderMarkdown(markdown: string, options: RenderOptions = {}): Promise<string> {
   const file = await processor.process({ value: markdown, data: { baseDir: options.baseDir } });
   return String(file);

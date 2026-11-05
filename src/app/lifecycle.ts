@@ -34,7 +34,7 @@ export async function installCloseHandler(): Promise<void> {
   });
 }
 
-/** Mirror the maximised state on <html> so the frame drops its rounded corners. */
+/** Mirror the maximized state on <html> so the frame drops its rounded corners. */
 export async function installMaximizeTracking(): Promise<void> {
   const win = getCurrentWindow();
   const update = async () => {

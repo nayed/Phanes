@@ -126,7 +126,7 @@ export async function openFile(path: string, opts: { activate?: boolean } = {}):
 
 /* ---------- Saving ---------- */
 
-/** Save a tab; untitled tabs ask for a name. Returns false if cancelled or failed. */
+/** Save a tab; untitled tabs ask for a name. Returns false if canceled or failed. */
 export async function saveTab(id: string | null = useTabs.getState().activeId): Promise<boolean> {
   const tab = useTabs.getState().tabs.find((t) => t.id === id);
   if (!tab) return false;
@@ -218,7 +218,7 @@ export async function closeTab(id: string | null = useTabs.getState().activeId):
   return true;
 }
 
-/** Close every tab, asking about unsaved ones. False if the user cancelled. */
+/** Close every tab, asking about unsaved ones. False if the user canceled. */
 export async function closeAllTabs(): Promise<boolean> {
   for (const tab of [...useTabs.getState().tabs]) {
     const current = useTabs.getState().tabs.find((t) => t.id === tab.id);
@@ -230,7 +230,7 @@ export async function closeAllTabs(): Promise<boolean> {
   return true;
 }
 
-/** Ask about unsaved changes in every tab (for quitting). False if cancelled. */
+/** Ask about unsaved changes in every tab (for quitting). False if canceled. */
 export async function settleAllUnsaved(): Promise<boolean> {
   for (const tab of useTabs.getState().tabs) {
     if (tab.dirty && !(await settleUnsaved(tab))) return false;

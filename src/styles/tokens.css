@@ -1,5 +1,5 @@
 /*
- * Design tokens. Every colour in the UI and the preview comes from these
+ * Design tokens. Every color in the UI and the preview comes from these
  * variables. A colorscheme is one `[data-scheme]` value with a light and a
  * dark block; adding Catppuccin, Gruvbox… means adding two more blocks.
  *

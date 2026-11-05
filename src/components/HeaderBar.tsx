@@ -19,7 +19,7 @@ const mainMenu: MenuEntry[] = [
   { kind: "separator" },
   {
     kind: "submenu",
-    label: "Colour Scheme",
+    label: "Color Scheme",
     entries: [
       { kind: "command", id: "theme.system" },
       { kind: "command", id: "theme.light" },
@@ -41,7 +41,7 @@ const modes: { mode: ViewMode; label: string; command: CommandId }[] = [
 
 /**
  * The libadwaita-style header bar. It is the window's title bar: dragging it
- * moves the window and double-clicking toggles maximise (data-tauri-drag-region).
+ * moves the window and double-clicking toggles maximize (data-tauri-drag-region).
  */
 export function HeaderBar({ title, subtitle }: Props) {
   const sidebarVisible = useSettings((s) => s.sidebarVisible);
@@ -120,10 +120,10 @@ function WindowControls() {
   const win = getCurrentWindow();
   return (
     <div className="window-controls">
-      <button type="button" aria-label="Minimise" onClick={() => void win.minimize()}>
+      <button type="button" aria-label="Minimize" onClick={() => void win.minimize()}>
         <Minus size={12} strokeWidth={2.5} aria-hidden />
       </button>
-      <button type="button" aria-label="Maximise" onClick={() => void win.toggleMaximize()}>
+      <button type="button" aria-label="Maximize" onClick={() => void win.toggleMaximize()}>
         <Square size={11} strokeWidth={2.5} aria-hidden />
       </button>
       <button type="button" aria-label="Close window" onClick={() => void runCommand("app.quit")}>

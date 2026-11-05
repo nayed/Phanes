@@ -18,13 +18,13 @@ export const Preview = forwardRef<HTMLDivElement>(function Preview(_props, ref) 
   const [html, setHtml] = useState("");
 
   useEffect(() => {
-    let cancelled = false;
+    let canceled = false;
     const baseDir = path ? dirname(path) : undefined;
     renderMarkdown(text, { baseDir })
-      .then((out) => !cancelled && setHtml(out))
+      .then((out) => !canceled && setHtml(out))
       .catch((err) => console.error("Preview failed", err));
     return () => {
-      cancelled = true;
+      canceled = true;
     };
   }, [text, version, path]);
 

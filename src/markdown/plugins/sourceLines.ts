@@ -9,7 +9,7 @@ const BLOCKS = new Set([
 
 /**
  * Tag block elements with the source line they start on: `data-line="12"`.
- * Runs before sanitising (which keeps the attribute) while positions exist.
+ * Runs before sanitizing (which keeps the attribute) while positions exist.
  */
 export function rehypeSourceLines() {
   return (tree: Root) => {

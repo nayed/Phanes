@@ -56,7 +56,7 @@ export interface Command {
   /** Extra shortcuts that trigger the command but are not displayed. */
   altShortcuts?: string[];
   scope?: ShortcutScope;
-  /** Shown in the danger colour in menus. */
+  /** Shown in the danger color in menus. */
   danger?: boolean;
   run: (ctx: CommandContext) => void | Promise<void>;
   isEnabled?: (ctx: CommandContext) => boolean;

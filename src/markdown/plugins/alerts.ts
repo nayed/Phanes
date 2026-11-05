@@ -3,7 +3,7 @@ import { visit } from "unist-util-visit";
 
 type AlertType = "note" | "tip" | "important" | "warning" | "caution";
 
-/** Icon paths from lucide (ISC licence), matching the app's icon set. */
+/** Icon paths from lucide (ISC license), matching the app's icon set. */
 const ICONS: Record<AlertType, Array<[string, Record<string, string>]>> = {
   note: [
     ["circle", { cx: "12", cy: "12", r: "10" }],

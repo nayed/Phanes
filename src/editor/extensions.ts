@@ -1,5 +1,5 @@
 /**
- * Every editor behaviour is a CodeMirror extension configured here.
+ * Every editor behavior is a CodeMirror extension configured here.
  * Later features (vim mode, focus mode…) are added to `editorExtensions`.
  */
 import { defaultKeymap, history, historyKeymap, indentWithTab, redo } from "@codemirror/commands";
@@ -46,7 +46,7 @@ const phanesMarkdownTags: MarkdownConfig = {
 };
 
 /**
- * Map syntax tags to CSS classes; colours live in styles/editor.css as
+ * Map syntax tags to CSS classes; colors live in styles/editor.css as
  * CSS variables, so the editor follows the colorscheme without reconfiguring.
  */
 const highlighter = tagHighlighter([
