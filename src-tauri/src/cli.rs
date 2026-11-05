@@ -50,12 +50,29 @@ fn absolute(base: &Path, arg: &str) -> PathBuf {
     out
 }
 
-/// Parse the process arguments. Options (anything starting with `-`) are ignored.
+/// The path arguments: options (anything starting with `-`) are ignored,
+/// except after `--`, which ends options as usual.
+fn path_args(args: impl IntoIterator<Item = String>) -> Vec<String> {
+    let mut after_dashes = false;
+    args.into_iter()
+        .filter(|a| {
+            if after_dashes {
+                return true;
+            }
+            if a == "--" {
+                after_dashes = true;
+                return false;
+            }
+            !a.starts_with('-')
+        })
+        .collect()
+}
+
+/// Parse the process arguments.
 pub fn parse() -> LaunchArgs {
     let base = start_dir();
-    let paths = std::env::args()
-        .skip(1)
-        .filter(|a| !a.starts_with('-'))
+    let paths = path_args(std::env::args().skip(1))
+        .into_iter()
         .map(|arg| {
             // `file://` URIs can come from some launchers.
             let arg = arg.strip_prefix("file://").map(str::to_string).unwrap_or(arg);
@@ -88,5 +105,11 @@ mod tests {
         assert_eq!(absolute(base, "a/../b.md"), PathBuf::from("/home/me/notes/b.md"));
         assert_eq!(absolute(base, "../x"), PathBuf::from("/home/me/x"));
         assert_eq!(absolute(base, "/tmp/y.md"), PathBuf::from("/tmp/y.md"));
+    }
+
+    #[test]
+    fn skips_options_until_double_dash() {
+        let args = ["-v", "a.md", "--", "-odd-name.md", "b"].map(String::from);
+        assert_eq!(path_args(args), vec!["a.md", "-odd-name.md", "b"]);
     }
 }

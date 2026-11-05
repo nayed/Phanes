@@ -19,10 +19,10 @@ npm install
 npm run tauri dev
 ```
 
-Pass arguments to the app after `--`. `tauri dev` runs the binary from `src-tauri/`, so relative paths start there:
+Arguments for the app go after a third `--` (the first is for npm, the second starts cargo's arguments, the third the app's). `tauri dev` runs the binary from `src-tauri/`, so relative paths start there:
 
 ```bash
-npm run tauri dev -- -- ../docs/sample-workspace
+npm run tauri dev -- -- -- ../docs/sample-workspace
 ```
 
 `npm run dev` alone serves the UI in a plain browser at http://localhost:1420 with a fake backend (`src/dev/`) and the sample workspace mounted at `~/notes`, which is handy for UI work.
