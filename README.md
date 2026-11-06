@@ -102,7 +102,25 @@ No accounts, no telemetry and no network access. The fonts (Inter and JetBrains 
 ---
 ## Install
 
-There are no prebuilt releases yet: build Phanes from source as described under [Build](#build), then install the `.deb` (Debian) or run the AppImage (Arch and other distributions).
+Download the package for your system from the [latest release](https://github.com/nayed/Phanes/releases/latest).
+
+**Debian** (and Ubuntu): download `Phanes_*_amd64.deb`, then install it from the folder you downloaded it to:
+
+```bash
+sudo apt install ./Phanes_*_amd64.deb
+```
+
+**Arch** (and other distributions): download `Phanes_*_amd64.AppImage`, make it executable and run it:
+
+```bash
+chmod +x Phanes_*_amd64.AppImage
+```
+
+```bash
+./Phanes_*_amd64.AppImage
+```
+
+The AppImage carries its own copy of WebKitGTK, which is why it's much larger than the `.deb`. To build Phanes yourself instead, see [For developers](#for-developers).
 
 ---
 ## For developers
