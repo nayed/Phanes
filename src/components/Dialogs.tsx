@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-import { useEffect, useRef, type ReactNode } from "react";
+import { Fragment, useEffect, useRef, type ReactNode } from "react";
 import { suspendShortcuts } from "../commands/keybindings";
 import { listCommands } from "../commands/registry";
 import { closePanel, useDialogs } from "../state/dialogs";
@@ -124,7 +124,10 @@ function AboutDialog() {
   );
 }
 
-/** Keys handled by CodeMirror itself rather than the command registry. */
+/**
+ * Keys handled by CodeMirror itself rather than the command registry. A space
+ * separates keys pressed one after the other ("Esc Tab": Esc, then Tab).
+ */
 const EDITOR_KEYS: Array<[string, string]> = [
   ["Find and Replace", "Ctrl+F"],
   ["Go to Line", "Alt+Ctrl+G"],
@@ -132,6 +135,8 @@ const EDITOR_KEYS: Array<[string, string]> = [
   ["Redo", "Shift+Ctrl+Z"],
   ["Indent", "Tab"],
   ["Unindent", "Shift+Tab"],
+  // Tab indents inside the editor; after Esc, the next Tab moves focus instead.
+  ["Leave the Editor", "Esc Tab"],
 ];
 
 function ShortcutsDialog() {
@@ -160,8 +165,13 @@ function ShortcutsDialog() {
               {row.scope && <span className="shortcuts-scope"> ({row.scope})</span>}
             </dt>
             <dd>
-              {row.shortcut.split("+").map((k, i) => (
-                <kbd key={i}>{k}</kbd>
+              {row.shortcut.split(" ").map((chord, i) => (
+                <Fragment key={i}>
+                  {i > 0 && <span className="shortcuts-then">then</span>}
+                  {chord.split("+").map((k, j) => (
+                    <kbd key={j}>{k}</kbd>
+                  ))}
+                </Fragment>
               ))}
             </dd>
           </div>
