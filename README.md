@@ -107,6 +107,28 @@ There are no prebuilt releases yet: build Phanes from source as described under 
 ---
 ## For developers
 
+### Tech stack
+
+| Area | What |
+| --- | --- |
+| App shell | [Tauri 2](https://tauri.app), with the backend in Rust |
+| Interface | [React 19](https://react.dev) + TypeScript, built with [Vite](https://vite.dev), state in [Zustand](https://zustand.docs.pmnd.rs) |
+| Editor | [CodeMirror 6](https://codemirror.net) with its markdown language |
+| Markdown | [unified](https://unifiedjs.com): `remark-parse` → `remark-gfm` → `remark-rehype` → `rehype-sanitize` → `rehype-stringify`, plus Phanes' own plugins for alerts, local images and source lines |
+| Code highlighting | [Shiki](https://shiki.style) with GitHub's light and dark themes |
+| Icons and fonts | [Lucide](https://lucide.dev), Inter and JetBrains Mono (bundled with Fontsource) |
+| Rust side | `gtk` (GTK theme colors), `trash` (Move to Trash), and Tauri's plugins for file dialogs (through GNOME's portal), opening links and the clipboard |
+
+How it fits together on Linux: Tauri opens a **GTK 3** window holding a single **WebKitGTK** web view, and the whole interface is the React app drawn inside it. The frontend asks Rust for anything that touches the system (files, the GTK theme, the window) through Tauri commands.
+
+```
+React app (HTML/CSS/TS)     src/
+   drawn by WebKitGTK       libwebkit2gtk-4.1 (WebKit's API 4.1, for GTK 3)
+   inside a GTK 3 window    libgtk-3
+   managed by Tauri         src-tauri/
+```
+
+
 ### Requirements
 - [Node.js](https://nodejs.org) 22 or later, with npm
 - A Rust toolchain, installed with [rustup](https://rustup.rs)
