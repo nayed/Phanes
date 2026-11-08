@@ -17,7 +17,7 @@ A footnote reference.[^1]
 
 ## Table with alignment
 
-| Left | Centre | Right |
+| Left | Center | Right |
 | :--- | :----: | ----: |
 | a    |   b    |     c |
 
@@ -46,4 +46,4 @@ fn main() {
 
 ---
 
-Raw HTML is sanitised: <script>alert("this must not run")</script>
+Raw HTML is sanitized: <script>alert("this must not run")</script>

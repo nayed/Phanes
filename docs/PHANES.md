@@ -14,9 +14,9 @@ This file is the source of truth. Read it fully, look at the screens in `design/
 | --- | --- |
 | `PHANES.md` | This brief. |
 | `design/screens/*.png` | The approved designs, rendered at 2× (1440 px wide windows). **Match these.** |
-| `design/html/*.html` | The same screens as static HTML. Open them to read exact sizes, spacing and colours. They are a visual reference, not code to copy. |
-| `icons/io.nayed.Phanes.svg` | Full-colour app icon (128 px grid, scalable). |
-| `icons/io.nayed.Phanes-symbolic.svg` | One-colour symbolic icon (16 px grid) for the GNOME top bar and notifications. |
+| `design/html/*.html` | The same screens as static HTML. Open them to read exact sizes, spacing and colors. They are a visual reference, not code to copy. |
+| `icons/io.nayed.Phanes.svg` | Full-color app icon (128 px grid, scalable). |
+| `icons/io.nayed.Phanes-symbolic.svg` | One-color symbolic icon (16 px grid) for the GNOME top bar and notifications. |
 | `icons/phanes-1024.png` | 1024 px source for `npx tauri icon` to generate Tauri's icon set. |
 | `sample-workspace/` | A small folder to open during development (`phanes docs/sample-workspace`). `notes.md` is the exact document shown in the designs; `projects/markdown-editor.md` exercises every GFM feature. |
 
@@ -28,7 +28,7 @@ The screens:
 | `02-main-dark` | The same window in GitHub Dark Default. |
 | `03-workspace-context-menu` | Right-click menu open on a folder in the sidebar. |
 | `04-editor-only` | Editor view mode. |
-| `05-preview-only` | Preview (reading) view mode, document centred. |
+| `05-preview-only` | Preview (reading) view mode, document centered. |
 | `06-app-icon-directions` | Icon exploration; the chosen icon is "navy cosmic egg (A2)" (marked Pick). Use the files in `icons/`, not this image. |
 
 ---
@@ -41,7 +41,7 @@ The screens:
 | UI | **React + TypeScript + Vite** | Function components and hooks. Keep state simple (React state/context or a small store like Zustand); no heavy framework. |
 | Editor | **CodeMirror 6** | `@codemirror/lang-markdown` with the GFM extensions. Never a plain `<textarea>`: later features (vim mode, focus mode, synced scroll) are CodeMirror extensions. |
 | Markdown → HTML | **unified**: `remark-parse` → `remark-gfm` → `remark-rehype` → `rehype-sanitize` → `rehype-stringify` | Each later feature (math, Mermaid, front matter) is one more plugin. Add a plugin for GitHub alerts (`> [!NOTE]` etc.). |
-| Code highlighting in preview | **Shiki** with themes `github-light-default` / `github-dark-default` | These are the exact GitHub colours and match the app colorscheme. |
+| Code highlighting in preview | **Shiki** with themes `github-light-default` / `github-dark-default` | These are the exact GitHub colors and match the app colorscheme. |
 | Fonts | **Inter** (interface and preview), **JetBrains Mono** (editor and code) | Bundle both locally with `@fontsource/*`. No Google Fonts or any other network request. |
 | Icons in the UI | **lucide-react** | 2 px stroke line icons, matching the designs (folder, file, file-text, image, chevrons, x, plus, menu, panel-left, minus, square, info). |
 | Rust side | Tauri commands for all file access; `notify` crate reserved for the later file watcher; `trash` crate for Move to Trash | |
@@ -53,9 +53,9 @@ The screens:
 
 These five rules exist so that every feature on the [later list](#later-features-not-version-1) can be added without rewriting anything. Follow them from the first commit.
 
-1. **CodeMirror 6 for editing.** All editor behaviour (highlighting, line numbers, current line, keymaps) is configured as CodeMirror extensions in one module, e.g. `src/editor/extensions.ts`.
+1. **CodeMirror 6 for editing.** All editor behavior (highlighting, line numbers, current line, keymaps) is configured as CodeMirror extensions in one module, e.g. `src/editor/extensions.ts`.
 2. **A plugin pipeline for markdown.** One module, e.g. `src/markdown/render.ts`, builds the unified processor from an array of plugins. Adding a feature = adding to that array. Rendering must keep source line positions (add `data-line` attributes to block elements) for synced scroll.
-3. **Colours only through CSS variables.** Every colour in the UI and the preview comes from a variable defined per colorscheme (see [Design tokens](#design-tokens)). No hex values inside components. A new colorscheme is a new block of variable values.
+3. **Colors only through CSS variables.** Every color in the UI and the preview comes from a variable defined per colorscheme (see [Design tokens](#design-tokens)). No hex values inside components. A new colorscheme is a new block of variable values.
 4. **All file access in one place.** Reading, writing, listing, renaming, trashing and watching files happen in Rust, exposed as Tauri commands from one module (e.g. `src-tauri/src/fs.rs`), and called from one TypeScript module (e.g. `src/lib/fs.ts`). Components never call the filesystem directly.
 5. **One command registry.** Every user action is defined once with an id, a label, an optional shortcut and a handler (e.g. `src/commands/registry.ts`). The main menu, the right-click menu, keyboard shortcuts and the future command palette all read from it. See [Commands](#commands).
 
@@ -90,12 +90,12 @@ GNOME/libadwaita look. Use a custom title bar (`decorations: false` with `data-t
 Header bar, 48 px tall, from left to right:
 
 - **Sidebar toggle** (panel-left icon). Shows and hides the workspace sidebar. Shown in its pressed state while the sidebar is visible.
-- **Title**, centred: the active file's name in bold, and below it the workspace path and save state, e.g. `~/notes · Saved` or `~/notes · Unsaved changes`. Abbreviate the home directory as `~`.
+- **Title**, centered: the active file's name in bold, and below it the workspace path and save state, e.g. `~/notes · Saved` or `~/notes · Unsaved changes`. Abbreviate the home directory as `~`.
 - **View switcher**: a segmented control with *Editor*, *Split*, *Preview*. The active segment is raised (window background, small shadow, semi-bold).
-- **Main menu** (hamburger). Items: Open Folder…, New File, Save, Save As…, Colour scheme ▸ (Follow System / Light / Dark), Show Sidebar, Keyboard Shortcuts, About Phanes, Quit.
-- **Window controls**: minimise, maximise/restore, close. Round 24 px buttons with 12 px icons, 10 px apart, on the right.
+- **Main menu** (hamburger). Items: Open Folder…, New File, Save, Save As…, Color scheme ▸ (Follow System / Light / Dark), Show Sidebar, Keyboard Shortcuts, About Phanes, Quit.
+- **Window controls**: minimize, maximize/restore, close. Round 24 px buttons with 12 px icons, 10 px apart, on the right.
 
-Dragging the header moves the window; double-clicking it toggles maximise.
+Dragging the header moves the window; double-clicking it toggles maximize.
 
 ### Workspace sidebar (left)
 
@@ -112,9 +112,9 @@ Dragging the header moves the window; double-clicking it toggles maximise.
   - Duplicate.
   - Copy Path (`Shift+Ctrl+C`), the absolute path to the clipboard.
   - Open in Files, which reveals the item in the GNOME file manager.
-  - Move to Trash (`Delete`), shown in the danger colour. Moves to the system trash, never a permanent delete. Closes any tab for that file (asking first if it has unsaved changes).
+  - Move to Trash (`Delete`), shown in the danger color. Moves to the system trash, never a permanent delete. Closes any tab for that file (asking first if it has unsaved changes).
   - Right-clicking empty space in the tree offers New File and New Folder at the workspace root.
-- The menu is a GNOME-style popover: 12 px radius, 6 px padding, 32 px items, a separator between groups, shortcuts right-aligned in the muted colour. It is keyboard-navigable (arrows, Enter, Escape).
+- The menu is a GNOME-style popover: 12 px radius, 6 px padding, 32 px items, a separator between groups, shortcuts right-aligned in the muted color. It is keyboard-navigable (arrows, Enter, Escape).
 - Refresh the tree after any change Phanes makes. Picking up changes made outside the app is a later feature.
 - Remember the last workspace and reopen it on launch when no argument is given.
 
@@ -123,7 +123,7 @@ Dragging the header moves the window; double-clicking it toggles maximise.
 A tab strip above the editor and preview, to the right of the sidebar, as in `01-main-light`.
 
 - One tab per open file. The tab shows a file icon and the file name; hovering shows the full path as a tooltip.
-- The active tab is raised (window background, small shadow, semi-bold, normal text colour); inactive tabs are flat with muted text.
+- The active tab is raised (window background, small shadow, semi-bold, normal text color); inactive tabs are flat with muted text.
 - A tab with unsaved changes shows a dot in place of its close button. Clean tabs show a close ✕.
 - A **+** button after the last tab creates a new untitled document. Saving it asks for a name and location (default: the workspace root).
 - Closing a tab with unsaved changes asks: Save, Discard, or Cancel. The same applies when quitting.
@@ -133,30 +133,30 @@ A tab strip above the editor and preview, to the right of the sidebar, as in `01
 ### Editor
 
 - CodeMirror 6 with markdown + GFM syntax highlighting, styled like the designs:
-  - Markdown punctuation (`#`, `**`, `_`, `|`, `[`, `](`, `- [ ]`, fences) in the muted "mark" colour.
-  - Headings in the heading colour and semi-bold.
+  - Markdown punctuation (`#`, `**`, `_`, `|`, `[`, `](`, `- [ ]`, fences) in the muted "mark" color.
+  - Headings in the heading color and semi-bold.
   - Bold, italic and strikethrough applied to the text itself.
-  - Inline code in the code colour; link and image URLs in the link colour, underlined; image paths in the string colour.
+  - Inline code in the code color; link and image URLs in the link color, underlined; image paths in the string color.
   - Fenced code blocks highlighted by language.
-- JetBrains Mono 14 px, 24 px line height. Line numbers in a 52 px gutter, right-aligned, muted; the current line number in the main text colour. The current line has a subtle background tint.
+- JetBrains Mono 14 px, 24 px line height. Line numbers in a 52 px gutter, right-aligned, muted; the current line number in the main text color. The current line has a subtle background tint.
 - Soft line wrapping on. Standard keybindings (undo/redo, search with `Ctrl+F`, indent with Tab).
 - Track the cursor position and word count for the status bar.
 
 ### Preview
 
 - Live: re-render as you type, debounced (about 150 ms).
-- Styled like GitHub's markdown rendering, using the app's CSS variables: Inter 15 px with 1.6 line height, headings with a bottom border on H1 and H2, 720 px max width centred in the pane, 28–36 px padding.
-- Full GFM: tables, task lists (rendered as disabled checkboxes), strikethrough, autolinks, footnotes, and GitHub alerts (`NOTE`, `TIP`, `IMPORTANT`, `WARNING`, `CAUTION`) with their icon, title and coloured left rule.
+- Styled like GitHub's markdown rendering, using the app's CSS variables: Inter 15 px with 1.6 line height, headings with a bottom border on H1 and H2, 720 px max width centered in the pane, 28–36 px padding.
+- Full GFM: tables, task lists (rendered as disabled checkboxes), strikethrough, autolinks, footnotes, and GitHub alerts (`NOTE`, `TIP`, `IMPORTANT`, `WARNING`, `CAUTION`) with their icon, title and colored left rule.
 - Code blocks highlighted by Shiki with the theme matching the current mode.
 - **Images with relative paths** resolve against the open file's folder and load through Tauri's asset protocol (`convertFileSrc`). Configure the asset protocol scope to the workspace.
 - **Links** (including image links like `[![alt](img.png)](https://…)`) open in the default browser via the Tauri opener plugin, never inside the app. Relative links to other `.md` files open them in a tab.
-- **Sanitise** the HTML (`rehype-sanitize` with GitHub's schema, extended for the classes Shiki and alerts need). No script ever runs from a document. `sample-workspace/projects/markdown-editor.md` includes a `<script>` to check this.
+- **Sanitize** the HTML (`rehype-sanitize` with GitHub's schema, extended for the classes Shiki and alerts need). No script ever runs from a document. `sample-workspace/projects/markdown-editor.md` includes a `<script>` to check this.
 
 ### View modes
 
 - **Split** (default): editor and preview side by side, 50/50, separated by a 1 px border.
 - **Editor**: the editor fills the area.
-- **Preview**: the preview fills the area, the document centred at its reading width.
+- **Preview**: the preview fills the area, the document centered at its reading width.
 - Switch with the header's segmented control or `Ctrl+1` / `Ctrl+2` / `Ctrl+3`. Remember the last mode.
 - The sidebar and tabs stay visible in all three modes.
 
@@ -168,7 +168,7 @@ In Split mode, scrolling the editor scrolls the preview to the matching block, u
 
 30 px tall, along the bottom of the window, 12 px muted text, items 20 px apart:
 
-`GFM` (semi-bold, main text colour) · `UTF-8` · `Ln 22, Col 42` · `64 words` … then, aligned right, the synced-scroll toggle (arrows icon + "Synced scroll") and the colorscheme name (`GitHub Default` with a small up chevron), which opens the colorscheme picker, followed by an icon-only color mode button: each click moves to the next of Follow System (sun-moon icon), Light (sun) and Dark (moon), in a loop.
+`GFM` (semi-bold, main text color) · `UTF-8` · `Ln 22, Col 42` · `64 words` … then, aligned right, the synced-scroll toggle (arrows icon + "Synced scroll") and the colorscheme name (`GitHub Default` with a small up chevron), which opens the colorscheme picker, followed by an icon-only color mode button: each click moves to the next of Follow System (sun-moon icon), Light (sun) and Dark (moon), in a loop.
 
 #### Colorscheme picker
 
@@ -230,7 +230,7 @@ StartupWMClass=phanes
 
 All values come from the designs. Define them as CSS variables in `src/styles/tokens.css`, one block per colorscheme variant, switched with an attribute on the root (e.g. `<html data-scheme="github-default" data-mode="dark">`).
 
-### GitHub Default — colours
+### GitHub Default — colors
 
 | Variable | Used for | Light | Dark |
 | --- | --- | --- | --- |
@@ -249,7 +249,7 @@ All values come from the designs. Define them as CSS variables in `src/styles/to
 | `--danger` | Destructive menu items (Move to Trash) | `#d1242f` | `#ff7b72` |
 | `--code-inline-bg` | Inline code background in the preview | `#eff2f5` | `#212830` |
 
-Editor syntax colours:
+Editor syntax colors:
 
 | Variable | Used for | Light | Dark |
 | --- | --- | --- | --- |
@@ -260,7 +260,7 @@ Editor syntax colours:
 | `--syn-function` | Function names | `#8250df` | `#d2a8ff` |
 | `--syn-string` | Strings, image paths | `#0a3069` | `#a5d6ff` |
 
-GitHub alert colours:
+GitHub alert colors:
 
 | Alert | Light | Dark |
 | --- | --- | --- |
@@ -270,7 +270,7 @@ GitHub alert colours:
 | Warning | `#9a6700` | `#d29922` |
 | Caution | `#d1242f` | `#f85149` |
 
-Keep text contrast at least 4.5:1 against its background when adding colours.
+Keep text contrast at least 4.5:1 against its background when adding colors.
 
 ### Type
 
@@ -299,7 +299,7 @@ Keep text contrast at least 4.5:1 against its background when adding colours.
 | Tree row | 30 px tall, 6 px radius, 18 px indent per level |
 | Tab strip | 6 px × 8 px padding; tabs 34 px tall, 8 px radius, up to 210 px wide (min 130 px) |
 | Editor gutter | 52 px |
-| Preview | 720 px max width, centred |
+| Preview | 720 px max width, centered |
 | Status bar | 30 px tall, 16 px side padding |
 | Popover menu | 232 px wide, 12 px radius, 6 px padding, 32 px items |
 | Window | 12 px radius |
@@ -364,5 +364,5 @@ Do not build these now. The foundations above are there so each one is an additi
 - Every GFM feature in `sample-workspace/projects/markdown-editor.md` renders, and its `<script>` does not run.
 - The context menu actions work on real files, and Move to Trash puts files in the GNOME trash.
 - No network requests at runtime.
-- Everything is reachable by keyboard, with visible focus rings in the link colour.
+- Everything is reachable by keyboard, with visible focus rings in the link color.
 - Build it in small, working steps and commit each one: window and header, then sidebar and tree, then tabs and editor, then preview, then the rest.
