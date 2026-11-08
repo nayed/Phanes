@@ -3,6 +3,7 @@ import { Menu, Minus, PanelLeft, Square, X } from "lucide-react";
 import { useCallback, useRef, useState } from "react";
 import { runCommand, type CommandId } from "../commands/registry";
 import { useSettings, type ViewMode } from "../state/settings";
+import { COLORSCHEMES, SCHEMES_BY_NAME } from "../app/theme";
 import { PopoverMenu, type MenuEntry } from "./PopoverMenu";
 
 interface Props {
@@ -21,10 +22,7 @@ const mainMenu: MenuEntry[] = [
     kind: "submenu",
     label: "Color Scheme",
     entries: [
-      { kind: "command", id: "scheme.githubDefault" },
-      { kind: "command", id: "scheme.gruvbox" },
-      { kind: "command", id: "scheme.catppuccin" },
-      { kind: "command", id: "scheme.everforest" },
+      ...SCHEMES_BY_NAME.map((id): MenuEntry => ({ kind: "command", id: COLORSCHEMES[id].command })),
       { kind: "separator" },
       { kind: "command", id: "theme.system" },
       { kind: "command", id: "theme.light" },

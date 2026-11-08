@@ -2,7 +2,7 @@ import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import { create } from "zustand";
 import type { CommandId } from "../commands/registry";
-import { useSettings, type ColorSchemePreference, type SchemeId } from "../state/settings";
+import { SCHEME_IDS, useSettings, type ColorSchemePreference, type SchemeId } from "../state/settings";
 
 /**
  * Colorschemes: name, and the command that applies it. Adding one: its id in
@@ -17,6 +17,11 @@ export const COLORSCHEMES: Record<SchemeId, { name: string; command: CommandId }
   catppuccin: { name: "Catppuccin", command: "scheme.catppuccin" },
   everforest: { name: "Everforest", command: "scheme.everforest" },
 };
+
+/** Colorschemes in the order lists show them: alphabetical by name. */
+export const SCHEMES_BY_NAME: SchemeId[] = [...SCHEME_IDS].sort((a, b) =>
+  COLORSCHEMES[a].name.localeCompare(COLORSCHEMES[b].name),
+);
 
 export type Mode = "light" | "dark";
 

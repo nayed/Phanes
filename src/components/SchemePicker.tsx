@@ -1,10 +1,10 @@
 import { Search } from "lucide-react";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { COLORSCHEMES, previewScheme, useAppliedMode } from "../app/theme";
+import { COLORSCHEMES, previewScheme, SCHEMES_BY_NAME, useAppliedMode } from "../app/theme";
 import { suspendShortcuts } from "../commands/keybindings";
 import { runCommand } from "../commands/registry";
-import { SCHEME_IDS, useSettings, type SchemeId } from "../state/settings";
+import { useSettings, type SchemeId } from "../state/settings";
 
 interface Props {
   /** The status bar button it opens from; the picker sits above it, right-aligned. */
@@ -28,14 +28,14 @@ export function SchemePicker({ anchor, toggle, onClose }: Props) {
   // Swatches show the variant on screen: with Follow System, GNOME's current one.
   const mode = useAppliedMode((s) => s.mode);
   const [query, setQuery] = useState("");
-  const [active, setActive] = useState(() => SCHEME_IDS.indexOf(current));
+  const [active, setActive] = useState(() => SCHEMES_BY_NAME.indexOf(current));
   const [pos, setPos] = useState<{ left: number; top: number } | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const matches = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return SCHEME_IDS.filter((id) => COLORSCHEMES[id].name.toLowerCase().includes(q));
+    return SCHEMES_BY_NAME.filter((id) => COLORSCHEMES[id].name.toLowerCase().includes(q));
   }, [query]);
   const highlighted: SchemeId | undefined = matches[active];
 
