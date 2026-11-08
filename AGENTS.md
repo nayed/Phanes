@@ -41,6 +41,7 @@ npm run tauri build                             # .deb, .rpm and AppImage in src
 
 - Commit straight to `main`, in small steps: one commit per working change, not one big commit at the end.
 - **Never push** unless the user explicitly asks.
+- **Releases are built by GitHub**, not locally: pushing a `v*` tag runs `.github/workflows/release.yml`, which builds on Ubuntu 22.04 (for an older glibc, so packages run on Debian 12 and Ubuntu 22.04 too) and creates a draft release. Don't upload locally built packages to a release: they need the build machine's newer glibc.
 - If a system package is missing, give the user the exact `sudo apt install …` line (and the Arch `pacman` one when relevant); they install it themselves.
 
 ## Things that are easy to get wrong
