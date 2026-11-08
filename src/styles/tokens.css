@@ -1,13 +1,9 @@
 /*
  * Design tokens. Every color in the UI and the preview comes from these
- * variables.
+ * variables. A colorscheme is one `[data-scheme]` value with a light and a
+ * dark block; adding Catppuccin, Gruvbox… means adding two more blocks.
  *
- * <html data-scheme="github-default|gtk" data-mode="light|dark">
- *
- * - The mode blocks hold what all colorschemes share by default: syntax,
- *   alert and shadow colors, and window-control colors.
- * - Each colorscheme then sets its interface colors in one light and one
- *   dark block. Adding Catppuccin, Gruvbox… means adding two more blocks.
+ * <html data-scheme="github-default" data-mode="light|dark">
  */
 
 :root {
@@ -27,75 +23,12 @@
   --preview-max-width: 720px;
   --menu-width: 232px;
   --window-radius: 12px;
-
-  /* Window controls (minimize, maximize, close) follow the button color
-     unless a colorscheme gives them their own. */
-  --wc-minimize-bg: var(--button);
-  --wc-maximize-bg: var(--button);
-  --wc-close-bg: var(--button);
-  --wc-minimize-hover-bg: var(--menu-hover);
-  --wc-maximize-hover-bg: var(--menu-hover);
-  --wc-close-hover-bg: var(--menu-hover);
-  --wc-fg: var(--fg);
-  --wc-hover-fg: var(--fg);
-  --wc-size: 24px;
-  --wc-gap: 10px;
-  --wc-icon: 12px;
-
-  /* Text on an accent (link-colored) background. */
-  --on-link: var(--window);
-}
-
-/* ---------- Shared by mode ---------- */
-
-:root[data-mode="light"] {
-  color-scheme: light;
-
-  --syn-mark: #59636e;
-  --syn-heading: #0550ae;
-  --syn-code: #953800;
-  --syn-keyword: #cf222e;
-  --syn-function: #8250df;
-  --syn-string: #0a3069;
-
-  --alert-note: #0969da;
-  --alert-tip: #1a7f37;
-  --alert-important: #8250df;
-  --alert-warning: #9a6700;
-  --alert-caution: #d1242f;
-
-  --search-match: rgba(212, 167, 44, 0.4);
-  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.2);
-  --shadow-tab: 0 1px 2px rgba(0, 0, 0, 0.18);
-  --shadow-popover: 0 2px 6px rgba(0, 0, 0, 0.12), 0 12px 32px rgba(0, 0, 0, 0.22);
-  --scrim: rgba(0, 0, 0, 0.32);
-}
-
-:root[data-mode="dark"] {
-  color-scheme: dark;
-
-  --syn-mark: #9198a1;
-  --syn-heading: #58a6ff;
-  --syn-code: #ffa657;
-  --syn-keyword: #ff7b72;
-  --syn-function: #d2a8ff;
-  --syn-string: #a5d6ff;
-
-  --alert-note: #4493f8;
-  --alert-tip: #3fb950;
-  --alert-important: #ab7df8;
-  --alert-warning: #d29922;
-  --alert-caution: #f85149;
-
-  --search-match: rgba(187, 128, 9, 0.45);
-  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.5);
-  --shadow-tab: 0 1px 2px rgba(0, 0, 0, 0.45);
-  --shadow-popover: 0 2px 6px rgba(0, 0, 0, 0.35), 0 12px 32px rgba(0, 0, 0, 0.5);
-  --scrim: rgba(1, 4, 9, 0.6);
 }
 
 /* ---------- GitHub Default — Light ---------- */
 :root[data-scheme="github-default"][data-mode="light"] {
+  color-scheme: light;
+
   --desk: #d8dee4;
   --window: #ffffff;
   --surface: #f6f8fa;
@@ -111,12 +44,32 @@
   --danger: #d1242f;
   --code-inline-bg: #eff2f5;
 
+  --syn-mark: #59636e;
+  --syn-heading: #0550ae;
+  --syn-code: #953800;
+  --syn-keyword: #cf222e;
+  --syn-function: #8250df;
+  --syn-string: #0a3069;
+
+  --alert-note: #0969da;
+  --alert-tip: #1a7f37;
+  --alert-important: #8250df;
+  --alert-warning: #9a6700;
+  --alert-caution: #d1242f;
+
   --selection: rgba(9, 105, 218, 0.2);
+  --search-match: rgba(212, 167, 44, 0.4);
+  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-tab: 0 1px 2px rgba(0, 0, 0, 0.18);
+  --shadow-popover: 0 2px 6px rgba(0, 0, 0, 0.12), 0 12px 32px rgba(0, 0, 0, 0.22);
+  --scrim: rgba(0, 0, 0, 0.32);
   --scrollbar: rgba(31, 35, 40, 0.28);
 }
 
 /* ---------- GitHub Default — Dark ---------- */
 :root[data-scheme="github-default"][data-mode="dark"] {
+  color-scheme: dark;
+
   --desk: #010409;
   --window: #0d1117;
   --surface: #151b23;
@@ -132,63 +85,24 @@
   --danger: #ff7b72;
   --code-inline-bg: #212830;
 
+  --syn-mark: #9198a1;
+  --syn-heading: #58a6ff;
+  --syn-code: #ffa657;
+  --syn-keyword: #ff7b72;
+  --syn-function: #d2a8ff;
+  --syn-string: #a5d6ff;
+
+  --alert-note: #4493f8;
+  --alert-tip: #3fb950;
+  --alert-important: #ab7df8;
+  --alert-warning: #d29922;
+  --alert-caution: #f85149;
+
   --selection: rgba(56, 139, 253, 0.3);
+  --search-match: rgba(187, 128, 9, 0.45);
+  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-tab: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-popover: 0 2px 6px rgba(0, 0, 0, 0.35), 0 12px 32px rgba(0, 0, 0, 0.5);
+  --scrim: rgba(1, 4, 9, 0.6);
   --scrollbar: rgba(240, 246, 252, 0.28);
-}
-
-/* ---------- GTK Theme ----------
- * Interface colors come from the user's GTK theme, read by Rust
- * (src-tauri/src/gtk_theme.rs) and set on <html> as --gtk-* variables by
- * app/theme.ts. Anything the theme doesn't define falls back to GitHub
- * Default. Syntax and alert colors stay the shared ones of the mode.
- */
-:root[data-scheme="gtk"] {
-  --window: var(--gtk-view-bg, var(--gtk-base, var(--gh-window)));
-  --surface: var(--gtk-header-bg, var(--gtk-bg, var(--gh-surface)));
-  --fg: var(--gtk-text, var(--gtk-fg, var(--gh-fg)));
-  --border: var(--gtk-borders, var(--gh-border));
-  --link: var(--gtk-selected-bg, var(--gh-link));
-  --on-link: var(--gtk-selected-fg, var(--window));
-  --danger: var(--gtk-error, var(--gh-danger));
-  --menu-bg: var(--gtk-bg, var(--surface));
-
-  --muted: color-mix(in srgb, var(--fg) 68%, var(--window));
-  --button: color-mix(in srgb, var(--fg) 10%, var(--surface));
-  --active-bg: color-mix(in srgb, var(--link) 20%, var(--surface));
-  --current-line: color-mix(in srgb, var(--fg) 5%, var(--window));
-  --menu-hover: color-mix(in srgb, var(--fg) 8%, var(--menu-bg));
-  --code-inline-bg: color-mix(in srgb, var(--fg) 8%, var(--window));
-  --selection: color-mix(in srgb, var(--link) 30%, transparent);
-  --scrollbar: color-mix(in srgb, var(--fg) 30%, transparent);
-  --syn-mark: var(--muted);
-
-  --wc-minimize-bg: var(--gtk-wc-minimize-bg, var(--button));
-  --wc-maximize-bg: var(--gtk-wc-maximize-bg, var(--button));
-  --wc-close-bg: var(--gtk-wc-close-bg, var(--button));
-  --wc-minimize-hover-bg: var(--gtk-wc-minimize-hover-bg, var(--menu-hover));
-  --wc-maximize-hover-bg: var(--gtk-wc-maximize-hover-bg, var(--menu-hover));
-  --wc-close-hover-bg: var(--gtk-wc-close-hover-bg, var(--menu-hover));
-  --wc-fg: var(--gtk-wc-fg, var(--fg));
-  --wc-hover-fg: var(--gtk-wc-hover-fg, var(--fg));
-  --wc-size: var(--gtk-wc-size, 24px);
-  --wc-gap: var(--gtk-wc-gap, 10px);
-  --wc-icon: min(12px, calc(var(--wc-size) * 0.6));
-}
-
-/* GitHub Default values the GTK scheme falls back to. */
-:root[data-scheme="gtk"][data-mode="light"] {
-  --gh-window: #ffffff;
-  --gh-surface: #f6f8fa;
-  --gh-fg: #1f2328;
-  --gh-border: #d1d9e0;
-  --gh-link: #0969da;
-  --gh-danger: #d1242f;
-}
-:root[data-scheme="gtk"][data-mode="dark"] {
-  --gh-window: #0d1117;
-  --gh-surface: #151b23;
-  --gh-fg: #f0f6fc;
-  --gh-border: #3d444d;
-  --gh-link: #4493f8;
-  --gh-danger: #ff7b72;
 }

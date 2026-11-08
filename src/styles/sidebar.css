@@ -127,7 +127,7 @@
 }
 .pill-button.suggested {
   background: var(--link);
-  color: var(--on-link);
+  color: var(--window);
 }
 
 .tree-rename {

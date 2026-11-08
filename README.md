@@ -70,9 +70,7 @@ In Orphic mythology, **Phanes** is the primordial god hatched from the cosmic eg
 ### At home on GNOME
 - A libadwaita-style header bar with rounded corners and the system shadow.
 - Follows GNOME's **light/dark preference**, or you can force Light or Dark from the menu.
-- Two color schemes:
-  - **GitHub Default** (light and dark).
-  - **GTK Theme**, which takes its colors and window buttons from your current GTK theme (Gruvbox, Adwaita…).
+- The **GitHub Default** color scheme, in light and dark.
 - Opens and saves through **GNOME's own file chooser** (the desktop portal).
 - Fast startup: the window shows up in about a second, already in the right colors.
 - Installs a desktop entry, so Phanes appears in the app grid and Files can use it to open `.md` files.
@@ -96,8 +94,6 @@ No accounts, no telemetry and no network access. The fonts (Inter and JetBrains 
 ## Screenshots
 #### Dark Theme
 ![Phanes in GitHub Dark Default](./docs/images/Dark-mode.png "Dark theme")
-#### GTK Theme
-![Phanes with the GTK Theme colorscheme, taking its colors from a Gruvbox GTK theme](./docs/images/GTK-mode.png "Phanes takes on your GTK theme")
 
 ---
 ## Install
@@ -135,9 +131,9 @@ The AppImage carries its own copy of WebKitGTK, which is why it's much larger th
 | Markdown | [unified](https://unifiedjs.com): `remark-parse` → `remark-gfm` → `remark-rehype` → `rehype-sanitize` → `rehype-stringify`, plus Phanes' own plugins for alerts, local images and source lines |
 | Code highlighting | [Shiki](https://shiki.style) with GitHub's light and dark themes |
 | Icons and fonts | [Lucide](https://lucide.dev), Inter and JetBrains Mono (bundled with Fontsource) |
-| Rust side | `gtk` (GTK theme colors), `trash` (Move to Trash), and Tauri's plugins for file dialogs (through GNOME's portal), opening links and the clipboard |
+| Rust side | `gtk` (the window's shadow and its light or dark variant), `trash` (Move to Trash), and Tauri's plugins for file dialogs (through GNOME's portal), opening links and the clipboard |
 
-How it fits together on Linux: Tauri opens a **GTK 3** window holding a single **WebKitGTK** web view, and the whole interface is the React app drawn inside it. The frontend asks Rust for anything that touches the system (files, the GTK theme, the window) through Tauri commands.
+How it fits together on Linux: Tauri opens a **GTK 3** window holding a single **WebKitGTK** web view, and the whole interface is the React app drawn inside it. The frontend asks Rust for anything that touches the system (files, the light/dark preference, the window) through Tauri commands.
 
 ```
 React app (HTML/CSS/TS)     src/

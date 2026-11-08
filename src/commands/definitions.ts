@@ -1,6 +1,6 @@
 import { quit } from "../app/lifecycle";
 import { showPanel } from "../state/dialogs";
-import { useSettings, type ColorSchemePreference, type SchemeId, type ViewMode } from "../state/settings";
+import { useSettings, type ColorSchemePreference, type ViewMode } from "../state/settings";
 import { copyPath, createItem, duplicateItem, revealItem, startRename, trashItem } from "../state/fileOps";
 import { activeTab, closeTab, cycleTab, newUntitledTab, saveTab, saveTabAs, useTabs } from "../state/tabs";
 import { chooseWorkspace, useWorkspace } from "../state/workspace";
@@ -17,15 +17,6 @@ function viewCommand(id: Command["id"], label: string, shortcut: string, mode: V
     shortcut,
     run: () => settings().set({ viewMode: mode }),
     isChecked: () => settings().viewMode === mode,
-  };
-}
-
-function schemeCommand(id: Command["id"], label: string, scheme: SchemeId): Command {
-  return {
-    id,
-    label,
-    run: () => settings().set({ scheme }),
-    isChecked: () => settings().scheme === scheme,
   };
 }
 
@@ -138,8 +129,6 @@ export function registerAllCommands(): void {
       run: () => settings().set({ syncScroll: !settings().syncScroll }),
       isChecked: () => settings().syncScroll,
     },
-    schemeCommand("scheme.githubDefault", "GitHub Default", "github-default"),
-    schemeCommand("scheme.gtk", "GTK Theme", "gtk"),
     themeCommand("theme.system", "Follow System", "system"),
     themeCommand("theme.light", "Light", "light"),
     themeCommand("theme.dark", "Dark", "dark"),

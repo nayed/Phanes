@@ -29,7 +29,6 @@ pub fn run() {
                 });
             }
             system_theme::watch(app.handle());
-            gtk_theme::watch(app.handle());
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
@@ -37,7 +36,6 @@ pub fn run() {
             app_state::save_app_state,
             cli::launch_paths,
             system_theme::system_color_scheme,
-            gtk_theme::gtk_theme_colors,
             gtk_theme::set_gtk_dark,
             fs::list_dir,
             fs::path_info,

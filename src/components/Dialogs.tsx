@@ -3,7 +3,7 @@ import { Fragment, useEffect, useRef, type ReactNode } from "react";
 import { suspendShortcuts } from "../commands/keybindings";
 import { listCommands } from "../commands/registry";
 import { closePanel, useDialogs } from "../state/dialogs";
-import { useThemeInfo } from "../app/theme";
+import { COLORSCHEME } from "../app/theme";
 import appIcon from "../../docs/icons/io.nayed.Phanes.svg";
 
 /** Renders whichever dialog, panel or toast is currently requested. */
@@ -106,7 +106,6 @@ function focusables(root: HTMLElement | null): HTMLElement[] {
 }
 
 function AboutDialog() {
-  const scheme = useThemeInfo((s) => s.label);
   return (
     <Modal label="About Phanes" onEscape={closePanel} className="about-dialog">
       <button type="button" className="icon-button small dialog-close" aria-label="Close" onClick={closePanel}>
@@ -119,7 +118,7 @@ function AboutDialog() {
       <p className="dialog-body">
         Write markdown on the left, read it on the right. A personal editor for GNOME.
       </p>
-      <p className="about-meta">Color scheme: {scheme}</p>
+      <p className="about-meta">Color scheme: {COLORSCHEME.name}</p>
     </Modal>
   );
 }

@@ -1,5 +1,5 @@
 import { ArrowDownUp } from "lucide-react";
-import { useThemeInfo } from "../app/theme";
+import { COLORSCHEME } from "../app/theme";
 import { runCommand } from "../commands/registry";
 import { useEditorStatus } from "../state/editorStatus";
 import { useSettings } from "../state/settings";
@@ -12,7 +12,6 @@ export function StatusBar() {
   const col = useEditorStatus((s) => s.col);
   const words = useEditorStatus((s) => s.words);
   const syncScroll = useSettings((s) => s.syncScroll);
-  const scheme = useThemeInfo((s) => s.label);
 
   return (
     <footer className="status-bar">
@@ -39,7 +38,7 @@ export function StatusBar() {
         <ArrowDownUp size={12} strokeWidth={2.5} aria-hidden />
         Synced scroll
       </button>
-      <span>{scheme}</span>
+      <span>{COLORSCHEME.name}</span>
     </footer>
   );
 }

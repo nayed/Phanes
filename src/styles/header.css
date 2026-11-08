@@ -58,36 +58,25 @@
 
 .window-controls {
   display: flex;
-  gap: var(--wc-gap);
+  gap: 10px;
   align-items: center;
   margin-left: 10px;
   margin-right: 2px;
 }
 .window-controls button {
-  width: var(--wc-size);
-  height: var(--wc-size);
+  width: 24px;
+  height: 24px;
   padding: 0;
   border: 0;
   border-radius: 50%;
-  color: var(--wc-fg);
+  background: var(--button);
+  color: var(--fg);
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.window-controls svg {
-  width: var(--wc-icon);
-  height: var(--wc-icon);
-}
-.window-controls .wc-minimize { background: var(--wc-minimize-bg); }
-.window-controls .wc-maximize { background: var(--wc-maximize-bg); }
-.window-controls .wc-close { background: var(--wc-close-bg); }
-.window-controls .wc-minimize:hover { background: var(--wc-minimize-hover-bg); }
-.window-controls .wc-maximize:hover { background: var(--wc-maximize-hover-bg); }
-.window-controls .wc-close:hover { background: var(--wc-close-hover-bg); }
-/* Some GTK themes hide the icons until hover; show them for keyboard focus too. */
-.window-controls button:hover,
-.window-controls button:focus-visible {
-  color: var(--wc-hover-fg);
+.window-controls button:hover {
+  background: var(--menu-hover);
   filter: brightness(0.94);
 }
 :root[data-mode="dark"] .window-controls button:hover {
