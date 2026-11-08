@@ -121,3 +121,7 @@
   text-decoration: line-through;
   opacity: 0.7;
 }
+.status-scheme[aria-expanded="true"] {
+  background: var(--button);
+  color: var(--fg);
+}

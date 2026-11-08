@@ -86,3 +86,107 @@
   background: var(--border);
   flex-shrink: 0;
 }
+
+/* Colorscheme picker (status bar): search, live-preview list, key hints. */
+.scheme-picker {
+  position: fixed;
+  z-index: 100;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  background: var(--menu-bg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-popover);
+  color: var(--fg);
+  font-size: 13px;
+  overflow: hidden;
+}
+.scheme-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 46px;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+}
+.scheme-search input {
+  flex-grow: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--fg);
+  font: 400 14px var(--font-ui);
+}
+.scheme-search input::placeholder {
+  color: var(--muted);
+}
+.scheme-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 6px;
+}
+.scheme-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 36px;
+  padding: 0 10px;
+  border-radius: 7px;
+  cursor: default;
+}
+.scheme-option:hover {
+  background: color-mix(in srgb, var(--menu-hover) 55%, transparent);
+}
+.scheme-option[data-active] {
+  background: var(--menu-hover);
+}
+.scheme-option[data-current] .scheme-name {
+  font-weight: 600;
+}
+.scheme-name {
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.scheme-note {
+  color: var(--muted);
+  font-size: 12px;
+}
+.scheme-swatch {
+  display: flex;
+  flex-shrink: 0;
+  height: 18px;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--fg) 12%, transparent);
+}
+.scheme-swatch i {
+  width: 8px;
+}
+.scheme-swatch i:first-child {
+  width: 10px;
+}
+.scheme-swatch i:last-child {
+  width: 10px;
+}
+.scheme-empty {
+  padding: 8px 10px;
+  color: var(--muted);
+}
+.scheme-hints {
+  display: flex;
+  gap: 16px;
+  padding: 8px 14px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 12px;
+}
+.scheme-hints b {
+  font-weight: 600;
+}

@@ -4,6 +4,10 @@
  * dark block; adding Tokyo Night, Nord… means adding two more blocks.
  *
  * <html data-scheme="github-default|gruvbox|catppuccin|everforest" data-mode="light|dark">
+ *
+ * The blocks match any element, not only <html>: an element with its own
+ * data-scheme and data-mode gets that palette (the colorscheme picker's
+ * swatches use this to show schemes that aren't applied).
  */
 
 :root {
@@ -26,7 +30,7 @@
 }
 
 /* ---------- GitHub Default — Light ---------- */
-:root[data-scheme="github-default"][data-mode="light"] {
+[data-scheme="github-default"][data-mode="light"] {
   color-scheme: light;
 
   --desk: #d8dee4;
@@ -67,7 +71,7 @@
 }
 
 /* ---------- GitHub Default — Dark ---------- */
-:root[data-scheme="github-default"][data-mode="dark"] {
+[data-scheme="github-default"][data-mode="dark"] {
   color-scheme: dark;
 
   --desk: #010409;
@@ -112,7 +116,7 @@
  * "faded" accents; green, aqua and yellow are darkened slightly so they keep
  * 4.5:1 contrast on the background.
  */
-:root[data-scheme="gruvbox"][data-mode="light"] {
+[data-scheme="gruvbox"][data-mode="light"] {
   color-scheme: light;
 
   --desk: #ebdbb2;
@@ -156,7 +160,7 @@
  * Gruvbox dark, medium contrast, with its "bright" accents; red is lightened
  * slightly for 4.5:1 contrast.
  */
-:root[data-scheme="gruvbox"][data-mode="dark"] {
+[data-scheme="gruvbox"][data-mode="dark"] {
   color-scheme: dark;
 
   --desk: #1d2021;
@@ -200,7 +204,7 @@
  * Catppuccin Latte. Its accents are pale by design, so the ones used for
  * text are darkened (toward black, keeping their hue) to 4.5:1 contrast.
  */
-:root[data-scheme="catppuccin"][data-mode="light"] {
+[data-scheme="catppuccin"][data-mode="light"] {
   color-scheme: light;
 
   --desk: #dce0e8;
@@ -244,7 +248,7 @@
  * Catppuccin Mocha: headings in red, keywords in mauve, links and functions
  * in blue. Every accent already has 4.5:1 contrast, so all are as published.
  */
-:root[data-scheme="catppuccin"][data-mode="dark"] {
+[data-scheme="catppuccin"][data-mode="dark"] {
   color-scheme: dark;
 
   --desk: #11111b;
@@ -289,7 +293,7 @@
  * all fall far below 4.5:1, so the ones used for text are darkened (toward
  * black, keeping their hue) until they reach it.
  */
-:root[data-scheme="everforest"][data-mode="light"] {
+[data-scheme="everforest"][data-mode="light"] {
   color-scheme: light;
 
   --desk: #efebd4;
@@ -333,7 +337,7 @@
  * Everforest dark, medium. Every accent already has 4.5:1 contrast, so all
  * are as published.
  */
-:root[data-scheme="everforest"][data-mode="dark"] {
+[data-scheme="everforest"][data-mode="dark"] {
   color-scheme: dark;
 
   --desk: #232a2e;

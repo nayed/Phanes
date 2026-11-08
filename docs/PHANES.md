@@ -168,7 +168,19 @@ In Split mode, scrolling the editor scrolls the preview to the matching block, u
 
 30 px tall, along the bottom of the window, 12 px muted text, items 20 px apart:
 
-`GFM` (semi-bold, main text colour) · `UTF-8` · `Ln 22, Col 42` · `64 words` … then, aligned right, the synced-scroll toggle (arrows icon + "Synced scroll") and the colorscheme name (`GitHub Default`), which opens a list of the colorschemes to switch to, followed by an icon-only color mode button: each click moves to the next of Follow System (sun-moon icon), Light (sun) and Dark (moon), in a loop.
+`GFM` (semi-bold, main text colour) · `UTF-8` · `Ln 22, Col 42` · `64 words` … then, aligned right, the synced-scroll toggle (arrows icon + "Synced scroll") and the colorscheme name (`GitHub Default` with a small up chevron), which opens the colorscheme picker, followed by an icon-only color mode button: each click moves to the next of Follow System (sun-moon icon), Light (sun) and Dark (moon), in a loop.
+
+#### Colorscheme picker
+
+A command-palette-style popover that opens above the colorscheme name, right-aligned with it. It scales to twenty colorschemes.
+
+- **Search field** at the top ("Search color schemes"), focused on open: typing filters the list by name.
+- **One row per colorscheme**: a color strip (its background, red, green, blue and text colors), the name, and on the right `Current` for the chosen colorscheme (its name in semi-bold) or `Previewing` for the highlighted one.
+- **Key hints** at the bottom: `↑↓ preview`, `Enter apply`, `Esc revert`.
+- **Live preview:** the arrow keys move the highlight, and the highlighted colorscheme is shown on the whole window right away, without being saved. The status bar keeps showing the chosen one.
+- **Enter** or a click applies the highlighted colorscheme and closes the picker. **Escape**, clicking elsewhere or leaving the window closes it and goes back to the chosen colorscheme.
+- **The preview keeps the current mode.** Previewing Catppuccin in Light mode shows Catppuccin Latte, and in Dark mode Catppuccin Mocha.
+- **The strips show the variant on screen.** In Light or Dark mode, every strip shows that variant. With Follow System, they show whichever variant GNOME is currently using.
 
 ### Files
 
