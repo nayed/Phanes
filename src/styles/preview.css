@@ -250,6 +250,12 @@
 :root[data-scheme="catppuccin"][data-mode="dark"] .markdown-body .shiki span {
   color: var(--shiki-catppuccin-dark);
 }
+:root[data-scheme="everforest"][data-mode="light"] .markdown-body .shiki span {
+  color: var(--shiki-everforest-light);
+}
+:root[data-scheme="everforest"][data-mode="dark"] .markdown-body .shiki span {
+  color: var(--shiki-everforest-dark);
+}
 
 /* GitHub alerts */
 .markdown-body .markdown-alert {

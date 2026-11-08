@@ -19,6 +19,7 @@ const schemeMenu: MenuEntry[] = [
   { kind: "command", id: "scheme.githubDefault" },
   { kind: "command", id: "scheme.gruvbox" },
   { kind: "command", id: "scheme.catppuccin" },
+  { kind: "command", id: "scheme.everforest" },
 ];
 
 /** GFM · UTF-8 · Ln, Col · words … synced-scroll toggle · colorscheme · color mode. */

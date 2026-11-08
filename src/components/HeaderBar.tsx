@@ -24,6 +24,7 @@ const mainMenu: MenuEntry[] = [
       { kind: "command", id: "scheme.githubDefault" },
       { kind: "command", id: "scheme.gruvbox" },
       { kind: "command", id: "scheme.catppuccin" },
+      { kind: "command", id: "scheme.everforest" },
       { kind: "separator" },
       { kind: "command", id: "theme.system" },
       { kind: "command", id: "theme.light" },

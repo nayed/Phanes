@@ -28,6 +28,7 @@ export type CommandId =
   | "scheme.githubDefault"
   | "scheme.gruvbox"
   | "scheme.catppuccin"
+  | "scheme.everforest"
   | "theme.system"
   | "theme.light"
   | "theme.dark"

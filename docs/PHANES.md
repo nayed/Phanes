@@ -179,7 +179,7 @@ In Split mode, scrolling the editor scrolls the preview to the matching block, u
 
 ### Theming
 
-- Three colorschemes: **GitHub Default**, **Gruvbox** and **Catppuccin** (Latte for light, Mocha for dark), each in light and dark variants (see [Design tokens](#design-tokens)). Pick one from the main menu's Color Scheme submenu or from the status bar.
+- Four colorschemes: **GitHub Default**, **Gruvbox**, **Catppuccin** (Latte for light, Mocha for dark) and **Everforest**, each in light and dark variants (see [Design tokens](#design-tokens)). Pick one from the main menu's Color Scheme submenu or from the status bar.
 - Default to following the system: GNOME's dark style preference arrives through `prefers-color-scheme` in WebKitGTK. The main menu can force Light or Dark. Remember the choice.
 - Structure the CSS so another colorscheme (Tokyo Night, Nord…) is one more set of variable values.
 
@@ -318,7 +318,7 @@ Register every one of these in the command registry. Shortcuts follow GNOME conv
 | `view.toggleSyncScroll` | Synced Scroll | |
 | `theme.system` / `theme.light` / `theme.dark` | Follow System / Light / Dark | |
 | `theme.cycle` | Switch Color Mode (Follow System → Light → Dark) | |
-| `scheme.githubDefault` / `scheme.gruvbox` / `scheme.catppuccin` | GitHub Default / Gruvbox / Catppuccin | |
+| `scheme.githubDefault` / `scheme.gruvbox` / `scheme.catppuccin` / `scheme.everforest` | GitHub Default / Gruvbox / Catppuccin / Everforest | |
 | `app.shortcuts` | Keyboard Shortcuts | `Ctrl+?` |
 | `app.about` | About Phanes | |
 | `app.quit` | Quit | `Ctrl+Q` |

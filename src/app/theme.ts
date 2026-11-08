@@ -11,6 +11,7 @@ export const COLORSCHEMES: Record<SchemeId, { name: string }> = {
   "github-default": { name: "GitHub Default" },
   gruvbox: { name: "Gruvbox" },
   catppuccin: { name: "Catppuccin" },
+  everforest: { name: "Everforest" },
 };
 
 export type Mode = "light" | "dark";

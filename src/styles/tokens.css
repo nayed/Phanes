@@ -3,7 +3,7 @@
  * variables. A colorscheme is one `[data-scheme]` value with a light and a
  * dark block; adding Tokyo Night, Nord… means adding two more blocks.
  *
- * <html data-scheme="github-default|gruvbox|catppuccin" data-mode="light|dark">
+ * <html data-scheme="github-default|gruvbox|catppuccin|everforest" data-mode="light|dark">
  */
 
 :root {
@@ -282,4 +282,93 @@
   --shadow-popover: 0 2px 6px rgba(0, 0, 0, 0.35), 0 12px 32px rgba(0, 0, 0, 0.5);
   --scrim: rgba(17, 17, 27, 0.6);
   --scrollbar: rgba(205, 214, 244, 0.28);
+}
+
+/* ---------- Everforest — Light ----------
+ * sainnhe's Everforest (light, medium). Its accents are soft by design and
+ * all fall far below 4.5:1, so the ones used for text are darkened (toward
+ * black, keeping their hue) until they reach it.
+ */
+:root[data-scheme="everforest"][data-mode="light"] {
+  color-scheme: light;
+
+  --desk: #efebd4;
+  --window: #fdf6e3;
+  --surface: #f4f0d9;
+  --button: #e6e2cc;
+  --fg: #5c6a72;
+  --muted: #636e62;
+  --border: #e0dcc7;
+  --link: #2d7298;
+  --active-bg: #e2ead8;
+  --current-line: #f4f0d9;
+  --menu-bg: #fdf6e3;
+  --menu-hover: #efebd4;
+  --danger: #bc413e;
+  --code-inline-bg: #f4f0d9;
+
+  --syn-mark: #636e62;
+  --syn-heading: #bc413e;
+  --syn-code: #647201;
+  --syn-keyword: #a34d88;
+  --syn-function: #2d7298;
+  --syn-string: #267859;
+
+  --alert-note: #2d7298;
+  --alert-tip: #647201;
+  --alert-important: #a34d88;
+  --alert-warning: #8c6500;
+  --alert-caution: #bc413e;
+
+  --selection: rgba(58, 148, 197, 0.2);
+  --search-match: rgba(223, 160, 0, 0.3);
+  --shadow-raised: 0 1px 2px rgba(92, 106, 114, 0.22);
+  --shadow-tab: 0 1px 2px rgba(92, 106, 114, 0.2);
+  --shadow-popover: 0 2px 6px rgba(92, 106, 114, 0.14), 0 12px 32px rgba(92, 106, 114, 0.24);
+  --scrim: rgba(92, 106, 114, 0.32);
+  --scrollbar: rgba(92, 106, 114, 0.3);
+}
+
+/* ---------- Everforest — Dark ----------
+ * Everforest dark, medium. Every accent already has 4.5:1 contrast, so all
+ * are as published.
+ */
+:root[data-scheme="everforest"][data-mode="dark"] {
+  color-scheme: dark;
+
+  --desk: #232a2e;
+  --window: #2d353b;
+  --surface: #232a2e;
+  --button: #3d484d;
+  --fg: #d3c6aa;
+  --muted: #9da9a0;
+  --border: #3d484d;
+  --link: #7fbbb3;
+  --active-bg: #3a515d;
+  --current-line: #343f44;
+  --menu-bg: #343f44;
+  --menu-hover: #3d484d;
+  --danger: #e67e80;
+  --code-inline-bg: #343f44;
+
+  --syn-mark: #9da9a0;
+  --syn-heading: #e67e80;
+  --syn-code: #a7c080;
+  --syn-keyword: #d699b6;
+  --syn-function: #7fbbb3;
+  --syn-string: #83c092;
+
+  --alert-note: #7fbbb3;
+  --alert-tip: #a7c080;
+  --alert-important: #d699b6;
+  --alert-warning: #dbbc7f;
+  --alert-caution: #e67e80;
+
+  --selection: rgba(127, 187, 179, 0.25);
+  --search-match: rgba(219, 188, 127, 0.3);
+  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-tab: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-popover: 0 2px 6px rgba(0, 0, 0, 0.35), 0 12px 32px rgba(0, 0, 0, 0.5);
+  --scrim: rgba(35, 42, 46, 0.6);
+  --scrollbar: rgba(211, 198, 170, 0.28);
 }
