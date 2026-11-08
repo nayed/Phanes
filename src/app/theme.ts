@@ -1,9 +1,16 @@
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
-import { useSettings, type ColorSchemePreference } from "../state/settings";
+import { useSettings, type ColorSchemePreference, type SchemeId } from "../state/settings";
 
-/** The only colorscheme for now; a new one is a new `[data-scheme]` block in tokens.css. */
-export const COLORSCHEME = { id: "github-default", name: "GitHub Default" } as const;
+/**
+ * Colorscheme names. Adding one: its id in SCHEME_IDS (state/settings.ts), a
+ * light and a dark `[data-scheme]` block in tokens.css, its code themes in
+ * markdown/plugins/highlight.ts and preview.css, and a command in the menus.
+ */
+export const COLORSCHEMES: Record<SchemeId, { name: string }> = {
+  "github-default": { name: "GitHub Default" },
+  gruvbox: { name: "Gruvbox" },
+};
 
 export type Mode = "light" | "dark";
 
@@ -18,11 +25,12 @@ export function resolveMode(pref: ColorSchemePreference): Mode {
   return pref === "system" ? systemMode : pref;
 }
 
-/** Apply the setting; resolves once GTK uses the matching light or dark variant. */
+/** Apply the settings; resolves once GTK uses the matching light or dark variant. */
 function apply(): Promise<void> {
-  const mode = resolveMode(useSettings.getState().colorScheme);
+  const { scheme, colorScheme } = useSettings.getState();
+  const mode = resolveMode(colorScheme);
   const root = document.documentElement;
-  root.dataset.scheme = COLORSCHEME.id;
+  root.dataset.scheme = scheme;
   root.dataset.mode = mode;
   // Tell GTK which variant to use, so the window shadow, native dialogs and
   // WebKit's own controls (checkboxes, scrollbars) match the app.
@@ -30,7 +38,7 @@ function apply(): Promise<void> {
 }
 
 /**
- * Apply the setting now and whenever it, or the system preference, changes.
+ * Apply the settings now and whenever they, or the system preference, change.
  * Resolves once the first frame can be drawn in final colors.
  */
 export async function installTheme(): Promise<void> {
@@ -41,7 +49,7 @@ export async function installTheme(): Promise<void> {
   }
   await apply();
   useSettings.subscribe((s, prev) => {
-    if (s.colorScheme !== prev.colorScheme) void apply();
+    if (s.colorScheme !== prev.colorScheme || s.scheme !== prev.scheme) void apply();
   });
   await listen<Mode>("system-color-scheme", (event) => {
     systemMode = event.payload;

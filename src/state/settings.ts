@@ -3,6 +3,9 @@ import { loadAppState, saveAppState } from "../lib/appState";
 
 export type ViewMode = "editor" | "split" | "preview";
 export type ColorSchemePreference = "system" | "light" | "dark";
+/** The colorschemes, each a `[data-scheme]` pair of blocks in tokens.css. */
+export const SCHEME_IDS = ["github-default", "gruvbox"] as const;
+export type SchemeId = (typeof SCHEME_IDS)[number];
 
 /** What Phanes remembers about one workspace between launches. */
 export interface WorkspaceMemory {
@@ -15,6 +18,8 @@ export interface WorkspaceMemory {
 }
 
 export interface Settings {
+  scheme: SchemeId;
+  /** Light/dark: follow GNOME, or forced. */
   colorScheme: ColorSchemePreference;
   viewMode: ViewMode;
   sidebarVisible: boolean;
@@ -24,6 +29,7 @@ export interface Settings {
 }
 
 const defaults: Settings = {
+  scheme: "github-default",
   colorScheme: "system",
   viewMode: "split",
   sidebarVisible: true,
@@ -57,6 +63,7 @@ export function emptyMemory(): WorkspaceMemory {
 
 function snapshot(s: SettingsStore): Settings {
   return {
+    scheme: s.scheme,
     colorScheme: s.colorScheme,
     viewMode: s.viewMode,
     sidebarVisible: s.sidebarVisible,
@@ -71,7 +78,9 @@ let saveTimer: number | undefined;
 /** Load persisted settings, then save them (debounced) whenever they change. */
 export async function initSettings(): Promise<void> {
   const stored = await loadAppState<Settings>();
-  useSettings.setState({ ...defaults, ...stored, loaded: true });
+  // A colorscheme that no longer exists (e.g. the removed "gtk") falls back to the default.
+  const scheme = SCHEME_IDS.includes(stored?.scheme as SchemeId) ? stored!.scheme : defaults.scheme;
+  useSettings.setState({ ...defaults, ...stored, scheme, loaded: true });
   useSettings.subscribe((s) => {
     window.clearTimeout(saveTimer);
     saveTimer = window.setTimeout(() => void saveAppState(snapshot(s)), 300);

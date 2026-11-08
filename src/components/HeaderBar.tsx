@@ -21,6 +21,9 @@ const mainMenu: MenuEntry[] = [
     kind: "submenu",
     label: "Color Scheme",
     entries: [
+      { kind: "command", id: "scheme.githubDefault" },
+      { kind: "command", id: "scheme.gruvbox" },
+      { kind: "separator" },
       { kind: "command", id: "theme.system" },
       { kind: "command", id: "theme.light" },
       { kind: "command", id: "theme.dark" },

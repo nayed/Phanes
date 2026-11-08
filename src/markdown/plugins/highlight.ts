@@ -6,19 +6,30 @@ import { bundledLanguages } from "shiki/langs";
 import { visit } from "unist-util-visit";
 
 /**
- * Code blocks highlighted by Shiki with GitHub's own themes. Both themes are
- * emitted as CSS variables (--shiki-light / --shiki-dark) and preview.css
- * picks one from the current mode, so switching light/dark needs no re-render.
- * Grammars load on demand from the bundle; nothing comes from the network.
+ * Code blocks highlighted by Shiki with each colorscheme's own themes. Every
+ * theme is emitted as a CSS variable (--shiki-github-light, --shiki-gruvbox-dark…)
+ * and preview.css picks one from the current colorscheme and mode, so
+ * switching either needs no re-render. Grammars load on demand from the
+ * bundle; nothing comes from the network.
  */
 
-const THEMES = { light: "github-light-default", dark: "github-dark-default" } as const;
+const THEMES = {
+  "github-light": "github-light-default",
+  "github-dark": "github-dark-default",
+  "gruvbox-light": "gruvbox-light-medium",
+  "gruvbox-dark": "gruvbox-dark-medium",
+} as const;
 
 let highlighter: Promise<HighlighterCore> | null = null;
 
 function getHighlighter(): Promise<HighlighterCore> {
   highlighter ??= createHighlighterCore({
-    themes: [import("shiki/themes/github-light-default.mjs"), import("shiki/themes/github-dark-default.mjs")],
+    themes: [
+      import("shiki/themes/github-light-default.mjs"),
+      import("shiki/themes/github-dark-default.mjs"),
+      import("shiki/themes/gruvbox-light-medium.mjs"),
+      import("shiki/themes/gruvbox-dark-medium.mjs"),
+    ],
     langs: [],
     // The JavaScript engine needs no WebAssembly (and no 'wasm-unsafe-eval' in the CSP).
     engine: createJavaScriptRegexEngine({ forgiving: true }),

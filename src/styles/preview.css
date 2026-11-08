@@ -218,7 +218,7 @@
   background: var(--surface);
 }
 
-/* Code blocks (Shiki emits both themes as variables; pick by mode). */
+/* Code blocks (Shiki emits every theme as a variable; pick by colorscheme and mode). */
 .markdown-body pre {
   padding: 14px 16px;
   overflow-x: auto;
@@ -232,11 +232,17 @@
   font-size: inherit;
   white-space: pre;
 }
-:root[data-mode="light"] .markdown-body .shiki span {
-  color: var(--shiki-light);
+:root[data-scheme="github-default"][data-mode="light"] .markdown-body .shiki span {
+  color: var(--shiki-github-light);
 }
-:root[data-mode="dark"] .markdown-body .shiki span {
-  color: var(--shiki-dark);
+:root[data-scheme="github-default"][data-mode="dark"] .markdown-body .shiki span {
+  color: var(--shiki-github-dark);
+}
+:root[data-scheme="gruvbox"][data-mode="light"] .markdown-body .shiki span {
+  color: var(--shiki-gruvbox-light);
+}
+:root[data-scheme="gruvbox"][data-mode="dark"] .markdown-body .shiki span {
+  color: var(--shiki-gruvbox-dark);
 }
 
 /* GitHub alerts */
