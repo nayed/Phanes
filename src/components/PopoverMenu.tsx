@@ -21,7 +21,9 @@ export type MenuAnchor =
   /** At the pointer (right-click menus). */
   | { kind: "point"; x: number; y: number }
   /** Below a button, aligned to its right edge (header menus). */
-  | { kind: "below"; rect: DOMRect };
+  | { kind: "below"; rect: DOMRect }
+  /** Above a button, aligned to its right edge (status bar menus). */
+  | { kind: "above"; rect: DOMRect };
 
 interface Props {
   entries: MenuEntry[];
@@ -78,9 +80,12 @@ export function PopoverMenu({ entries, anchor, label, focusFirst, toggle, onClos
     if (anchor.kind === "point") {
       left = anchor.x;
       top = anchor.y;
-    } else {
+    } else if (anchor.kind === "below") {
       left = anchor.rect.right - width;
       top = anchor.rect.bottom + 4;
+    } else {
+      left = anchor.rect.right - width;
+      top = Math.max(MARGIN, anchor.rect.top - height - 4);
     }
     left = Math.max(MARGIN, Math.min(left, window.innerWidth - width - MARGIN));
     if (top + height > window.innerHeight - MARGIN) {

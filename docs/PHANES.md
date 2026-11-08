@@ -168,7 +168,7 @@ In Split mode, scrolling the editor scrolls the preview to the matching block, u
 
 30 px tall, along the bottom of the window, 12 px muted text, items 20 px apart:
 
-`GFM` (semi-bold, main text colour) · `UTF-8` · `Ln 22, Col 42` · `64 words` … then, aligned right, the synced-scroll toggle (arrows icon + "Synced scroll") and the colorscheme name (`GitHub Default`), followed by an icon-only color mode button: each click moves to the next of Follow System (sun-moon icon), Light (sun) and Dark (moon), in a loop.
+`GFM` (semi-bold, main text colour) · `UTF-8` · `Ln 22, Col 42` · `64 words` … then, aligned right, the synced-scroll toggle (arrows icon + "Synced scroll") and the colorscheme name (`GitHub Default`), which opens a list of the colorschemes to switch to, followed by an icon-only color mode button: each click moves to the next of Follow System (sun-moon icon), Light (sun) and Dark (moon), in a loop.
 
 ### Files
 
@@ -179,7 +179,7 @@ In Split mode, scrolling the editor scrolls the preview to the matching block, u
 
 ### Theming
 
-- One colorscheme for now: **GitHub Default**, in light and dark variants (see [Design tokens](#design-tokens)).
+- Two colorschemes: **GitHub Default** and **Gruvbox**, each in light and dark variants (see [Design tokens](#design-tokens)). Pick one from the main menu's Color Scheme submenu or from the status bar.
 - Default to following the system: GNOME's dark style preference arrives through `prefers-color-scheme` in WebKitGTK. The main menu can force Light or Dark. Remember the choice.
 - Structure the CSS so another colorscheme (Catppuccin, Gruvbox, Tokyo Night…) is one more set of variable values.
 
@@ -318,6 +318,7 @@ Register every one of these in the command registry. Shortcuts follow GNOME conv
 | `view.toggleSyncScroll` | Synced Scroll | |
 | `theme.system` / `theme.light` / `theme.dark` | Follow System / Light / Dark | |
 | `theme.cycle` | Switch Color Mode (Follow System → Light → Dark) | |
+| `scheme.githubDefault` / `scheme.gruvbox` | GitHub Default / Gruvbox | |
 | `app.shortcuts` | Keyboard Shortcuts | `Ctrl+?` |
 | `app.about` | About Phanes | |
 | `app.quit` | Quit | `Ctrl+Q` |
