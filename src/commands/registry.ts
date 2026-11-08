@@ -28,6 +28,7 @@ export type CommandId =
   | "theme.system"
   | "theme.light"
   | "theme.dark"
+  | "theme.cycle"
   | "app.shortcuts"
   | "app.about"
   | "app.quit";

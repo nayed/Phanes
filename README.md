@@ -69,7 +69,7 @@ In Orphic mythology, **Phanes** is the primordial god hatched from the cosmic eg
 
 ### At home on GNOME
 - A libadwaita-style header bar with rounded corners and the system shadow.
-- Follows GNOME's **light/dark preference**, or you can force Light or Dark from the menu.
+- Follows GNOME's **light/dark preference**, or you can force Light or Dark from the menu. The icon at the bottom right of the status bar cycles through Follow System, Light and Dark in one click.
 - The **GitHub Default** color scheme, in light and dark.
 - Opens and saves through **GNOME's own file chooser** (the desktop portal).
 - Fast startup: the window shows up in about a second, already in the right colors.

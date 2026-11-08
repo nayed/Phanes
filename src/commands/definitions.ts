@@ -20,6 +20,9 @@ function viewCommand(id: Command["id"], label: string, shortcut: string, mode: V
   };
 }
 
+/** The order the status bar's color mode button goes through. */
+const COLOR_MODE_CYCLE: ColorSchemePreference[] = ["system", "light", "dark"];
+
 function themeCommand(id: Command["id"], label: string, pref: ColorSchemePreference): Command {
   return {
     id,
@@ -132,6 +135,14 @@ export function registerAllCommands(): void {
     themeCommand("theme.system", "Follow System", "system"),
     themeCommand("theme.light", "Light", "light"),
     themeCommand("theme.dark", "Dark", "dark"),
+    {
+      id: "theme.cycle",
+      label: "Switch Color Mode",
+      run: () => {
+        const next = COLOR_MODE_CYCLE.indexOf(settings().colorScheme) + 1;
+        settings().set({ colorScheme: COLOR_MODE_CYCLE[next % COLOR_MODE_CYCLE.length] });
+      },
+    },
     {
       id: "app.shortcuts",
       label: "Keyboard Shortcuts",
