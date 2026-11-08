@@ -13,7 +13,7 @@ npm run typecheck                               # TypeScript
 cargo test --manifest-path src-tauri/Cargo.toml # Rust
 npm run dev                                     # UI only, in a browser at http://localhost:1420
 npm run tauri dev                               # the real desktop app
-npm run tauri build                             # .deb and AppImage in src-tauri/target/release/bundle/
+npm run tauri build                             # .deb, .rpm and AppImage in src-tauri/target/release/bundle/
 ```
 
 - Run `npm run typecheck` and `cargo test` before every commit.

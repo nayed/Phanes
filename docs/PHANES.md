@@ -45,7 +45,7 @@ The screens:
 | Fonts | **Inter** (interface and preview), **JetBrains Mono** (editor and code) | Bundle both locally with `@fontsource/*`. No Google Fonts or any other network request. |
 | Icons in the UI | **lucide-react** | 2 px stroke line icons, matching the designs (folder, file, file-text, image, chevrons, x, plus, menu, panel-left, minus, square, info). |
 | Rust side | Tauri commands for all file access; `notify` crate reserved for the later file watcher; `trash` crate for Move to Trash | |
-| Packaging | `.deb` and AppImage from the Tauri bundler | Arch can use the AppImage or a simple PKGBUILD later. |
+| Packaging | `.deb`, `.rpm` and AppImage from the Tauri bundler | Arch can use the AppImage or a simple PKGBUILD later. |
 
 ---
 
@@ -359,7 +359,7 @@ Do not build these now. The foundations above are there so each one is an additi
 
 ## Done means
 
-- `npm run tauri dev` runs the app; `npm run tauri build` produces a `.deb` and an AppImage.
+- `npm run tauri dev` runs the app; `npm run tauri build` produces a `.deb`, an `.rpm` and an AppImage.
 - `phanes docs/sample-workspace` opens the sample workspace, and opening `notes.md` looks like `design/screens/01-main-light.png` (and `02-main-dark.png` with GNOME set to dark).
 - Every GFM feature in `sample-workspace/projects/markdown-editor.md` renders, and its `<script>` does not run.
 - The context menu actions work on real files, and Move to Trash puts files in the GNOME trash.

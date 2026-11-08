@@ -47,6 +47,7 @@
     "active": true,
     "targets": [
       "deb",
+      "rpm",
       "appimage"
     ],
     "icon": [
@@ -62,6 +63,13 @@
     "publisher": "Nayed Saïd Ali",
     "linux": {
       "deb": {
+        "desktopTemplate": "linux/phanes.desktop",
+        "files": {
+          "/usr/share/icons/hicolor/scalable/apps/io.nayed.Phanes.svg": "../docs/icons/io.nayed.Phanes.svg",
+          "/usr/share/icons/hicolor/symbolic/apps/io.nayed.Phanes-symbolic.svg": "../docs/icons/io.nayed.Phanes-symbolic.svg"
+        }
+      },
+      "rpm": {
         "desktopTemplate": "linux/phanes.desktop",
         "files": {
           "/usr/share/icons/hicolor/scalable/apps/io.nayed.Phanes.svg": "../docs/icons/io.nayed.Phanes.svg",

@@ -106,6 +106,14 @@ Download the package for your system from the [latest release](https://github.co
 sudo apt install ./Phanes_*_amd64.deb
 ```
 
+**Fedora** (and openSUSE): download `Phanes-*.x86_64.rpm`, then install it from the folder you downloaded it to:
+
+```bash
+sudo dnf install ./Phanes-*.x86_64.rpm
+```
+
+On openSUSE, use `sudo zypper install ./Phanes-*.x86_64.rpm` instead.
+
 **Arch** (and other distributions): download `Phanes_*_amd64.AppImage`, make it executable and run it:
 
 ```bash
@@ -116,7 +124,7 @@ chmod +x Phanes_*_amd64.AppImage
 ./Phanes_*_amd64.AppImage
 ```
 
-The AppImage carries its own copy of WebKitGTK, which is why it's much larger than the `.deb`. To build Phanes yourself instead, see [For developers](#for-developers).
+The AppImage carries its own copy of WebKitGTK, which is why it's much larger than the `.deb` and `.rpm`. To build Phanes yourself instead, see [For developers](#for-developers).
 
 ---
 ## For developers
@@ -195,10 +203,16 @@ cargo test --manifest-path src-tauri/Cargo.toml
 npm run tauri build
 ```
 
-This produces `src-tauri/target/release/bundle/deb/Phanes_*.deb` and `src-tauri/target/release/bundle/appimage/Phanes_*.AppImage`. On Debian, install the `.deb`:
+This produces `src-tauri/target/release/bundle/deb/Phanes_*.deb`, `src-tauri/target/release/bundle/rpm/Phanes-*.rpm` and `src-tauri/target/release/bundle/appimage/Phanes_*.AppImage`. On Debian, install the `.deb`:
 
 ```bash
 sudo apt install ./src-tauri/target/release/bundle/deb/Phanes_*.deb
+```
+
+On Fedora, install the `.rpm` (on openSUSE, with `zypper install` instead):
+
+```bash
+sudo dnf install ./src-tauri/target/release/bundle/rpm/Phanes-*.rpm
 ```
 
 On Arch, or any other distribution, make the AppImage executable and run it:
