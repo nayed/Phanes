@@ -1,15 +1,17 @@
 import type { Element, Root } from "hast";
 import { toText } from "hast-util-to-text";
-import { createHighlighterCore, type HighlighterCore } from "shiki/core";
+import { createHighlighterCore, type HighlighterCore, type ThemeRegistrationRaw } from "shiki/core";
 import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
 import { bundledLanguages } from "shiki/langs";
 import { visit } from "unist-util-visit";
+import { readableTheme } from "./readableTheme";
 
 /**
  * Code blocks highlighted by Shiki with each colorscheme's own themes. Every
  * theme is emitted as a CSS variable (--shiki-github-light, --shiki-gruvbox-dark…)
  * and preview.css picks one from the current colorscheme and mode, so
- * switching either needs no re-render. Grammars load on demand from the
+ * switching either needs no re-render. Each theme's colors are raised to 4.5:1
+ * contrast on its code block background. Grammars load on demand from the
  * bundle; nothing comes from the network.
  */
 
@@ -24,20 +26,45 @@ const THEMES = {
   "everforest-dark": "everforest-dark",
 } as const;
 
+type ThemeKey = keyof typeof THEMES;
+
+/** Each theme's module, loaded on first use. */
+const THEME_MODULES: Record<ThemeKey, () => Promise<{ default: unknown }>> = {
+  "github-light": () => import("shiki/themes/github-light-default.mjs"),
+  "github-dark": () => import("shiki/themes/github-dark-default.mjs"),
+  "gruvbox-light": () => import("shiki/themes/gruvbox-light-medium.mjs"),
+  "gruvbox-dark": () => import("shiki/themes/gruvbox-dark-medium.mjs"),
+  "catppuccin-light": () => import("shiki/themes/catppuccin-latte.mjs"),
+  "catppuccin-dark": () => import("shiki/themes/catppuccin-mocha.mjs"),
+  "everforest-light": () => import("shiki/themes/everforest-light.mjs"),
+  "everforest-dark": () => import("shiki/themes/everforest-dark.mjs"),
+};
+
+/**
+ * The code block background each theme is drawn on: --surface of its
+ * colorscheme and mode in styles/tokens.css. Keep the two in sync.
+ */
+const CODE_BACKGROUNDS: Record<ThemeKey, string> = {
+  "github-light": "#f6f8fa",
+  "github-dark": "#151b23",
+  "gruvbox-light": "#f2e5bc",
+  "gruvbox-dark": "#32302f",
+  "catppuccin-light": "#e6e9ef",
+  "catppuccin-dark": "#181825",
+  "everforest-light": "#f4f0d9",
+  "everforest-dark": "#232a2e",
+};
+
+async function loadTheme(key: ThemeKey): Promise<ThemeRegistrationRaw> {
+  const theme = (await THEME_MODULES[key]()).default as ThemeRegistrationRaw;
+  return readableTheme(theme, CODE_BACKGROUNDS[key]);
+}
+
 let highlighter: Promise<HighlighterCore> | null = null;
 
 function getHighlighter(): Promise<HighlighterCore> {
   highlighter ??= createHighlighterCore({
-    themes: [
-      import("shiki/themes/github-light-default.mjs"),
-      import("shiki/themes/github-dark-default.mjs"),
-      import("shiki/themes/gruvbox-light-medium.mjs"),
-      import("shiki/themes/gruvbox-dark-medium.mjs"),
-      import("shiki/themes/catppuccin-latte.mjs"),
-      import("shiki/themes/catppuccin-mocha.mjs"),
-      import("shiki/themes/everforest-light.mjs"),
-      import("shiki/themes/everforest-dark.mjs"),
-    ],
+    themes: (Object.keys(THEMES) as ThemeKey[]).map(loadTheme),
     langs: [],
     // The JavaScript engine needs no WebAssembly (and no 'wasm-unsafe-eval' in the CSP).
     engine: createJavaScriptRegexEngine({ forgiving: true }),

@@ -4,8 +4,9 @@ import { useSettings, type ColorSchemePreference, type SchemeId } from "../state
 
 /**
  * Colorscheme names. Adding one: its id in SCHEME_IDS (state/settings.ts), a
- * light and a dark `[data-scheme]` block in tokens.css, its code themes in
- * markdown/plugins/highlight.ts and preview.css, and a command in the menus.
+ * light and a dark `[data-scheme]` block in tokens.css, its code themes (and
+ * their backgrounds) in markdown/plugins/highlight.ts and preview.css, and a
+ * command in the menus.
  */
 export const COLORSCHEMES: Record<SchemeId, { name: string }> = {
   "github-default": { name: "GitHub Default" },
