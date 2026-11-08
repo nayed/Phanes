@@ -179,9 +179,9 @@ In Split mode, scrolling the editor scrolls the preview to the matching block, u
 
 ### Theming
 
-- Two colorschemes: **GitHub Default** and **Gruvbox**, each in light and dark variants (see [Design tokens](#design-tokens)). Pick one from the main menu's Color Scheme submenu or from the status bar.
+- Three colorschemes: **GitHub Default**, **Gruvbox** and **Catppuccin** (Latte for light, Mocha for dark), each in light and dark variants (see [Design tokens](#design-tokens)). Pick one from the main menu's Color Scheme submenu or from the status bar.
 - Default to following the system: GNOME's dark style preference arrives through `prefers-color-scheme` in WebKitGTK. The main menu can force Light or Dark. Remember the choice.
-- Structure the CSS so another colorscheme (Catppuccin, Gruvbox, Tokyo Night…) is one more set of variable values.
+- Structure the CSS so another colorscheme (Tokyo Night, Nord…) is one more set of variable values.
 
 ### Command line
 
@@ -318,7 +318,7 @@ Register every one of these in the command registry. Shortcuts follow GNOME conv
 | `view.toggleSyncScroll` | Synced Scroll | |
 | `theme.system` / `theme.light` / `theme.dark` | Follow System / Light / Dark | |
 | `theme.cycle` | Switch Color Mode (Follow System → Light → Dark) | |
-| `scheme.githubDefault` / `scheme.gruvbox` | GitHub Default / Gruvbox | |
+| `scheme.githubDefault` / `scheme.gruvbox` / `scheme.catppuccin` | GitHub Default / Gruvbox / Catppuccin | |
 | `app.shortcuts` | Keyboard Shortcuts | `Ctrl+?` |
 | `app.about` | About Phanes | |
 | `app.quit` | Quit | `Ctrl+Q` |
@@ -340,7 +340,7 @@ Do not build these now. The foundations above are there so each one is an additi
 - Paste or drop an image: save it to the workspace's `assets/` folder and insert the markdown link.
 - Focus mode: hide sidebar and tabs, dim everything but the current paragraph.
 - Search across the workspace (ripgrep), git status tints in the tree, recent workspaces in the main menu.
-- More colorschemes: Catppuccin, Gruvbox, Tokyo Night, Nord.
+- More colorschemes: Tokyo Night, Nord.
 - Single-instance: `phanes file.md` while Phanes is running opens a tab in the existing window.
 
 ---

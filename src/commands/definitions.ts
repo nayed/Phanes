@@ -143,6 +143,7 @@ export function registerAllCommands(): void {
     },
     schemeCommand("scheme.githubDefault", "GitHub Default", "github-default"),
     schemeCommand("scheme.gruvbox", "Gruvbox", "gruvbox"),
+    schemeCommand("scheme.catppuccin", "Catppuccin", "catppuccin"),
     themeCommand("theme.system", "Follow System", "system"),
     themeCommand("theme.light", "Light", "light"),
     themeCommand("theme.dark", "Dark", "dark"),

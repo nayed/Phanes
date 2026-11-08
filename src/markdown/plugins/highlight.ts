@@ -18,6 +18,8 @@ const THEMES = {
   "github-dark": "github-dark-default",
   "gruvbox-light": "gruvbox-light-medium",
   "gruvbox-dark": "gruvbox-dark-medium",
+  "catppuccin-light": "catppuccin-latte",
+  "catppuccin-dark": "catppuccin-mocha",
 } as const;
 
 let highlighter: Promise<HighlighterCore> | null = null;
@@ -29,6 +31,8 @@ function getHighlighter(): Promise<HighlighterCore> {
       import("shiki/themes/github-dark-default.mjs"),
       import("shiki/themes/gruvbox-light-medium.mjs"),
       import("shiki/themes/gruvbox-dark-medium.mjs"),
+      import("shiki/themes/catppuccin-latte.mjs"),
+      import("shiki/themes/catppuccin-mocha.mjs"),
     ],
     langs: [],
     // The JavaScript engine needs no WebAssembly (and no 'wasm-unsafe-eval' in the CSP).

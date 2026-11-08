@@ -10,6 +10,7 @@ import { useSettings, type ColorSchemePreference, type SchemeId } from "../state
 export const COLORSCHEMES: Record<SchemeId, { name: string }> = {
   "github-default": { name: "GitHub Default" },
   gruvbox: { name: "Gruvbox" },
+  catppuccin: { name: "Catppuccin" },
 };
 
 export type Mode = "light" | "dark";

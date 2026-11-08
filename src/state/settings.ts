@@ -4,7 +4,7 @@ import { loadAppState, saveAppState } from "../lib/appState";
 export type ViewMode = "editor" | "split" | "preview";
 export type ColorSchemePreference = "system" | "light" | "dark";
 /** The colorschemes, each a `[data-scheme]` pair of blocks in tokens.css. */
-export const SCHEME_IDS = ["github-default", "gruvbox"] as const;
+export const SCHEME_IDS = ["github-default", "gruvbox", "catppuccin"] as const;
 export type SchemeId = (typeof SCHEME_IDS)[number];
 
 /** What Phanes remembers about one workspace between launches. */

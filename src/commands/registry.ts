@@ -27,6 +27,7 @@ export type CommandId =
   | "view.toggleSyncScroll"
   | "scheme.githubDefault"
   | "scheme.gruvbox"
+  | "scheme.catppuccin"
   | "theme.system"
   | "theme.light"
   | "theme.dark"

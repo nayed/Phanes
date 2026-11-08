@@ -1,9 +1,9 @@
 /*
  * Design tokens. Every color in the UI and the preview comes from these
  * variables. A colorscheme is one `[data-scheme]` value with a light and a
- * dark block; adding Catppuccin, Tokyo Night… means adding two more blocks.
+ * dark block; adding Tokyo Night, Nord… means adding two more blocks.
  *
- * <html data-scheme="github-default|gruvbox" data-mode="light|dark">
+ * <html data-scheme="github-default|gruvbox|catppuccin" data-mode="light|dark">
  */
 
 :root {
@@ -194,4 +194,92 @@
   --shadow-popover: 0 2px 6px rgba(0, 0, 0, 0.35), 0 12px 32px rgba(0, 0, 0, 0.5);
   --scrim: rgba(29, 32, 33, 0.6);
   --scrollbar: rgba(235, 219, 178, 0.28);
+}
+
+/* ---------- Catppuccin — Light (Latte) ----------
+ * Catppuccin Latte. Its accents are pale by design, so the ones used for
+ * text are darkened (toward black, keeping their hue) to 4.5:1 contrast.
+ */
+:root[data-scheme="catppuccin"][data-mode="light"] {
+  color-scheme: light;
+
+  --desk: #dce0e8;
+  --window: #eff1f5;
+  --surface: #e6e9ef;
+  --button: #ccd0da;
+  --fg: #4c4f69;
+  --muted: #63667a;
+  --border: #ccd0da;
+  --link: #1c5ee1;
+  --active-bg: #ced9f0;
+  --current-line: #e6e9ef;
+  --menu-bg: #eff1f5;
+  --menu-hover: #dce0e8;
+  --danger: #ce0f38;
+  --code-inline-bg: #e6e9ef;
+
+  --syn-mark: #63667a;
+  --syn-heading: #ce0f38;
+  --syn-code: #2f7620;
+  --syn-keyword: #8538ea;
+  --syn-function: #1c5ee1;
+  --syn-string: #2f7620;
+
+  --alert-note: #1c5ee1;
+  --alert-tip: #2f7620;
+  --alert-important: #8538ea;
+  --alert-warning: #915c13;
+  --alert-caution: #ce0f38;
+
+  --selection: rgba(30, 102, 245, 0.18);
+  --search-match: rgba(223, 142, 29, 0.35);
+  --shadow-raised: 0 1px 2px rgba(76, 79, 105, 0.2);
+  --shadow-tab: 0 1px 2px rgba(76, 79, 105, 0.18);
+  --shadow-popover: 0 2px 6px rgba(76, 79, 105, 0.12), 0 12px 32px rgba(76, 79, 105, 0.22);
+  --scrim: rgba(76, 79, 105, 0.32);
+  --scrollbar: rgba(76, 79, 105, 0.28);
+}
+
+/* ---------- Catppuccin — Dark (Mocha) ----------
+ * Catppuccin Mocha: headings in red, keywords in mauve, links and functions
+ * in blue. Every accent already has 4.5:1 contrast, so all are as published.
+ */
+:root[data-scheme="catppuccin"][data-mode="dark"] {
+  color-scheme: dark;
+
+  --desk: #11111b;
+  --window: #1e1e2e;
+  --surface: #181825;
+  --button: #313244;
+  --fg: #cdd6f4;
+  --muted: #a6adc8;
+  --border: #313244;
+  --link: #89b4fa;
+  --active-bg: #292f45;
+  --current-line: #282839;
+  --menu-bg: #313244;
+  --menu-hover: #45475a;
+  --danger: #f38ba8;
+  --code-inline-bg: #313244;
+
+  --syn-mark: #9399b2;
+  --syn-heading: #f38ba8;
+  --syn-code: #a6e3a1;
+  --syn-keyword: #cba6f7;
+  --syn-function: #89b4fa;
+  --syn-string: #a6e3a1;
+
+  --alert-note: #89b4fa;
+  --alert-tip: #a6e3a1;
+  --alert-important: #cba6f7;
+  --alert-warning: #f9e2af;
+  --alert-caution: #f38ba8;
+
+  --selection: rgba(137, 180, 250, 0.25);
+  --search-match: rgba(249, 226, 175, 0.3);
+  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-tab: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-popover: 0 2px 6px rgba(0, 0, 0, 0.35), 0 12px 32px rgba(0, 0, 0, 0.5);
+  --scrim: rgba(17, 17, 27, 0.6);
+  --scrollbar: rgba(205, 214, 244, 0.28);
 }

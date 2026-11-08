@@ -244,6 +244,12 @@
 :root[data-scheme="gruvbox"][data-mode="dark"] .markdown-body .shiki span {
   color: var(--shiki-gruvbox-dark);
 }
+:root[data-scheme="catppuccin"][data-mode="light"] .markdown-body .shiki span {
+  color: var(--shiki-catppuccin-light);
+}
+:root[data-scheme="catppuccin"][data-mode="dark"] .markdown-body .shiki span {
+  color: var(--shiki-catppuccin-dark);
+}
 
 /* GitHub alerts */
 .markdown-body .markdown-alert {
