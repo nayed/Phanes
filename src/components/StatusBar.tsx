@@ -1,4 +1,4 @@
-import { ArrowDownUp, ChevronUp, Moon, Sun, SunMoon, type LucideIcon } from "lucide-react";
+import { ArrowDownUp, ChevronUp, Monitor, Moon, Sun, type LucideIcon } from "lucide-react";
 import { useCallback, useRef, useState } from "react";
 import { COLORSCHEMES } from "../app/theme";
 import { runCommand } from "../commands/registry";
@@ -9,7 +9,7 @@ import { SchemePicker } from "./SchemePicker";
 
 /** What the color mode button shows for each setting. */
 const COLOR_MODES: Record<ColorSchemePreference, { icon: LucideIcon; label: string }> = {
-  system: { icon: SunMoon, label: "Follow System" },
+  system: { icon: Monitor, label: "Follow System" },
   light: { icon: Sun, label: "Light" },
   dark: { icon: Moon, label: "Dark" },
 };
