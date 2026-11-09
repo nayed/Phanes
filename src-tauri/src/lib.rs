@@ -1,4 +1,5 @@
 mod app_state;
+mod appimage;
 mod cli;
 mod fs;
 mod gtk_theme;
@@ -9,6 +10,8 @@ use tauri::Manager;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    // First, while Phanes is still single-threaded: it changes PATH.
+    appimage::isolate_system_programs();
     // Libraries' warnings go to the terminal: started from one, Phanes then
     // says for example why a file dialog fell back to zenity or failed.
     // RUST_LOG=debug shows more. The clipboard library warns on every GNOME
