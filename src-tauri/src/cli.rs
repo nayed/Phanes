@@ -32,17 +32,6 @@ fn start_dir() -> PathBuf {
         .unwrap_or_else(|| PathBuf::from("/"))
 }
 
-/// Run from the directory the user started Phanes from, not from inside the
-/// AppImage mount (its launcher changes into the mount before starting us).
-/// Anything that falls back to the working directory then starts somewhere
-/// sensible: file dialogs drawn by zenity, which is only told a file name,
-/// would otherwise open in `/tmp/.mount_…/usr`.
-pub fn leave_appimage_mount() {
-    if std::env::var_os("APPIMAGE").is_some() {
-        let _ = std::env::set_current_dir(start_dir());
-    }
-}
-
 /// Make a path absolute and drop `.` and `..` without touching the disk
 /// (the file may not exist yet).
 fn absolute(base: &Path, arg: &str) -> PathBuf {

@@ -14,7 +14,6 @@ pub fn run() {
     // RUST_LOG=debug shows more. The clipboard library warns on every GNOME
     // Wayland start that it falls back to X11, which is expected: errors only.
     env_logger::Builder::from_env(env_logger::Env::default().default_filter_or("warn,arboard=error")).init();
-    cli::leave_appimage_mount();
     tauri::Builder::default()
         .manage(cli::parse())
         .plugin(tauri_plugin_dialog::init())
