@@ -124,7 +124,12 @@ chmod +x Phanes_*_amd64.AppImage
 ./Phanes_*_amd64.AppImage
 ```
 
-The AppImage carries its own copy of WebKitGTK, which is why it's much larger than the `.deb` and `.rpm`. To build Phanes yourself instead, see [For developers](#for-developers).
+The AppImage carries its own copy of WebKitGTK, which is why it's much larger than the `.deb` and `.rpm`. All three run on Debian 13, Ubuntu 24.04 and newer, current Fedora and openSUSE Tumbleweed. To build Phanes yourself instead, see [For developers](#for-developers).
+
+### If something doesn't work
+
+- **Open Folder or Save As does nothing, or opens a basic dialog:** Phanes asks your desktop for its file chooser through the desktop portal. GNOME has it built in; on other desktops (XFCE, for example), install `xdg-desktop-portal-gtk`. Without a portal, Phanes falls back to `zenity`, a simpler dialog.
+- **To see what went wrong,** start Phanes from a terminal (`phanes`, or `./Phanes_*_amd64.AppImage`): problems are printed there. `RUST_LOG=debug phanes` prints more.
 
 ---
 ## For developers
@@ -230,7 +235,7 @@ Packages built on your machine only run on systems with the same C library (glib
 Two GitHub Actions workflows live in `.github/workflows/`:
 
 - **Check** runs on every push to `main` and every pull request: typecheck, frontend build and Rust tests.
-- **Release** runs when a version tag is pushed. It builds the `.deb`, `.rpm` and AppImage on Ubuntu 22.04, so they also work on Debian 12, Ubuntu 22.04 and newer, and attaches them to a **draft** release to review and publish by hand.
+- **Release** runs when a version tag is pushed. It builds the `.deb`, `.rpm` and AppImage on Ubuntu 24.04, so they work on Debian 13, Ubuntu 24.04 and newer (packages only run on systems with the build machine's glibc or newer), and attaches them to a **draft** release to review and publish by hand.
 
 To release a new version, set it in `package.json`, `src-tauri/Cargo.toml` and `src-tauri/tauri.conf.json`, commit, then tag and push:
 

@@ -41,7 +41,7 @@ npm run tauri build                             # .deb, .rpm and AppImage in src
 
 - Commit straight to `main`, in small steps: one commit per working change, not one big commit at the end.
 - **Never push** unless the user explicitly asks.
-- **Releases are built by GitHub**, not locally: pushing a `v*` tag runs `.github/workflows/release.yml`, which builds on Ubuntu 22.04 (for an older glibc, so packages run on Debian 12 and Ubuntu 22.04 too) and creates a draft release. Don't upload locally built packages to a release: they need the build machine's newer glibc.
+- **Releases are built by GitHub**, not locally: pushing a `v*` tag runs `.github/workflows/release.yml`, which builds on Ubuntu 24.04 (glibc 2.39: the oldest target, so packages run on Debian 13, Ubuntu 24.04 and newer; don't move it to a release whose glibc is newer than Debian 13's 2.41) and creates a draft release. Don't upload locally built packages to a release: they need the build machine's newer glibc.
 - If a system package is missing, give the user the exact `sudo apt install …` line (and the Arch `pacman` one when relevant); they install it themselves.
 
 ## Things that are easy to get wrong
@@ -51,5 +51,5 @@ npm run tauri build                             # .deb, .rpm and AppImage in src
 - **GTK's dark setting is expensive:** writing `gtk-application-prefer-dark-theme` reloads the whole GTK theme (~45 ms) even when the value doesn't change. Only write it when it differs.
 - **GTK calls run on the main thread.** Synchronous Tauri commands do; async ones don't.
 - **No GTK theme colors.** Phanes used to offer a "GTK Theme" colorscheme that read colors and title buttons from the user's GTK 3 theme. It was removed: themes are arbitrary CSS, so colors went missing or fell back to Adwaita and the window buttons came out wrong on many themes and desktops. Colorschemes are fixed palettes in `tokens.css`; don't bring theme reading back.
-- **File dialogs** use GNOME's chooser through the desktop portal (`tauri-plugin-dialog` with only the `xdg-portal` feature). Don't switch back to the GTK 3 backend: its first open is slow and it doesn't look like the rest of GNOME.
+- **File dialogs** use GNOME's chooser through the desktop portal (`tauri-plugin-dialog` with only the `xdg-portal` feature). Don't switch back to the GTK 3 backend: its first open is slow and it doesn't look like the rest of GNOME. Without a portal file chooser (XFCE without `xdg-desktop-portal-gtk`, for example), `rfd` falls back to zenity, which is only given the file name, not the folder. Library warnings go to stderr (`env_logger`), so run Phanes from a terminal to see why a dialog failed.
 - **Icons:** the SVGs in `docs/icons/` are used directly. The PNGs in `src-tauri/icons/` are generated from `docs/icons/phanes-1024.png` with `npx tauri icon` (into a temporary folder; copy only `32x32.png`, `64x64.png`, `128x128.png` and `icon.png`).
