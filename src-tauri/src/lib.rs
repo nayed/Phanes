@@ -9,6 +9,7 @@ use tauri::Manager;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    cli::leave_appimage_mount();
     tauri::Builder::default()
         .manage(cli::parse())
         .plugin(tauri_plugin_dialog::init())
