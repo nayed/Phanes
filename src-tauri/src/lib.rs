@@ -9,6 +9,11 @@ use tauri::Manager;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    // Libraries' warnings go to the terminal: started from one, Phanes then
+    // says for example why a file dialog fell back to zenity or failed.
+    // RUST_LOG=debug shows more. The clipboard library warns on every GNOME
+    // Wayland start that it falls back to X11, which is expected: errors only.
+    env_logger::Builder::from_env(env_logger::Env::default().default_filter_or("warn,arboard=error")).init();
     cli::leave_appimage_mount();
     tauri::Builder::default()
         .manage(cli::parse())
