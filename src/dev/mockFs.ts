@@ -54,6 +54,9 @@ export function mockImageUrl(path: string): string | undefined {
   return files.get(path)?.url;
 }
 
+/** What the fake clipboard holds. */
+let mockClipboard = "";
+
 export function installMockFs(add: (handlers: Handlers) => void): void {
   add({
     "plugin:path|resolve_directory": () => MOCK_HOME,
@@ -62,7 +65,11 @@ export function installMockFs(add: (handlers: Handlers) => void): void {
       const o = options as { defaultPath?: string } | undefined;
       return window.prompt("Save as (mock dialog)", o?.defaultPath ?? `${MOCK_ROOT}/untitled.md`);
     },
-    "plugin:clipboard-manager|write_text": ({ text }) => console.info("[mock clipboard]", text),
+    "plugin:clipboard-manager|write_text": ({ text }) => {
+      mockClipboard = String(text);
+      console.info("[mock clipboard]", text);
+    },
+    "plugin:clipboard-manager|read_text": () => mockClipboard,
     "plugin:opener|open_url": ({ url }) => console.info("[mock opener] open", url),
     open_workspace: ({ path }) => {
       const p = String(path).replace(/\/+$/, "");

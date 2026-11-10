@@ -21,6 +21,12 @@ export interface Settings {
   scheme: SchemeId;
   /** Light/dark: follow GNOME, or forced. */
   colorScheme: ColorSchemePreference;
+  /** Vim keybindings in the editor (docs/VIM.md). */
+  vimMode: boolean;
+  /** Vim's unnamed register follows the system clipboard (`clipboard=unnamedplus`). */
+  vimSystemClipboard: boolean;
+  /** Line numbers count from the cursor line, with or without Vim. */
+  relativeLineNumbers: boolean;
   viewMode: ViewMode;
   sidebarVisible: boolean;
   syncScroll: boolean;
@@ -31,6 +37,9 @@ export interface Settings {
 const defaults: Settings = {
   scheme: "github-default",
   colorScheme: "system",
+  vimMode: false,
+  vimSystemClipboard: true,
+  relativeLineNumbers: false,
   viewMode: "split",
   sidebarVisible: true,
   syncScroll: true,
@@ -65,6 +74,9 @@ function snapshot(s: SettingsStore): Settings {
   return {
     scheme: s.scheme,
     colorScheme: s.colorScheme,
+    vimMode: s.vimMode,
+    vimSystemClipboard: s.vimSystemClipboard,
+    relativeLineNumbers: s.relativeLineNumbers,
     viewMode: s.viewMode,
     sidebarVisible: s.sidebarVisible,
     syncScroll: s.syncScroll,

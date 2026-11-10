@@ -10,6 +10,9 @@ import { getDocState } from "../editor/documents";
 interface EditorStatus {
   line: number;
   col: number;
+  /** Size of the main selection: lines it touches and characters it covers (0 when empty). */
+  selLines: number;
+  selChars: number;
   words: number;
   /** The active document's text, updated ~150 ms after typing stops. */
   text: string;
@@ -30,14 +33,24 @@ export function countWords(text: string): number {
 }
 
 function cursorOf(state: EditorState) {
-  const head = state.selection.main.head;
+  const { head, from, to } = state.selection.main;
   const line = state.doc.lineAt(head);
-  return { line: line.number, col: head - line.from + 1 };
+  let lastLine = state.doc.lineAt(to).number;
+  const firstLine = state.doc.lineAt(from).number;
+  if (to > from && to === state.doc.line(lastLine).from && lastLine > firstLine) lastLine--;
+  return {
+    line: line.number,
+    col: head - line.from + 1,
+    selLines: to > from ? lastLine - firstLine + 1 : 0,
+    selChars: to - from,
+  };
 }
 
 export const useEditorStatus = create<EditorStatus>((set, get) => ({
   line: 1,
   col: 1,
+  selLines: 0,
+  selChars: 0,
   words: 0,
   text: "",
   version: 0,
@@ -57,7 +70,7 @@ export const useEditorStatus = create<EditorStatus>((set, get) => ({
     const state = tabId ? getDocState(tabId) : undefined;
     const text = state ? state.doc.toString() : "";
     set({
-      ...(state ? cursorOf(state) : { line: 1, col: 1 }),
+      ...(state ? cursorOf(state) : { line: 1, col: 1, selLines: 0, selChars: 0 }),
       text,
       words: countWords(text),
       version: get().version + 1,

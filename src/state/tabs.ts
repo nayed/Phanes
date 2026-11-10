@@ -148,7 +148,16 @@ export async function saveTabAs(id: string | null = useTabs.getState().activeId)
     filters: [{ name: "Markdown", extensions: ["md", "markdown"] }],
   });
   if (!picked) return false;
-  const path = extname(picked) ? picked : `${picked}.md`;
+  await saveTabTo(tab.id, picked);
+  return true;
+}
+
+/** Save a tab to `path` (".md" added when it has no extension), which becomes its file. */
+export async function saveTabTo(id: string, target: string): Promise<void> {
+  const tab = useTabs.getState().tabs.find((t) => t.id === id);
+  if (!tab) return;
+  const root = useWorkspace.getState().root;
+  const path = extname(target) ? target : `${target}.md`;
   // Another tab showing the file being overwritten no longer matches it.
   const other = useTabs.getState().tabs.find((t) => t.path === path && t.id !== tab.id);
   if (other) removeTab(other.id);
@@ -156,6 +165,37 @@ export async function saveTabAs(id: string | null = useTabs.getState().activeId)
   patchTab(tab.id, { path, title: basename(path) });
   if (!root || !isInside(path, root)) await allowAssetDir(dirname(path));
   rememberSession();
+}
+
+/** Save every tab with unsaved changes. False if one was canceled or failed. */
+export async function saveAllTabs(): Promise<boolean> {
+  for (const tab of useTabs.getState().tabs) {
+    if (tab.dirty && !(await saveTab(tab.id))) return false;
+  }
+  return true;
+}
+
+/** Load a tab's file again from disk, asking first if it has unsaved changes. */
+export async function reloadTab(id: string | null = useTabs.getState().activeId): Promise<boolean> {
+  const tab = useTabs.getState().tabs.find((t) => t.id === id);
+  if (!tab?.path) return false;
+  if (tab.dirty) {
+    const choice = await ask({
+      heading: "Reload From Disk?",
+      body: `“${tab.title}” has unsaved changes. Reloading it discards them.`,
+      buttons: [
+        { id: "cancel", label: "Cancel" },
+        { id: "reload", label: "Reload", appearance: "destructive" },
+      ],
+      cancelId: "cancel",
+      defaultId: "cancel",
+    });
+    if (choice !== "reload") return false;
+  }
+  const text = await readTextFile(tab.path);
+  createDoc(tab.id, text);
+  patchTab(tab.id, { dirty: false, lineEnding: text.includes("\r\n") ? "\r\n" : "\n" });
+  if (useTabs.getState().activeId === tab.id) activateTab(tab.id);
   return true;
 }
 
@@ -216,6 +256,18 @@ export async function closeTab(id: string | null = useTabs.getState().activeId):
   if (!(await settleUnsaved(tab))) return false;
   removeTab(tab.id);
   return true;
+}
+
+/** Close a tab without asking, discarding unsaved changes (Vim's `:q!`). */
+export function discardTab(id: string | null = useTabs.getState().activeId): void {
+  if (id) removeTab(id);
+}
+
+/** Close every tab without asking, discarding unsaved changes (Vim's `:qa!`). */
+export function discardAllTabs(): void {
+  for (const tab of useTabs.getState().tabs) deleteDoc(tab.id);
+  useTabs.setState({ tabs: [] });
+  activateTab(null);
 }
 
 /** Close every tab, asking about unsaved ones. False if the user canceled. */

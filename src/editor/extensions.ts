@@ -1,18 +1,21 @@
 /**
  * Every editor behavior is a CodeMirror extension configured here.
- * Later features (vim mode, focus mode…) are added to `editorExtensions`.
+ * Later features (focus mode…) are added to `editorExtensions`. Settings that
+ * change live (Vim mode, line numbers, wrapping) sit in compartments.
  */
 import { defaultKeymap, history, historyKeymap, indentWithTab, redo } from "@codemirror/commands";
 import { markdown, markdownKeymap, markdownLanguage } from "@codemirror/lang-markdown";
 import { indentUnit, syntaxHighlighting } from "@codemirror/language";
 import { languages } from "@codemirror/language-data";
 import { highlightSelectionMatches, search, searchKeymap } from "@codemirror/search";
-import { EditorState, type Extension } from "@codemirror/state";
+import { Compartment, EditorState, type Extension } from "@codemirror/state";
 import {
   Decoration,
   drawSelection,
   dropCursor,
   EditorView,
+  gutter,
+  GutterMarker,
   highlightActiveLine,
   highlightActiveLineGutter,
   keymap,
@@ -25,6 +28,7 @@ import {
 } from "@codemirror/view";
 import { styleTags, Tag, tagHighlighter, tags as t } from "@lezer/highlight";
 import type { MarkdownConfig } from "@lezer/markdown";
+import { vimExtension, vimCompartment } from "./vim";
 
 /* ---------- Syntax highlighting ---------- */
 
@@ -93,6 +97,52 @@ const alertMarkers = ViewPlugin.fromClass(
   { decorations: (v) => v.decorations },
 );
 
+/* ---------- Line numbers and wrapping ---------- */
+
+class LineNumber extends GutterMarker {
+  constructor(readonly text: string) {
+    super();
+  }
+  eq(other: LineNumber) {
+    return other.text === this.text;
+  }
+  toDOM() {
+    return document.createTextNode(this.text);
+  }
+}
+
+/** The cursor line shows its own number, the others their distance from it. */
+const relativeLineNumbers = gutter({
+  class: "cm-lineNumbers",
+  lineMarker(view, line) {
+    const current = view.state.doc.lineAt(view.state.selection.main.head).number;
+    const n = view.state.doc.lineAt(line.from).number;
+    return new LineNumber(String(n === current ? n : Math.abs(n - current)));
+  },
+  lineMarkerChange: (update) => update.selectionSet || update.docChanged,
+  initialSpacer: (view) => new LineNumber(String(view.state.doc.lines)),
+  updateSpacer: (_spacer, update) => new LineNumber(String(update.state.doc.lines)),
+});
+
+export const lineNumbersCompartment = new Compartment();
+export const wrapCompartment = new Compartment();
+
+export interface EditorOptions {
+  vim: boolean;
+  lineNumbers: boolean;
+  relativeLineNumbers: boolean;
+  wrap: boolean;
+}
+
+export function lineNumbersExtension(o: Pick<EditorOptions, "lineNumbers" | "relativeLineNumbers">): Extension {
+  if (!o.lineNumbers) return [];
+  return [o.relativeLineNumbers ? relativeLineNumbers : lineNumbers(), highlightActiveLineGutter()];
+}
+
+export function wrapExtension(wrap: boolean): Extension {
+  return wrap ? EditorView.lineWrapping : [];
+}
+
 /* ---------- Assembly ---------- */
 
 export interface EditorHooks {
@@ -101,17 +151,18 @@ export interface EditorHooks {
 }
 
 /** The full extension set of a Phanes document. */
-export function editorExtensions(hooks: EditorHooks): Extension[] {
+export function editorExtensions(hooks: EditorHooks, options: EditorOptions): Extension[] {
   return [
-    lineNumbers(),
-    highlightActiveLineGutter(),
+    // Vim first: its keys win over every other keymap.
+    vimCompartment.of(vimExtension(options.vim)),
+    lineNumbersCompartment.of(lineNumbersExtension(options)),
     highlightActiveLine(),
     history(),
     drawSelection(),
     dropCursor(),
     rectangularSelection(),
     EditorState.allowMultipleSelections.of(true),
-    EditorView.lineWrapping,
+    wrapCompartment.of(wrapExtension(options.wrap)),
     indentUnit.of("  "),
     EditorState.tabSize.of(4),
     markdown({

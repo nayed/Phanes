@@ -125,3 +125,41 @@
   background: var(--button);
   color: var(--fg);
 }
+
+/* Vim mode (docs/VIM.md): the mode pill touches the left edge, full height. */
+.vim-pill {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  margin-left: -16px;
+  padding: 0 12px;
+  background: var(--vim-normal);
+  color: var(--vim-pill-fg);
+  font: 700 11px var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.vim-pill[data-mode="insert"] {
+  background: var(--vim-insert);
+}
+.vim-pill[data-mode="visual"],
+.vim-pill[data-mode="v-line"],
+.vim-pill[data-mode="v-block"] {
+  background: var(--vim-visual);
+}
+.vim-pill[data-mode="replace"] {
+  background: var(--vim-replace);
+}
+.vim-pill[data-mode="command"] {
+  background: var(--vim-command);
+}
+.vim-pending {
+  margin-left: -8px;
+  color: var(--fg);
+  font: 600 12px var(--font-mono);
+}
+.vim-recording {
+  margin-left: -8px;
+  color: var(--muted);
+  font: 400 12px var(--font-mono);
+}

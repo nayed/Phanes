@@ -68,3 +68,10 @@ export function tildify(path: string): string {
   if (home && isInside(path, home)) return "~" + path.slice(home.length);
   return path;
 }
+
+/** "~/notes" → "/home/nayed/notes" (unchanged without a known home folder). */
+export function expandHome(path: string): string {
+  if (!home) return path;
+  if (path === "~") return home;
+  return path.startsWith("~/") ? home + path.slice(1) : path;
+}

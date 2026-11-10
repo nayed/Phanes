@@ -71,7 +71,8 @@
   background: var(--selection);
 }
 .editor-host .cm-searchMatch {
-  background: var(--search-match);
+  /* !important: Vim mode's own theme sets a match color too. */
+  background: var(--search-match) !important;
   border-radius: 2px;
 }
 .editor-host .cm-searchMatch-selected {
@@ -224,4 +225,109 @@
 }
 .editor-host .cm-panel.cm-search [name="close"]:hover {
   background: var(--button);
+}
+
+/* ---------- Vim mode (docs/VIM.md) ----------
+ * The extension draws its own block cursor (.cm-fat-cursor) and command
+ * line (.cm-vim-panel); they are restyled here. vim.ts sets
+ * data-vim-mode on .editor-host ("normal", "insert", "visual", "v-line",
+ * "v-block", "replace", "command").
+ */
+
+/* Block cursor in Normal and Visual modes: link color, the character readable on it. */
+.editor-host .cm-fat-cursor {
+  background: color-mix(in srgb, var(--link) 85%, transparent) !important;
+  color: var(--window) !important;
+  border-radius: 1px;
+}
+.editor-host .cm-editor:not(.cm-focused) .cm-fat-cursor {
+  background: none !important;
+  outline: 1px solid var(--link) !important;
+  color: transparent !important;
+}
+/* Replace: an underline in the Replace color. */
+.editor-host[data-vim-mode="replace"] .cm-fat-cursor {
+  background: var(--vim-replace) !important;
+  height: 2px !important;
+  color: transparent !important;
+  border-radius: 0;
+}
+
+/* Visual selections in the Visual color at 20%, like the pill. (As specific
+   as the normal selection rule above, which they must override.) */
+.editor-host[data-vim-mode="visual"] .cm-selectionBackground,
+.editor-host[data-vim-mode="visual"] .cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground,
+.editor-host[data-vim-mode="v-block"] .cm-selectionBackground,
+.editor-host[data-vim-mode="v-block"] .cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground {
+  background: color-mix(in srgb, var(--vim-visual) 20%, transparent) !important;
+}
+/* V-LINE tints whole lines and their numbers instead. */
+.editor-host[data-vim-mode="v-line"] .cm-selectionBackground,
+.editor-host[data-vim-mode="v-line"] .cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground {
+  background: transparent !important;
+}
+.editor-host .cm-line.cm-vim-line-selected,
+.editor-host[data-vim-mode="v-line"] .cm-gutterElement.cm-vim-selected {
+  background: color-mix(in srgb, var(--vim-visual) 20%, transparent);
+}
+.editor-host .cm-gutterElement.cm-vim-selected {
+  color: var(--fg);
+}
+
+/* Command line: a 28 px bar at the bottom of the editor pane. */
+.editor-host .cm-panels-bottom {
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+.editor-host .cm-vim-panel {
+  height: 28px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  background: var(--surface);
+  color: var(--fg);
+  font: 400 14px var(--font-mono);
+}
+.editor-host .cm-vim-panel * {
+  font-family: var(--font-mono) !important;
+}
+/* The prompt and the search match count side by side, the count on the right. */
+.editor-host .cm-vim-panel > div {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+/* The prompt (":", "/", "?") in the Command color, bold; the typed text plain. */
+.editor-host .cm-vim-panel span:has(> input) {
+  color: var(--vim-command);
+  font-weight: 700;
+}
+.editor-host .cm-vim-panel input {
+  flex: 1;
+  min-width: 0;
+  margin-left: 1px;
+  padding: 0;
+  color: var(--fg);
+  font: 400 14px var(--font-mono);
+  caret-color: var(--link);
+}
+/* The core adds a hint after the search prompt ("JavaScript regexp…"): not in the design. */
+.editor-host .cm-vim-panel span:has(> input) + span {
+  display: none;
+}
+.editor-host .cm-vim-panel .cm-vim-count {
+  margin-left: 12px;
+  color: var(--muted);
+  font-size: 12px;
+}
+/* Errors in the danger color; recording shows in the status bar, not here. */
+.editor-host .cm-vim-panel .cm-vim-message {
+  color: var(--danger) !important;
+}
+.editor-host .cm-vim-panel .cm-vim-message.cm-vim-info {
+  color: var(--fg) !important;
+}
+.editor-host .cm-vim-panel:has(span.cm-vim-message) {
+  display: none;
 }

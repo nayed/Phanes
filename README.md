@@ -45,6 +45,16 @@ In Orphic mythology, **Phanes** is the primordial god hatched from the cosmic eg
 - Line numbers, current-line highlight, soft wrap, search (`Ctrl+F`), undo/redo and Tab to indent.
 - Cursor position and word count in the status bar.
 - Saving keeps the file's original line endings.
+- **Relative line numbers**, as an option (main menu, or `:set rnu` in Vim mode).
+
+### Vim mode
+Optional, from the main menu (**Vim Mode**). Specified in [`docs/VIM.md`](docs/VIM.md).
+- Motions, operators, text objects, Visual modes, registers, macros, marks and `/` search, from [`@replit/codemirror-vim`](https://github.com/replit/codemirror-vim).
+- A **mode pill** in the status bar (NORMAL, INSERT, VISUAL, V-LINE, V-BLOCK, REPLACE, COMMAND) in the colorscheme's own colors, with pending keys (`2d`), `recording @q` and the selection size.
+- A block cursor, Visual selections tinted to match the pill, and a command line at the bottom of the editor with a match count for searches.
+- Ex commands that act like the menus: `:w`, `:wa`, `:q`, `:wq`, `:x`, `:qa`, `:e path`, `:tabnew`, `:tabn` / `:tabp` (and `gt` / `gT`), `:Ex`, `:set wrap` / `rnu` / `nu` / `clipboard`, and `:theme name [light|dark]`.
+- Yank and paste share the system clipboard (`clipboard=unnamedplus`, on by default).
+- While the editor has focus, Vim gets its Ctrl keys (`Ctrl+W`, `Ctrl+O`, `Ctrl+N`…); `Ctrl+S`, `Ctrl+Tab` and the other app shortcuts keep working. The Keyboard Shortcuts dialog lists them.
 
 ### Workspace sidebar
 - Opens a folder as a **file tree**, with markdown files and images, folders first. Hidden files, `.git` and `node_modules` are left out.

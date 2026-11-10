@@ -140,6 +140,49 @@ const EDITOR_KEYS: Array<[string, string]> = [
   ["Leave the Editor", "Esc Tab"],
 ];
 
+/** Keys Vim mode takes over while the editor has focus (docs/VIM.md). */
+const VIM_KEYS: Array<[string, string]> = [
+  ["Window commands, instead of Close Tab", "Ctrl+W"],
+  ["Visual block, instead of Paste", "Ctrl+V"],
+  ["Redo", "Ctrl+R"],
+  ["Jump back, instead of Open Folder", "Ctrl+O"],
+  ["Next match, instead of New File", "Ctrl+N"],
+  ["Half page down / up", "Ctrl+D Ctrl+U"],
+  ["Page down / up, instead of Find", "Ctrl+F Ctrl+B"],
+  ["Increment / decrement, instead of Select All / Cut", "Ctrl+A Ctrl+X"],
+];
+
+/** Phanes' ex commands. */
+const VIM_EX: Array<[string, string]> = [
+  ["Save (to a path: Save As)", ":w [path]"],
+  ["Save all", ":wa"],
+  ["Close tab (! discards changes)", ":q[!]"],
+  ["Save and close tab", ":wq  :x"],
+  ["Close all tabs (! discards and quits)", ":qa[!]"],
+  ["Open a file (alone: reload from disk)", ":e [path]"],
+  ["New document, or open a file", ":tabnew [path]"],
+  ["Next / previous tab", ":tabn  :tabp  gt  gT"],
+  ["Show the workspace sidebar", ":Ex"],
+  ["Wrapping, line numbers", ":set wrap  :set rnu  :set nu"],
+  ["Share the system clipboard", ":set clipboard=unnamedplus"],
+  ["Color scheme and mode", ":theme name [light|dark]"],
+];
+
+function ShortcutKeys({ shortcut }: { shortcut: string }) {
+  return (
+    <dd>
+      {shortcut.split(" ").map((chord, i) => (
+        <Fragment key={i}>
+          {i > 0 && <span className="shortcuts-then">then</span>}
+          {chord.split("+").map((k, j) => (
+            <kbd key={j}>{k}</kbd>
+          ))}
+        </Fragment>
+      ))}
+    </dd>
+  );
+}
+
 function ShortcutsDialog() {
   const commands = listCommands().filter((c) => c.shortcut);
   return (
@@ -165,15 +208,37 @@ function ShortcutsDialog() {
               {row.label}
               {row.scope && <span className="shortcuts-scope"> ({row.scope})</span>}
             </dt>
+            <ShortcutKeys shortcut={row.shortcut} />
+          </div>
+        ))}
+      </dl>
+
+      <h3 className="shortcuts-section">Vim mode</h3>
+      <p className="shortcuts-note">While the editor has focus, these keys go to Vim:</p>
+      <dl className="shortcuts-list">
+        {VIM_KEYS.map(([label, keys]) => (
+          <div key={label} className="shortcuts-row">
+            <dt>{label}</dt>
             <dd>
-              {row.shortcut.split(" ").map((chord, i) => (
+              {keys.split(" ").map((chord, i) => (
                 <Fragment key={i}>
-                  {i > 0 && <span className="shortcuts-then">then</span>}
+                  {i > 0 && <span className="shortcuts-then">/</span>}
                   {chord.split("+").map((k, j) => (
                     <kbd key={j}>{k}</kbd>
                   ))}
                 </Fragment>
               ))}
+            </dd>
+          </div>
+        ))}
+      </dl>
+      <p className="shortcuts-note">Ex commands:</p>
+      <dl className="shortcuts-list">
+        {VIM_EX.map(([label, ex]) => (
+          <div key={label} className="shortcuts-row">
+            <dt>{label}</dt>
+            <dd>
+              <code className="shortcuts-ex">{ex}</code>
             </dd>
           </div>
         ))}

@@ -1,3 +1,4 @@
+import { useSettings } from "../state/settings";
 import {
   listCommands,
   runCommand,
@@ -89,8 +90,23 @@ export function suspendShortcuts(): () => void {
   };
 }
 
+/**
+ * Keys Vim uses that would otherwise run an app command (docs/VIM.md): with
+ * Vim mode on and the editor focused, they go to Vim. Ctrl+S, Ctrl+Tab,
+ * Ctrl+1/2/3, F9, Ctrl+Q… stay app shortcuts.
+ */
+const VIM_CTRL_KEYS = new Set(["w", "v", "r", "o", "n", "d", "u", "f", "b", "a", "x"]);
+
+function vimClaims(e: KeyboardEvent): boolean {
+  if (!useSettings.getState().vimMode) return false;
+  if (!document.activeElement?.closest(".cm-editor")) return false;
+  if (e.key === "Escape") return true;
+  return e.ctrlKey && !e.altKey && !e.shiftKey && !e.metaKey && VIM_CTRL_KEYS.has(e.key.toLowerCase());
+}
+
 function onKeyDown(e: KeyboardEvent): void {
   if (suspended > 0 || e.defaultPrevented || e.isComposing) return;
+  if (vimClaims(e)) return;
   const inTree = treeHasFocus();
   for (const command of listCommands()) {
     const shortcuts = [command.shortcut, ...(command.altShortcuts ?? [])].filter(

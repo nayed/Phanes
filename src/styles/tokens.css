@@ -48,6 +48,14 @@
   --danger: #d1242f;
   --code-inline-bg: #eff2f5;
 
+  /* Vim mode pill (docs/VIM.md): backgrounds, and the text on them. */
+  --vim-pill-fg: #ffffff;
+  --vim-normal: #59636e;
+  --vim-insert: #1a7f37;
+  --vim-visual: #8250df;
+  --vim-replace: #cf222e;
+  --vim-command: #bc4c00;
+
   --syn-mark: #59636e;
   --syn-heading: #0550ae;
   --syn-code: #953800;
@@ -88,6 +96,14 @@
   --menu-hover: #2f3742;
   --danger: #ff7b72;
   --code-inline-bg: #212830;
+
+  /* Vim mode pill (docs/VIM.md): backgrounds, and the text on them. */
+  --vim-pill-fg: #0d1117;
+  --vim-normal: #9198a1;
+  --vim-insert: #3fb950;
+  --vim-visual: #d2a8ff;
+  --vim-replace: #ff7b72;
+  --vim-command: #ffa657;
 
   --syn-mark: #9198a1;
   --syn-heading: #58a6ff;
@@ -134,6 +150,14 @@
   --danger: #9d0006;
   --code-inline-bg: #ebdbb2;
 
+  /* Vim mode pill (docs/VIM.md): backgrounds, and the text on them. */
+  --vim-pill-fg: #fbf1c7;
+  --vim-normal: #665c54;
+  --vim-insert: #726e0d;
+  --vim-visual: #8f3f71;
+  --vim-replace: #9d0006;
+  --vim-command: #af3a03;
+
   --syn-mark: #665c54;
   --syn-heading: #af3a03;
   --syn-code: #417756;
@@ -177,6 +201,14 @@
   --menu-hover: #3c3836;
   --danger: #fb5841;
   --code-inline-bg: #3c3836;
+
+  /* Vim mode pill (docs/VIM.md): backgrounds, and the text on them. */
+  --vim-pill-fg: #1d2021;
+  --vim-normal: #a89984;
+  --vim-insert: #b8bb26;
+  --vim-visual: #d3869b;
+  --vim-replace: #fb4934;
+  --vim-command: #fe8019;
 
   --syn-mark: #a89984;
   --syn-heading: #fe8019;
@@ -222,6 +254,14 @@
   --danger: #ce0f38;
   --code-inline-bg: #e6e9ef;
 
+  /* Vim mode pill (docs/VIM.md): backgrounds, and the text on them. */
+  --vim-pill-fg: #eff1f5;
+  --vim-normal: #66697e;
+  --vim-insert: #307a20;
+  --vim-visual: #8839ef;
+  --vim-replace: #d20f39;
+  --vim-command: #b84805;
+
   --syn-mark: #63667a;
   --syn-heading: #ce0f38;
   --syn-code: #2f7620;
@@ -265,6 +305,14 @@
   --menu-hover: #45475a;
   --danger: #f38ba8;
   --code-inline-bg: #313244;
+
+  /* Vim mode pill (docs/VIM.md): backgrounds, and the text on them. */
+  --vim-pill-fg: #1e1e2e;
+  --vim-normal: #9399b2;
+  --vim-insert: #a6e3a1;
+  --vim-visual: #cba6f7;
+  --vim-replace: #f38ba8;
+  --vim-command: #fab387;
 
   --syn-mark: #9399b2;
   --syn-heading: #f38ba8;
@@ -311,6 +359,14 @@
   --danger: #bc413e;
   --code-inline-bg: #f4f0d9;
 
+  /* Vim mode pill (docs/VIM.md): backgrounds, and the text on them. */
+  --vim-pill-fg: #fdf6e3;
+  --vim-normal: #5c6a72;
+  --vim-insert: #657300;
+  --vim-visual: #ab4f8e;
+  --vim-replace: #be403d;
+  --vim-command: #a95518;
+
   --syn-mark: #636e62;
   --syn-heading: #bc413e;
   --syn-code: #647201;
@@ -354,6 +410,14 @@
   --menu-hover: #3d484d;
   --danger: #e67e80;
   --code-inline-bg: #343f44;
+
+  /* Vim mode pill (docs/VIM.md): backgrounds, and the text on them. */
+  --vim-pill-fg: #232a2e;
+  --vim-normal: #9da9a0;
+  --vim-insert: #a7c080;
+  --vim-visual: #d699b6;
+  --vim-replace: #e67e80;
+  --vim-command: #e69875;
 
   --syn-mark: #9da9a0;
   --syn-heading: #e67e80;
