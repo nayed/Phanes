@@ -261,6 +261,13 @@
 .editor-host[data-vim-mode="v-block"] .cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground {
   background: color-mix(in srgb, var(--vim-visual) 20%, transparent) !important;
 }
+/* Vim mode hides the browser's selection and draws it on a layer behind the
+   text, which the current line's opaque background would cover: drop that
+   background while selecting, so the selection shows on the cursor's line too. */
+.editor-host[data-vim-mode="visual"] .cm-activeLine,
+.editor-host[data-vim-mode="v-block"] .cm-activeLine {
+  background: transparent;
+}
 /* V-LINE tints whole lines and their numbers instead. */
 .editor-host[data-vim-mode="v-line"] .cm-selectionBackground,
 .editor-host[data-vim-mode="v-line"] .cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground {

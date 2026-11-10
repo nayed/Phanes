@@ -33,16 +33,21 @@ export function countWords(text: string): number {
 }
 
 function cursorOf(state: EditorState) {
-  const { head, from, to } = state.selection.main;
+  const { head } = state.selection.main;
   const line = state.doc.lineAt(head);
-  let lastLine = state.doc.lineAt(to).number;
+  // Over every range: a block selection (Vim's V-BLOCK) is one range per line.
+  const ranges = state.selection.ranges;
+  const from = Math.min(...ranges.map((r) => r.from));
+  const to = Math.max(...ranges.map((r) => r.to));
+  const selChars = ranges.reduce((n, r) => n + r.to - r.from, 0);
   const firstLine = state.doc.lineAt(from).number;
+  let lastLine = state.doc.lineAt(to).number;
   if (to > from && to === state.doc.line(lastLine).from && lastLine > firstLine) lastLine--;
   return {
     line: line.number,
     col: head - line.from + 1,
     selLines: to > from ? lastLine - firstLine + 1 : 0,
-    selChars: to - from,
+    selChars,
   };
 }
 

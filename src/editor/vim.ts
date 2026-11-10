@@ -38,9 +38,11 @@ const visualField = StateField.define<VisualKind>({
   },
 });
 
-/** First and last line numbers touched by the main selection. */
+/** First and last line numbers touched by the selection (all ranges: a block is one per line). */
 function selectedLines(state: EditorState): [number, number] {
-  const { from, to } = state.selection.main;
+  const ranges = state.selection.ranges;
+  const from = Math.min(...ranges.map((r) => r.from));
+  const to = Math.max(...ranges.map((r) => r.to));
   const first = state.doc.lineAt(from);
   let last = state.doc.lineAt(to);
   // A selection ending at the very start of a line doesn't include that line.
