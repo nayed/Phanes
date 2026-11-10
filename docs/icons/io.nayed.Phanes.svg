@@ -4,8 +4,8 @@
     <clipPath id="bottom"><polygon points="0,76 40,62 64,78 88,62 128,76 128,128 0,128"/></clipPath>
     <clipPath id="top"><polygon points="0,0 128,0 128,76 88,62 64,78 40,62 0,76"/></clipPath>
     <linearGradient id="shell" x1="0.2" y1="0" x2="0.8" y2="1">
-      <stop offset="0" stop-color="#22457f"/>
-      <stop offset="1" stop-color="#0d2347"/>
+      <stop offset="0" stop-color="#3d74cc"/>
+      <stop offset="1" stop-color="#1f4b96"/>
     </linearGradient>
     <linearGradient id="beam" x1="74" y1="76" x2="96" y2="20" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#f6d32d" stop-opacity="0.95"/>
@@ -24,12 +24,12 @@
       <ellipse cx="68" cy="72" rx="22" ry="5.5" fill="#fffbd6"/>
     </g>
     <g clip-path="url(#bottom)">
-      <path d="M64 10C92 10 108 52 108 80C108 106 88 122 64 122C40 122 20 106 20 80C20 52 36 10 64 10Z" fill="url(#shell)" stroke="#5a86cc" stroke-width="2.5"/>
+      <path d="M64 10C92 10 108 52 108 80C108 106 88 122 64 122C40 122 20 106 20 80C20 52 36 10 64 10Z" fill="url(#shell)" stroke="#8ab4f0" stroke-width="2.5"/>
     </g>
     <g transform="translate(-3,-5) rotate(-24 20 72)">
       <g clip-path="url(#top)">
-        <path d="M64 10C92 10 108 52 108 80C108 106 88 122 64 122C40 122 20 106 20 80C20 52 36 10 64 10Z" fill="url(#shell)" stroke="#5a86cc" stroke-width="2.5"/>
-        <ellipse cx="50" cy="34" rx="6" ry="12" fill="#ffffff" opacity="0.2"/>
+        <path d="M64 10C92 10 108 52 108 80C108 106 88 122 64 122C40 122 20 106 20 80C20 52 36 10 64 10Z" fill="url(#shell)" stroke="#8ab4f0" stroke-width="2.5"/>
+        <ellipse cx="50" cy="34" rx="6" ry="12" fill="#ffffff" opacity="0.22"/>
       </g>
     </g>
   </g>
