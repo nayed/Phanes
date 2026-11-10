@@ -30,6 +30,7 @@ The screens:
 | `04-editor-only` | Editor view mode. |
 | `05-preview-only` | Preview (reading) view mode, document centered. |
 | `06-app-icon-directions` | Icon exploration; the chosen icon is "navy cosmic egg (A2)" (marked Pick). Use the files in `icons/`, not this image. |
+| `07-vim-mode` | Vim mode's four states (Normal, Insert, Visual line, Command line) in Gruvbox Light. Specified in [`VIM.md`](VIM.md). |
 
 ---
 
@@ -343,7 +344,7 @@ The future command palette (`Shift+Ctrl+P`) will list this registry, so give eve
 
 Do not build these now. The foundations above are there so each one is an addition, not a rewrite.
 
-- Vim keybindings in the editor (CodeMirror vim extension), as a setting.
+- ~~Vim keybindings in the editor~~: specified in [`VIM.md`](VIM.md).
 - Command palette (`Shift+Ctrl+P`) and quick open (`Ctrl+P`, fuzzy file search in the workspace).
 - Live reload when a file changes on disk (for example edited in Neovim), and refreshing the tree after outside changes, using the `notify` watcher.
 - Mermaid diagrams and math (`$…$`, `$$…$$` with KaTeX), as remark/rehype plugins.

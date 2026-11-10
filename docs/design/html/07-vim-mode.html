@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Phanes design: Vim Mode</title>
+<!-- Static render of the design canvas. Visual reference only: read exact sizes and colors from it, do not copy the markup as app code. -->
+<style>body{margin:0;font-family:Inter,system-ui,sans-serif}</style>
+</head>
+<body>
+
+
+<div style="width: 1520px; box-sizing: border-box; padding: 48px; background: #ffffff; color: #1f2328; font-family: Inter, system-ui, sans-serif; display: flex; flex-direction: column; gap: 32px">
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -0.01em">Vim mode — four states</h1>
+<p style="margin: 0; font-size: 15px; color: #59636e">The editor pane and status bar of the main window in Gruvbox Light. The mode pill, cursor shape and command line are all that change; mode colors come from the active colorscheme.</p>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 44px 40px">
+
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 style="margin: 0; font-size: 18px; font-weight: 600">Normal</h2>
+<p style="margin: 0; font-size: 13px; line-height: 1.5; color: #59636e">Block cursor on the character, in the theme’s link color. Keys typed so far (here 2d, waiting for a motion) show right after the pill.</p>
+</div>
+
+<div style="position: relative; height: 452px; display: flex; flex-direction: column; border-radius: 12px; overflow: hidden; border: 1px solid #d5c4a1; background: #fbf1c7; color: #3c3836; font-family: Inter, sans-serif">
+
+<div style="display: flex; gap: 4px; padding: 6px 8px; background: #f2e5bc; border-bottom: 1px solid #d5c4a1">
+<span style="display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 14px; border-radius: 8px; background: #fbf1c7; box-shadow: 0 1px 2px rgba(60,56,54,0.18); font-size: 13px; font-weight: 600">
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6"></path></svg>notes.md</span>
+<span style="display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 14px; font-size: 13px; color: #665c54">
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6"></path></svg>AGENTS.md</span>
+</div>
+
+<div style="flex: 1 1 auto; min-height: 0; padding: 12px 0; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 14px; line-height: 24px; overflow: hidden">
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">1</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"># </span><span style="color: #79740e; font-weight: 600; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Project notes</span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">2</span>
+<span style="white-space: pre"><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> </span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">3</span>
+<span style="white-space: pre"><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">A </span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">**</span><span style="color: #3c3836; font-weight: 600; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">small</span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">**</span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> editor with a live </span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">_</span><span style="color: #3c3836; font-weight: 400; font-style: italic; text-decoration: none; background: transparent; border-radius: 0">GFM</span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">_</span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> preview.</span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">4</span>
+<span style="white-space: pre"><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> </span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">5</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">## </span><span style="color: #79740e; font-weight: 600; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Today</span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">6</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">- [x] </span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Pick the stack (Tauri + React)</span></span>
+</div>
+
+<div style="display: flex; background: #f2e5bc">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #3c3836">7</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">- [ ] </span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Wire up </span><span style="color: #427b58; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">`</span><span style="color: #fbf1c7; font-weight: 400; font-style: normal; text-decoration: none; background: rgba(7,102,120,0.85); border-radius: 1px">r</span><span style="color: #427b58; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">emark-gfm`</span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">8</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">- [ ] ~~</span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: line-through; background: transparent; border-radius: 0">Electron</span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">~~</span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> too heavy</span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">9</span>
+<span style="white-space: pre"><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> </span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">10</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">| </span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Feature       </span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">| </span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Status  </span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">|</span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">11</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">| ------------- | ------- |</span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">12</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">| </span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Live preview  </span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">| </span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Done    </span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">|</span></span>
+</div>
+
+</div>
+
+
+
+<div style="display: flex; align-items: center; gap: 18px; height: 30px; flex-shrink: 0; padding: 0 12px 0 0; background: #f2e5bc; border-top: 1px solid #d5c4a1; font-size: 12px; color: #665c54; white-space: nowrap">
+<span style="display: flex; align-items: center; height: 30px; padding: 0 12px; background: #665c54; color: #fbf1c7; font: 700 11px 'JetBrains Mono', monospace; letter-spacing: 0.06em">NORMAL</span>
+<span style="margin-left: -10px; font: 600 12px 'JetBrains Mono', monospace; color: #3c3836">2d</span>
+<span style="font-weight: 600; color: #3c3836">GFM</span>
+<span>Ln 7, Col 16</span>
+<span style="flex-grow: 1"></span>
+<span>Synced scroll</span>
+<span style="color: #3c3836">Gruvbox</span>
+<svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#3c3836" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+</div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 style="margin: 0; font-size: 18px; font-weight: 600">Insert</h2>
+<p style="margin: 0; font-size: 13px; line-height: 1.5; color: #59636e">Thin bar cursor, like the editor without vim. The pill turns green; nothing else moves, so switching modes never shifts the layout.</p>
+</div>
+
+<div style="position: relative; height: 452px; display: flex; flex-direction: column; border-radius: 12px; overflow: hidden; border: 1px solid #d5c4a1; background: #fbf1c7; color: #3c3836; font-family: Inter, sans-serif">
+
+<div style="display: flex; gap: 4px; padding: 6px 8px; background: #f2e5bc; border-bottom: 1px solid #d5c4a1">
+<span style="display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 14px; border-radius: 8px; background: #fbf1c7; box-shadow: 0 1px 2px rgba(60,56,54,0.18); font-size: 13px; font-weight: 600">
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6"></path></svg>notes.md</span>
+<span style="display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 14px; font-size: 13px; color: #665c54">
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6"></path></svg>AGENTS.md</span>
+</div>
+
+<div style="flex: 1 1 auto; min-height: 0; padding: 12px 0; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 14px; line-height: 24px; overflow: hidden">
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">1</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"># </span><span style="color: #79740e; font-weight: 600; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Project notes</span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">2</span>
+<span style="white-space: pre"><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> </span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">3</span>
+<span style="white-space: pre"><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">A </span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">**</span><span style="color: #3c3836; font-weight: 600; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">small</span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">**</span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> editor with a live </span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">_</span><span style="color: #3c3836; font-weight: 400; font-style: italic; text-decoration: none; background: transparent; border-radius: 0">GFM</span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">_</span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> preview.</span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">4</span>
+<span style="white-space: pre"><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> </span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">5</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">## </span><span style="color: #79740e; font-weight: 600; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Today</span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">6</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">- [x] </span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Pick the stack (Tauri + React)</span></span>
+</div>
+
+<div style="display: flex; background: #f2e5bc">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #3c3836">7</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">- [ ] </span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Wire up </span><span style="color: #427b58; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">`remark-gfm`</span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> and rehype</span><span style="display: inline-block; width: 2px; height: 18px; vertical-align: -4px; background: #076678"></span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">8</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">- [ ] ~~</span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: line-through; background: transparent; border-radius: 0">Electron</span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">~~</span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> too heavy</span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">9</span>
+<span style="white-space: pre"><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> </span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">10</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">| </span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Feature       </span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">| </span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Status  </span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">|</span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">11</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">| ------------- | ------- |</span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">12</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">| </span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Live preview  </span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">| </span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Done    </span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">|</span></span>
+</div>
+
+</div>
+
+
+
+<div style="display: flex; align-items: center; gap: 18px; height: 30px; flex-shrink: 0; padding: 0 12px 0 0; background: #f2e5bc; border-top: 1px solid #d5c4a1; font-size: 12px; color: #665c54; white-space: nowrap">
+<span style="display: flex; align-items: center; height: 30px; padding: 0 12px; background: #726e0d; color: #fbf1c7; font: 700 11px 'JetBrains Mono', monospace; letter-spacing: 0.06em">INSERT</span>
+
+<span style="font-weight: 600; color: #3c3836">GFM</span>
+<span>Ln 7, Col 31</span>
+<span style="flex-grow: 1"></span>
+<span>Synced scroll</span>
+<span style="color: #3c3836">Gruvbox</span>
+<svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#3c3836" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+</div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 style="margin: 0; font-size: 18px; font-weight: 600">Visual line</h2>
+<p style="margin: 0; font-size: 13px; line-height: 1.5; color: #59636e">Selected lines get a purple tint matching the pill, so the mode reads at a glance. The status bar counts the selection.</p>
+</div>
+
+<div style="position: relative; height: 452px; display: flex; flex-direction: column; border-radius: 12px; overflow: hidden; border: 1px solid #d5c4a1; background: #fbf1c7; color: #3c3836; font-family: Inter, sans-serif">
+
+<div style="display: flex; gap: 4px; padding: 6px 8px; background: #f2e5bc; border-bottom: 1px solid #d5c4a1">
+<span style="display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 14px; border-radius: 8px; background: #fbf1c7; box-shadow: 0 1px 2px rgba(60,56,54,0.18); font-size: 13px; font-weight: 600">
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6"></path></svg>notes.md</span>
+<span style="display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 14px; font-size: 13px; color: #665c54">
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6"></path></svg>AGENTS.md</span>
+</div>
+
+<div style="flex: 1 1 auto; min-height: 0; padding: 12px 0; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 14px; line-height: 24px; overflow: hidden">
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">1</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"># </span><span style="color: #79740e; font-weight: 600; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Project notes</span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">2</span>
+<span style="white-space: pre"><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> </span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">3</span>
+<span style="white-space: pre"><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">A </span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">**</span><span style="color: #3c3836; font-weight: 600; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">small</span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">**</span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> editor with a live </span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">_</span><span style="color: #3c3836; font-weight: 400; font-style: italic; text-decoration: none; background: transparent; border-radius: 0">GFM</span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">_</span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> preview.</span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">4</span>
+<span style="white-space: pre"><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> </span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">5</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">## </span><span style="color: #79740e; font-weight: 600; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Today</span></span>
+</div>
+
+<div style="display: flex; background: rgba(143,63,113,0.2)">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #3c3836">6</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">- [x] </span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Pick the stack (Tauri + React)</span></span>
+</div>
+
+<div style="display: flex; background: rgba(143,63,113,0.2)">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #3c3836">7</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">- [ ] </span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Wire up </span><span style="color: #427b58; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">`remark-gfm`</span></span>
+</div>
+
+<div style="display: flex; background: rgba(143,63,113,0.2)">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #3c3836">8</span>
+<span style="white-space: pre"><span style="color: #fbf1c7; font-weight: 400; font-style: normal; text-decoration: none; background: rgba(7,102,120,0.85); border-radius: 1px">-</span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> [ ] ~~</span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: line-through; background: transparent; border-radius: 0">Electron</span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">~~</span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> too heavy</span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">9</span>
+<span style="white-space: pre"><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> </span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">10</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">| </span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Feature       </span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">| </span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Status  </span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">|</span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">11</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">| ------------- | ------- |</span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">12</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">| </span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Live preview  </span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">| </span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Done    </span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">|</span></span>
+</div>
+
+</div>
+
+
+
+<div style="display: flex; align-items: center; gap: 18px; height: 30px; flex-shrink: 0; padding: 0 12px 0 0; background: #f2e5bc; border-top: 1px solid #d5c4a1; font-size: 12px; color: #665c54; white-space: nowrap">
+<span style="display: flex; align-items: center; height: 30px; padding: 0 12px; background: #8f3f71; color: #ffffff; font: 700 11px 'JetBrains Mono', monospace; letter-spacing: 0.06em">V-LINE</span>
+
+<span style="font-weight: 600; color: #3c3836">GFM</span>
+<span>Ln 8, Col 1</span>
+<span style="flex-grow: 1">3 lines selected</span>
+<span>Synced scroll</span>
+<span style="color: #3c3836">Gruvbox</span>
+<svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#3c3836" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+</div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 style="margin: 0; font-size: 18px; font-weight: 600">Command line</h2>
+<p style="margin: 0; font-size: 13px; line-height: 1.5; color: #59636e">A 28 px bar at the bottom of the editor pane. :e completes paths from the workspace; / and ? reuse the same bar for search, with a match count on the right.</p>
+</div>
+
+<div style="position: relative; height: 452px; display: flex; flex-direction: column; border-radius: 12px; overflow: hidden; border: 1px solid #d5c4a1; background: #fbf1c7; color: #3c3836; font-family: Inter, sans-serif">
+
+<div style="display: flex; gap: 4px; padding: 6px 8px; background: #f2e5bc; border-bottom: 1px solid #d5c4a1">
+<span style="display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 14px; border-radius: 8px; background: #fbf1c7; box-shadow: 0 1px 2px rgba(60,56,54,0.18); font-size: 13px; font-weight: 600">
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6"></path></svg>notes.md</span>
+<span style="display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 14px; font-size: 13px; color: #665c54">
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6"></path></svg>AGENTS.md</span>
+</div>
+
+<div style="flex: 1 1 auto; min-height: 0; padding: 12px 0; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 14px; line-height: 24px; overflow: hidden">
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">1</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"># </span><span style="color: #79740e; font-weight: 600; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Project notes</span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">2</span>
+<span style="white-space: pre"><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> </span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">3</span>
+<span style="white-space: pre"><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">A </span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">**</span><span style="color: #3c3836; font-weight: 600; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">small</span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">**</span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> editor with a live </span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">_</span><span style="color: #3c3836; font-weight: 400; font-style: italic; text-decoration: none; background: transparent; border-radius: 0">GFM</span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">_</span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> preview.</span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">4</span>
+<span style="white-space: pre"><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> </span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">5</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">## </span><span style="color: #79740e; font-weight: 600; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Today</span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">6</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">- [x] </span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Pick the stack (Tauri + React)</span></span>
+</div>
+
+<div style="display: flex; background: #f2e5bc">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #3c3836">7</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">- [ ] </span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Wire up </span><span style="color: #427b58; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">`remark-gfm`</span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">8</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">- [ ] ~~</span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: line-through; background: transparent; border-radius: 0">Electron</span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">~~</span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> too heavy</span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">9</span>
+<span style="white-space: pre"><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0"> </span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">10</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">| </span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Feature       </span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">| </span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Status  </span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">|</span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">11</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">| ------------- | ------- |</span></span>
+</div>
+
+<div style="display: flex; background: transparent">
+<span style="width: 52px; flex-shrink: 0; padding-right: 16px; box-sizing: border-box; text-align: right; color: #7c6f64">12</span>
+<span style="white-space: pre"><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">| </span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Live preview  </span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">| </span><span style="color: #3c3836; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">Done    </span><span style="color: #7c6f64; font-weight: 400; font-style: normal; text-decoration: none; background: transparent; border-radius: 0">|</span></span>
+</div>
+
+</div>
+
+
+<div style="display: flex; align-items: center; height: 28px; padding: 0 14px; background: #f2e5bc; border-top: 1px solid #d5c4a1; font: 400 14px 'JetBrains Mono', monospace; white-space: pre; color: #3c3836"><span style="color: #af3a03; font-weight: 700">:</span>e projects/mar<span style="display: inline-block; width: 2px; height: 16px; margin-left: 1px; background: #076678"></span></div>
+<div role="listbox" aria-label="Completions" style="position: absolute; left: 14px; bottom: 64px; width: 320px; box-sizing: border-box; padding: 5px; border-radius: 10px; background: #fbf1c7; border: 1px solid #d5c4a1; box-shadow: 0 2px 6px rgba(60,56,54,0.12), 0 10px 24px rgba(60,56,54,0.2); font: 400 13px 'JetBrains Mono', monospace">
+<div role="option" aria-selected="true" style="display: flex; align-items: center; gap: 8px; height: 28px; padding: 0 9px; border-radius: 6px; background: #ebdbb2"><span style="flex-grow: 1">projects/<span style="font-weight: 700">mar</span>kdown-editor.md</span><span style="font: 400 11px Inter, sans-serif; color: #665c54">Tab</span></div>
+<div role="option" aria-selected="false" style="display: flex; align-items: center; height: 28px; padding: 0 9px; border-radius: 6px; color: #665c54">projects/</div>
+</div>
+
+
+<div style="display: flex; align-items: center; gap: 18px; height: 30px; flex-shrink: 0; padding: 0 12px 0 0; background: #f2e5bc; border-top: 1px solid #d5c4a1; font-size: 12px; color: #665c54; white-space: nowrap">
+<span style="display: flex; align-items: center; height: 30px; padding: 0 12px; background: #af3a03; color: #ffffff; font: 700 11px 'JetBrains Mono', monospace; letter-spacing: 0.06em">COMMAND</span>
+
+<span style="font-weight: 600; color: #3c3836">GFM</span>
+<span>Ln 7, Col 16</span>
+<span style="flex-grow: 1"></span>
+<span>Synced scroll</span>
+<span style="color: #3c3836">Gruvbox</span>
+<svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#3c3836" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+</div>
+</div>
+</div>
+
+</div>
+
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px; font-size: 13px; color: #59636e">
+<span style="font-weight: 600; color: #1f2328">Mode colors in Gruvbox</span>
+
+<span style="display: flex; align-items: center; gap: 8px"><span style="padding: 3px 8px; border-radius: 4px; background: #665c54; color: #fbf1c7; font: 700 11px 'JetBrains Mono', monospace; letter-spacing: 0.06em">NORMAL</span>fg3</span>
+
+<span style="display: flex; align-items: center; gap: 8px"><span style="padding: 3px 8px; border-radius: 4px; background: #726e0d; color: #fbf1c7; font: 700 11px 'JetBrains Mono', monospace; letter-spacing: 0.06em">INSERT</span>green</span>
+
+<span style="display: flex; align-items: center; gap: 8px"><span style="padding: 3px 8px; border-radius: 4px; background: #8f3f71; color: #ffffff; font: 700 11px 'JetBrains Mono', monospace; letter-spacing: 0.06em">VISUAL</span>purple</span>
+
+<span style="display: flex; align-items: center; gap: 8px"><span style="padding: 3px 8px; border-radius: 4px; background: #9d0006; color: #ffffff; font: 700 11px 'JetBrains Mono', monospace; letter-spacing: 0.06em">REPLACE</span>red</span>
+
+<span style="display: flex; align-items: center; gap: 8px"><span style="padding: 3px 8px; border-radius: 4px; background: #af3a03; color: #ffffff; font: 700 11px 'JetBrains Mono', monospace; letter-spacing: 0.06em">COMMAND</span>orange</span>
+
+</div>
+</div>
+
+</body>
+</html>

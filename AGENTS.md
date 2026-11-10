@@ -3,6 +3,7 @@
 Phanes is a desktop markdown editor and reader for Linux (GNOME on Wayland, Debian and Arch). It's a personal tool with one user, its author. Tauri 2 opens a GTK 3 window holding a WebKitGTK web view; the whole interface is a React + TypeScript app drawn inside it, and Rust handles everything that touches the system.
 
 - `docs/PHANES.md` is the full product brief and the source of truth for behavior and design. Read the relevant section before changing a feature.
+- `docs/VIM.md` specifies the optional Vim mode (CodeMirror's `@replit/codemirror-vim`); read it before touching the editor's keys, the status bar or the command registry.
 - `README.md` has the feature list, tech stack, layout table and build steps.
 
 ## Commands
