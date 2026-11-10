@@ -15,9 +15,11 @@ const COLOR_MODES: Record<ColorSchemePreference, { icon: LucideIcon; label: stri
   dark: { icon: Moon, label: "Dark" },
 };
 
-/** [Vim mode pill] UTF-8 · Ln, Col · words … Vim toggle · synced-scroll toggle · colorscheme · color mode. */
+/** [Vim mode pill] Ln, Col · words [· CRLF] … Vim toggle · synced-scroll toggle · colorscheme · color mode. */
 export function StatusBar() {
   const hasTab = useTabs((s) => s.activeId !== null);
+  // Windows line endings, which saving keeps: the one file property worth showing (shown only then).
+  const crlf = useTabs((s) => s.tabs.find((t) => t.id === s.activeId)?.lineEnding === "\r\n");
   const line = useEditorStatus((s) => s.line);
   const col = useEditorStatus((s) => s.col);
   const words = useEditorStatus((s) => s.words);
@@ -58,7 +60,6 @@ export function StatusBar() {
           ) : null}
         </>
       )}
-      <span>UTF-8</span>
       {hasTab && (
         <>
           <span>
@@ -77,6 +78,7 @@ export function StatusBar() {
               {words} {words === 1 ? "word" : "words"}
             </span>
           )}
+          {crlf && <span title="Windows line endings, kept when saving">CRLF</span>}
         </>
       )}
       <span className="status-spacer" />

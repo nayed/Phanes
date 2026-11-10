@@ -74,7 +74,7 @@ See `07-vim-mode.png` for all of these.
 
 ### 1. Mode pill in the status bar
 
-- At the **far left** of the status bar, **before `UTF-8`**, touching the left edge, full status bar height (30 px), 12 px horizontal padding.
+- At the **far left** of the status bar, **before `Ln, Col`**, touching the left edge, full status bar height (30 px), 12 px horizontal padding.
 - Text: `NORMAL`, `INSERT`, `VISUAL`, `V-LINE`, `V-BLOCK`, `REPLACE`, `COMMAND`. JetBrains Mono 11 px, weight 700, letter-spacing 0.06em, uppercase.
 - Background and text colors come from the active colorscheme (table below).
 - **Pending keys** appear right after the pill in JetBrains Mono 12 px semi-bold, main text color (e.g. `2d`). Hidden when empty.

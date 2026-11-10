@@ -44,7 +44,7 @@ In Orphic mythology, **Phanes** is the primordial god hatched from the cosmic eg
 - Built on **CodeMirror 6**, with markdown syntax highlighting, including highlighting inside fenced code blocks.
 - Line numbers, current-line highlight, soft wrap, search (`Ctrl+F`), undo/redo and Tab to indent.
 - Cursor position and word count in the status bar.
-- Saving keeps the file's original line endings.
+- Saving keeps the file's original line endings; files with Windows line endings show `CRLF` in the status bar.
 - **Relative line numbers**, as an option (main menu, or `:set rnu` in Vim mode).
 
 ### Vim mode
