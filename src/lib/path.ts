@@ -75,3 +75,18 @@ export function expandHome(path: string): string {
   if (path === "~") return home;
   return path.startsWith("~/") ? home + path.slice(1) : path;
 }
+
+/**
+ * Vim's `pathshorten`, after `tildify`: every folder down to its first
+ * character (a leading dot kept), the file name whole.
+ * "/home/nayed/Codes/Misc/Phanes/src-tauri/src/app_state.rs" → "~/C/M/P/s/s/app_state.rs".
+ */
+export function shortenPath(path: string): string {
+  const parts = tildify(path).split("/");
+  return parts
+    .map((part, i) => {
+      if (i === parts.length - 1 || part === "" || part === "~") return part;
+      return part.startsWith(".") ? part.slice(0, 2) : part.slice(0, 1);
+    })
+    .join("/");
+}

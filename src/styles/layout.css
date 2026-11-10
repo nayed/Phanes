@@ -159,3 +159,10 @@
   color: var(--muted);
   font: 400 12px var(--font-mono);
 }
+/* The current file's path, shortened like Vim's pathshorten; cut with an ellipsis if the window is narrow. */
+.status-path {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--fg);
+}

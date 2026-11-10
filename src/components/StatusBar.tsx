@@ -5,6 +5,7 @@ import { runCommand } from "../commands/registry";
 import { useEditorStatus } from "../state/editorStatus";
 import { useSettings, type ColorSchemePreference } from "../state/settings";
 import { useTabs } from "../state/tabs";
+import { shortenPath } from "../lib/path";
 import { useVimStatus } from "../state/vimStatus";
 import { SchemePicker } from "./SchemePicker";
 
@@ -15,11 +16,12 @@ const COLOR_MODES: Record<ColorSchemePreference, { icon: LucideIcon; label: stri
   dark: { icon: Moon, label: "Dark" },
 };
 
-/** [Vim mode pill] Ln, Col · words [· CRLF] … Vim toggle · synced-scroll toggle · colorscheme · color mode. */
+/** [Vim mode pill] path · Ln, Col · words [· CRLF] … Vim toggle · synced-scroll toggle · colorscheme · color mode. */
 export function StatusBar() {
   const hasTab = useTabs((s) => s.activeId !== null);
   // Windows line endings, which saving keeps: the one file property worth showing (shown only then).
   const crlf = useTabs((s) => s.tabs.find((t) => t.id === s.activeId)?.lineEnding === "\r\n");
+  const path = useTabs((s) => s.tabs.find((t) => t.id === s.activeId)?.path ?? null);
   const line = useEditorStatus((s) => s.line);
   const col = useEditorStatus((s) => s.col);
   const words = useEditorStatus((s) => s.words);
@@ -62,6 +64,11 @@ export function StatusBar() {
       )}
       {hasTab && (
         <>
+          {path && (
+            <span className="status-path" title={path}>
+              {shortenPath(path)}
+            </span>
+          )}
           <span>
             Ln {line}, Col {col}
           </span>
