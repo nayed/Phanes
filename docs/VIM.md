@@ -8,7 +8,7 @@ Design reference: `docs/design/screens/07-vim-mode.png` (static HTML version in 
 
 ## Summary
 
-- Vim mode is **off by default** and toggled from the main menu or the command registry. The setting is remembered.
+- Vim mode is **off by default** and toggled from the main menu, the **Vim** toggle in the status bar, or the command registry. The setting is remembered.
 - It changes the **editor only**. The rest of the app stays the same, except for four touch points: the **status bar** (a mode indicator), a **command line** at the bottom of the editor pane, the **command registry** (ex commands call it), and **keyboard shortcuts** (some Ctrl keys go to Vim while the editor has focus).
 - Switching modes must **never shift the layout**. Only the mode pill's text and color, the cursor shape and the selection tint change.
 
@@ -53,7 +53,7 @@ Keep this state in the app store (`state/`) per tab, so the status bar re-render
 
 | Setting | Default | Where it's set |
 | --- | --- | --- |
-| `editor.vimMode` | off | Main menu checkbox **Vim Mode**; command `editor.toggleVim` |
+| `editor.vimMode` | off | Main menu checkbox **Vim Mode**; the **Vim** toggle in the status bar; command `editor.toggleVim` |
 | `editor.vimSystemClipboard` | on | Main menu → Vim Mode options, or `:set clipboard=unnamedplus` / `:set clipboard=` |
 | `editor.relativeLineNumbers` | off | Main menu, or `:set rnu` / `:set nornu` |
 
@@ -74,13 +74,18 @@ See `07-vim-mode.png` for all of these.
 
 ### 1. Mode pill in the status bar
 
-- At the **far left** of the status bar, **before `GFM`**, touching the left edge, full status bar height (30 px), 12 px horizontal padding.
+- At the **far left** of the status bar, **before `UTF-8`**, touching the left edge, full status bar height (30 px), 12 px horizontal padding.
 - Text: `NORMAL`, `INSERT`, `VISUAL`, `V-LINE`, `V-BLOCK`, `REPLACE`, `COMMAND`. JetBrains Mono 11 px, weight 700, letter-spacing 0.06em, uppercase.
 - Background and text colors come from the active colorscheme (table below).
 - **Pending keys** appear right after the pill in JetBrains Mono 12 px semi-bold, main text color (e.g. `2d`). Hidden when empty.
 - **Recording**: `recording @q` in the same spot, muted text color.
 - In Visual modes, the status bar's free space (where the word count usually is) shows the selection size: `3 lines selected`, or `14 characters selected` for charwise.
-- When Vim mode is **off**, the pill and these extras are not rendered at all, and the status bar looks exactly as it does today.
+- When Vim mode is **off**, the pill and these extras are not rendered at all; only the **Vim** toggle remains, struck through.
+
+### 1b. Vim toggle in the status bar
+
+- Right-aligned, just left of the "Synced scroll" toggle, and styled the same: a keyboard icon and the word **Vim**, 12 px muted text, struck through and dimmed when Vim mode is off.
+- Clicking it runs `editor.toggleVim`, like the main menu's **Vim Mode** checkbox. Its tooltip says "Vim mode is on" or "Vim mode is off".
 
 ### 2. Cursor shape
 

@@ -1,4 +1,4 @@
-import { ArrowDownUp, ChevronUp, Monitor, Moon, Sun, type LucideIcon } from "lucide-react";
+import { ArrowDownUp, ChevronUp, Keyboard, Monitor, Moon, Sun, type LucideIcon } from "lucide-react";
 import { useCallback, useRef, useState } from "react";
 import { COLORSCHEMES } from "../app/theme";
 import { runCommand } from "../commands/registry";
@@ -15,7 +15,7 @@ const COLOR_MODES: Record<ColorSchemePreference, { icon: LucideIcon; label: stri
   dark: { icon: Moon, label: "Dark" },
 };
 
-/** GFM · UTF-8 · Ln, Col · words … synced-scroll toggle · colorscheme · color mode. */
+/** [Vim mode pill] UTF-8 · Ln, Col · words … Vim toggle · synced-scroll toggle · colorscheme · color mode. */
 export function StatusBar() {
   const hasTab = useTabs((s) => s.activeId !== null);
   const line = useEditorStatus((s) => s.line);
@@ -28,7 +28,8 @@ export function StatusBar() {
   const schemeButton = useRef<HTMLButtonElement>(null);
   const [picker, setPicker] = useState<DOMRect | null>(null);
   const closePicker = useCallback(() => setPicker(null), []);
-  const vimOn = useSettings((s) => s.vimMode) && hasTab;
+  const vimEnabled = useSettings((s) => s.vimMode);
+  const vimOn = vimEnabled && hasTab;
   const vimMode = useVimStatus((s) => s.mode);
   const pending = useVimStatus((s) => s.pending);
   const recording = useVimStatus((s) => s.recording);
@@ -57,7 +58,6 @@ export function StatusBar() {
           ) : null}
         </>
       )}
-      <span className="status-strong">GFM</span>
       <span>UTF-8</span>
       {hasTab && (
         <>
@@ -80,6 +80,16 @@ export function StatusBar() {
         </>
       )}
       <span className="status-spacer" />
+      <button
+        type="button"
+        className="status-toggle"
+        aria-pressed={vimEnabled}
+        title={vimEnabled ? "Vim mode is on" : "Vim mode is off"}
+        onClick={() => void runCommand("editor.toggleVim")}
+      >
+        <Keyboard size={12} strokeWidth={2.5} aria-hidden />
+        Vim
+      </button>
       <button
         type="button"
         className="status-toggle"

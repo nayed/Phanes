@@ -169,7 +169,7 @@ In Split mode, scrolling the editor scrolls the preview to the matching block, u
 
 30 px tall, along the bottom of the window, 12 px muted text, items 20 px apart:
 
-`GFM` (semi-bold, main text color) · `UTF-8` · `Ln 22, Col 42` · `64 words` … then, aligned right, the synced-scroll toggle (arrows icon + "Synced scroll") and the colorscheme name (`GitHub Default` with a small up chevron), which opens the colorscheme picker, followed by an icon-only color mode button: each click moves to the next of Follow System (monitor icon), Light (sun) and Dark (moon), in a loop.
+`UTF-8` · `Ln 22, Col 42` · `64 words` (preceded by the Vim mode pill when Vim mode is on, see [`VIM.md`](VIM.md)) … then, aligned right, the Vim mode toggle (keyboard icon + "Vim", struck through when off, like the synced-scroll toggle), the synced-scroll toggle (arrows icon + "Synced scroll") and the colorscheme name (`GitHub Default` with a small up chevron), which opens the colorscheme picker, followed by an icon-only color mode button: each click moves to the next of Follow System (monitor icon), Light (sun) and Dark (moon), in a loop.
 
 #### Colorscheme picker
 
@@ -282,7 +282,7 @@ Keep text contrast at least 4.5:1 against its background when adding colors.
 | Segmented control | Inter | 13 px | 500, active 600 |
 | Sidebar label "Workspace" | Inter | 11 px uppercase, 0.06em tracking | 600, muted |
 | Sidebar path, tree rows, menus, tabs | Inter | 13 px | 400 (active 600) |
-| Status bar | Inter | 12 px | 400, `GFM` 600 |
+| Status bar | Inter | 12 px | 400 |
 | Editor | JetBrains Mono | 14 px / 24 px | 400, headings 600 |
 | Preview body | Inter | 15 px / 1.6 | 400 |
 | Preview H1 / H2 | Inter | 28 px / 21 px | 600 |

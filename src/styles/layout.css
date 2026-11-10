@@ -92,10 +92,6 @@
   white-space: nowrap;
   overflow: hidden;
 }
-.status-strong {
-  font-weight: 600;
-  color: var(--fg);
-}
 .status-spacer {
   flex-grow: 1;
   margin-left: -20px;
