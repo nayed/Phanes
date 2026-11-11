@@ -5,6 +5,7 @@ mod fs;
 mod gtk_theme;
 mod system_theme;
 mod window;
+mod window_state;
 
 use tauri::Manager;
 
@@ -28,6 +29,7 @@ pub fn run() {
                 // anyway after a few seconds if the frontend never says so (it
                 // failed to start), so there is something on screen to look at.
                 window::setup(&main);
+                window_state::restore_and_track(&main);
                 let fallback = main.clone();
                 std::thread::spawn(move || {
                     std::thread::sleep(std::time::Duration::from_secs(4));
