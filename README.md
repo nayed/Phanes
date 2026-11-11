@@ -52,7 +52,7 @@ Optional: turn it on from the **Vim** toggle in the status bar or the main menu 
 - Motions, operators, text objects, Visual modes, registers, macros, marks and `/` search, from [`@replit/codemirror-vim`](https://github.com/replit/codemirror-vim).
 - A **mode pill** in the status bar (NORMAL, INSERT, VISUAL, V-LINE, V-BLOCK, REPLACE, COMMAND) in the colorscheme's own colors, with pending keys (`2d`), `recording @q` and the selection size.
 - A block cursor, Visual selections tinted to match the pill, and a command line at the bottom of the editor with a match count for searches.
-- Ex commands that act like the menus: `:w`, `:wa`, `:q`, `:wq`, `:x`, `:qa`, `:e path`, `:tabnew`, `:tabn` / `:tabp` (and `gt` / `gT`), `:Ex`, `:set wrap` / `rnu` / `nu` / `clipboard`, and `:theme name [light|dark]`.
+- Ex commands that act like the menus: `:w`, `:wa`, `:q`, `:wq`, `:x`, `:qa`, `:e path`, `:tabnew`, `:tabn` / `:tabp` (and `gt` / `gT`), `:Ex`, `:set wrap` / `rnu` / `nu` / `clipboard`, and `:theme name [light|dark]`. Tab completes paths after `:e` and color schemes after `:theme`.
 - Yank and paste share the system clipboard (`clipboard=unnamedplus`, on by default).
 - While the editor has focus, Vim gets its Ctrl keys (`Ctrl+W`, `Ctrl+O`, `Ctrl+N`…); `Ctrl+S`, `Ctrl+Tab` and the other app shortcuts keep working. The Keyboard Shortcuts dialog lists them.
 

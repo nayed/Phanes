@@ -133,7 +133,7 @@ function publish(view: EditorView): void {
       }
     });
   }
-  watchSearchInput(view, cm);
+  watchPromptInput(view, cm);
 }
 
 /** Hook into a view's Vim object once (it is recreated when the editor shows another tab). */
@@ -166,16 +166,34 @@ const keyWatcher = Prec.highest(
 
 const tracker = EditorView.updateListener.of((update) => track(update.view));
 
-/* ---------- Search match count ---------- */
+/* ---------- Command line: search count and completion ---------- */
 
 const watchedInputs = new WeakSet<HTMLInputElement>();
 
-/** While `/` or `?` is open, show "current/total" matches on the right of the command line. */
-function watchSearchInput(view: EditorView, cm: VimCM): void {
+/** Called once for each `:` prompt that opens (completion for :e and :theme lives in vimCommands.ts). */
+type CommandPromptHook = (input: HTMLInputElement, panel: HTMLElement) => void;
+let commandPromptHook: CommandPromptHook | null = null;
+
+export function onCommandPrompt(hook: CommandPromptHook): void {
+  commandPromptHook = hook;
+}
+
+/**
+ * Hook into each prompt as it opens: `:` goes to the completion hook; while
+ * `/` or `?` is open, show "current/total" matches on the right of the
+ * command line.
+ */
+function watchPromptInput(view: EditorView, cm: VimCM): void {
   const dialog = cm.state.dialog as HTMLElement | null | undefined;
   const input = dialog?.querySelector("input");
   if (!dialog || !input || watchedInputs.has(input)) return;
   const prompt = (input.previousSibling?.textContent ?? "").trim();
+  if (prompt === ":") {
+    watchedInputs.add(input);
+    const panel = dialog.closest<HTMLElement>(".cm-vim-panel");
+    if (panel && commandPromptHook) commandPromptHook(input, panel);
+    return;
+  }
   if (prompt !== "/" && prompt !== "?") return;
   watchedInputs.add(input);
   const count = document.createElement("span");

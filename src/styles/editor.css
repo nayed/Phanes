@@ -338,3 +338,51 @@
 .editor-host .cm-vim-panel:has(span.cm-vim-message) {
   display: none;
 }
+
+/* :e / :theme completion: a popup above the command line, left-aligned with it. */
+.editor-host .cm-vim-panel {
+  position: relative;
+}
+.editor-host .cm-vim-completion {
+  position: absolute;
+  left: 10px;
+  bottom: calc(100% + 6px);
+  z-index: 10;
+  min-width: 240px;
+  max-width: min(480px, calc(100% - 20px));
+  padding: 5px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--menu-bg);
+  box-shadow: var(--shadow-popover);
+}
+.editor-host .cm-vim-completion[hidden] {
+  display: none;
+}
+.editor-host .cm-vim-completion-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 6px;
+  color: var(--fg);
+  font: 400 13px var(--font-mono);
+  white-space: pre;
+}
+.editor-host .cm-vim-completion-row[aria-selected="true"] {
+  background: var(--menu-hover);
+}
+.editor-host .cm-vim-completion-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.editor-host .cm-vim-completion-label b {
+  font-weight: 700;
+}
+.editor-host .cm-vim-completion-hint {
+  color: var(--muted);
+  font: 400 11px var(--font-ui);
+}

@@ -113,12 +113,13 @@ The extension draws its own block cursor; restyle it in the editor theme rather 
 - Search matches use the existing search highlight; the current match is stronger.
 - Errors (unknown command, pattern not found) show in the same bar in `--danger` for 2 seconds, e.g. `E492: Not an editor command: foo`.
 
-### 5. `:e` completion (nice to have)
+### 5. `:e` and `:theme` completion
 
-- While typing `:e ` or `:tabe `, show a small popup **above the command line**, left-aligned with it: paths from the workspace matching what's typed, best match first.
+- While typing `:e `, `:tabe ` or `:tabnew `, show a small popup **above the command line**, left-aligned with it: folders and markdown files next to what's typed (relative to the current file's folder, like the command itself), folders ending in `/`; names that start with the typed part first, then names that contain it; at most 8.
+- After `:theme `, the same popup lists the colorschemes (alphabetical); after a scheme name, `light`, `dark` and `system`.
 - Popup: `--menu-bg`, 1 px `--border`, 10 px radius, popover shadow, 5 px padding, rows 28 px in JetBrains Mono 13 px, the matched part bold, the selected row in `--menu-hover` with a right-aligned muted `Tab` hint.
-- Tab accepts / cycles, Shift+Tab cycles back.
-- The extension has no completion hook for its command line, so this is custom: listen to the input inside `.cm-vim-panel`. If it turns out fragile, ship without it first and add it later.
+- The highlighted row is the one Tab puts in: Tab accepts it and moves to the next on the following press, Shift+Tab cycles back. Typing again starts over (so after Tab puts `projects/` in, typing `mar` lists what's inside).
+- The extension has no completion hook for its command line, so this is custom (`src/editor/vimCompletion.ts`): it listens to the input inside `.cm-vim-panel`.
 
 ---
 

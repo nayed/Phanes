@@ -159,13 +159,13 @@ const VIM_EX: Array<[string, string]> = [
   ["Close tab (! discards changes)", ":q[!]"],
   ["Save and close tab", ":wq  :x"],
   ["Close all tabs (! discards and quits)", ":qa[!]"],
-  ["Open a file (alone: reload from disk)", ":e [path]"],
+  ["Open a file, Tab completes (alone: reload from disk)", ":e [path]"],
   ["New document, or open a file", ":tabnew [path]"],
   ["Next / previous tab", ":tabn  :tabp  gt  gT"],
   ["Show the workspace sidebar", ":Ex"],
   ["Wrapping, line numbers", ":set wrap  :set rnu  :set nu"],
   ["Share the system clipboard", ":set clipboard=unnamedplus"],
-  ["Color scheme and mode", ":theme name [light|dark]"],
+  ["Color scheme and mode, Tab completes", ":theme name [light|dark]"],
 ];
 
 function ShortcutKeys({ shortcut }: { shortcut: string }) {
