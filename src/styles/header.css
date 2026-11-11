@@ -32,6 +32,10 @@
   font-size: 12px;
   color: var(--muted);
 }
+/* The desktop's title bar already shows the file name. */
+:root[data-title-bar="system"] .header-title-main {
+  display: none;
+}
 
 /* Segmented control: Editor / Split / Preview. */
 .view-switcher {
