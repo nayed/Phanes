@@ -45,6 +45,7 @@ pub fn run() {
             cli::launch_paths,
             system_theme::system_color_scheme,
             gtk_theme::set_gtk_dark,
+            window::title_bar_style,
             fs::list_dir,
             fs::path_info,
             fs::read_text_file,

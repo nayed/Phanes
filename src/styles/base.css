@@ -59,6 +59,10 @@ button {
 :root[data-maximized="true"] .window-frame {
   border-radius: 0;
 }
+/* Under the desktop's own title bar the window is a plain rectangle. */
+:root[data-title-bar="system"] {
+  --window-radius: 0px;
+}
 
 /* ---------- Shared controls ---------- */
 

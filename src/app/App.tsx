@@ -12,6 +12,7 @@ import { dirname, tildify } from "../lib/path";
 import { useSettings } from "../state/settings";
 import { activeTab, openFile, useTabs } from "../state/tabs";
 import { useWorkspace } from "../state/workspace";
+import { setWindowTitle } from "./lifecycle";
 import { installSyncScroll } from "./syncScroll";
 
 export function App() {
@@ -27,6 +28,9 @@ export function App() {
     if (!syncScroll || viewMode !== "split" || !hasTabs || !previewRef.current) return;
     return installSyncScroll(getView, previewRef.current);
   }, [syncScroll, viewMode, hasTabs]);
+
+  const tabTitle = tab?.title ?? null;
+  useEffect(() => setWindowTitle(tabTitle), [tabTitle]);
 
   const place = root ? tildify(root) : tab?.path ? tildify(dirname(tab.path)) : null;
   const state = !tab ? null : tab.dirty ? "Unsaved changes" : tab.path ? "Saved" : "New document";

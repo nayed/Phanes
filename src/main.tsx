@@ -14,7 +14,7 @@ import "./styles/preview.css";
 import "./styles/menu.css";
 import "./styles/dialogs.css";
 import { App } from "./app/App";
-import { installCloseHandler, installMaximizeTracking } from "./app/lifecycle";
+import { installCloseHandler, installMaximizeTracking, installTitleBarStyle } from "./app/lifecycle";
 import { startup } from "./app/startup";
 import { installTheme } from "./app/theme";
 import { wireStores } from "./app/wiring";
@@ -38,7 +38,7 @@ async function start() {
   setCommandErrorReporter((err) => showToast(err instanceof Error ? err.message : String(err)));
   installKeybindings();
   installVim();
-  await Promise.all([installCloseHandler(), installMaximizeTracking()]);
+  await Promise.all([installCloseHandler(), installMaximizeTracking(), installTitleBarStyle()]);
 
   // No browser context menu (Reload, Inspect…) except inside text fields and the editor.
   window.addEventListener("contextmenu", (e) => {

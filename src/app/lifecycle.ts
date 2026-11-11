@@ -1,3 +1,4 @@
+import { invoke } from "@tauri-apps/api/core";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { flushSettings } from "../state/settings";
 
@@ -43,4 +44,22 @@ export async function installMaximizeTracking(): Promise<void> {
   };
   await update();
   await win.onResized(() => void update());
+}
+
+/**
+ * Who draws the title bar: Phanes in its header bar ("own", on GNOME), or the
+ * desktop's window manager in the user's theme ("system", everywhere else).
+ * Mirrored on <html>: with a system title bar the header bar has no window
+ * buttons and the frame has square corners.
+ */
+export async function installTitleBarStyle(): Promise<void> {
+  const style = await invoke<"own" | "system">("title_bar_style").catch(() => "own" as const);
+  document.documentElement.dataset.titleBar = style;
+}
+
+/** The window's own title, shown in a system title bar, the taskbar and the window switcher. */
+export function setWindowTitle(name: string | null): void {
+  void getCurrentWindow()
+    .setTitle(name ? `${name} — Phanes` : "Phanes")
+    .catch(() => {});
 }

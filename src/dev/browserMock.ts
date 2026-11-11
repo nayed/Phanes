@@ -18,6 +18,8 @@ const handlers: Record<string, Handler> = {
   system_color_scheme: () => (systemDark.matches ? "dark" : "light"),
   // GTK's light/dark variant only affects native parts a browser doesn't have.
   set_gtk_dark: () => null,
+  // http://localhost:1420/?titleBar=system shows the header bar as it is under a system title bar.
+  title_bar_style: () => (new URLSearchParams(location.search).get("titleBar") === "system" ? "system" : "own"),
   "plugin:window|is_maximized": () => false,
   "plugin:window|is_fullscreen": () => false,
 };

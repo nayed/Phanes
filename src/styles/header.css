@@ -63,6 +63,10 @@
   margin-left: 10px;
   margin-right: 2px;
 }
+/* The desktop's title bar has the window buttons. */
+:root[data-title-bar="system"] .window-controls {
+  display: none;
+}
 .window-controls button {
   width: 24px;
   height: 24px;
