@@ -44,6 +44,7 @@ pub fn run() {
                 });
             }
             system_theme::watch(app.handle());
+            window::watch_button_layout(app.handle());
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
@@ -53,6 +54,7 @@ pub fn run() {
             system_theme::system_color_scheme,
             gtk_theme::set_gtk_dark,
             window::title_bar_style,
+            window::window_button_layout,
             fs::list_dir,
             fs::path_info,
             fs::read_text_file,

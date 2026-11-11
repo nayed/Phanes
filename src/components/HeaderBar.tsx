@@ -3,6 +3,7 @@ import { Menu, Minus, PanelLeft, Square, X } from "lucide-react";
 import { useCallback, useRef, useState } from "react";
 import { runCommand, type CommandId } from "../commands/registry";
 import { useSettings, type ViewMode } from "../state/settings";
+import { useWindowButtons, type WindowButton } from "../state/windowButtons";
 import { COLORSCHEMES, SCHEMES_BY_NAME } from "../app/theme";
 import { PopoverMenu, type MenuEntry } from "./PopoverMenu";
 
@@ -59,6 +60,7 @@ export function HeaderBar({ title, subtitle }: Props) {
 
   return (
     <header className="header-bar" data-tauri-drag-region>
+      <WindowControls side="left" />
       <button
         type="button"
         className="icon-button"
@@ -118,24 +120,40 @@ export function HeaderBar({ title, subtitle }: Props) {
         />
       )}
 
-      <WindowControls />
+      <WindowControls side="right" />
     </header>
   );
 }
 
-function WindowControls() {
-  const win = getCurrentWindow();
+const windowButtons: Record<WindowButton, { label: string; icon: React.ReactNode; run: () => void }> = {
+  minimize: {
+    label: "Minimize",
+    icon: <Minus size={12} strokeWidth={2.5} aria-hidden />,
+    run: () => void getCurrentWindow().minimize(),
+  },
+  maximize: {
+    label: "Maximize",
+    icon: <Square size={11} strokeWidth={2.5} aria-hidden />,
+    run: () => void getCurrentWindow().toggleMaximize(),
+  },
+  close: {
+    label: "Close window",
+    icon: <X size={12} strokeWidth={2.5} aria-hidden />,
+    run: () => void runCommand("app.quit"),
+  },
+};
+
+/** The window buttons the desktop's button layout puts on this side, if any. */
+function WindowControls({ side }: { side: "left" | "right" }) {
+  const buttons = useWindowButtons((s) => s[side]);
+  if (!buttons.length) return null;
   return (
-    <div className="window-controls">
-      <button type="button" aria-label="Minimize" onClick={() => void win.minimize()}>
-        <Minus size={12} strokeWidth={2.5} aria-hidden />
-      </button>
-      <button type="button" aria-label="Maximize" onClick={() => void win.toggleMaximize()}>
-        <Square size={11} strokeWidth={2.5} aria-hidden />
-      </button>
-      <button type="button" aria-label="Close window" onClick={() => void runCommand("app.quit")}>
-        <X size={12} strokeWidth={2.5} aria-hidden />
-      </button>
+    <div className="window-controls" data-side={side}>
+      {buttons.map((id) => (
+        <button key={id} type="button" aria-label={windowButtons[id].label} onClick={windowButtons[id].run}>
+          {windowButtons[id].icon}
+        </button>
+      ))}
     </div>
   );
 }

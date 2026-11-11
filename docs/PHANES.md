@@ -98,7 +98,7 @@ Header bar, 48 px tall, from left to right:
 - **Title**, centered: the active file's name in bold, and below it the workspace path and save state, e.g. `~/notes · Saved` or `~/notes · Unsaved changes`. Abbreviate the home directory as `~`.
 - **View switcher**: a segmented control with *Editor*, *Split*, *Preview*. The active segment is raised (window background, small shadow, semi-bold).
 - **Main menu** (hamburger). Items: Open Folder…, New File, Save, Save As…, Color scheme ▸ (Follow System / Light / Dark), Show Sidebar, Keyboard Shortcuts, About Phanes, Quit.
-- **Window controls**: minimize, maximize/restore, close. Round 24 px buttons with 12 px icons, 10 px apart, on the right.
+- **Window controls**: minimize, maximize/restore, close. Round 24 px buttons with 12 px icons, 10 px apart, on the right. Which buttons show, and on which side, follows the desktop's button layout (GNOME Tweaks › Windows › Titlebar Buttons; GTK's `gtk-decoration-layout`), also while Phanes is running: buttons placed on the left come before the sidebar toggle.
 
 Dragging the header moves the window; double-clicking it toggles maximize.
 

@@ -20,6 +20,12 @@ const handlers: Record<string, Handler> = {
   set_gtk_dark: () => null,
   // http://localhost:1420/?titleBar=system shows the header bar as it is under a system title bar.
   title_bar_style: () => (new URLSearchParams(location.search).get("titleBar") === "system" ? "system" : "own"),
+  // ?buttons=close,minimize: puts those two on the left, like GNOME's button-layout.
+  window_button_layout: () => {
+    const [left, right = ""] = (new URLSearchParams(location.search).get("buttons") ?? ":minimize,maximize,close").split(":");
+    const side = (names: string) => names.split(",").filter((n) => ["minimize", "maximize", "close"].includes(n));
+    return { left: side(left), right: side(right) };
+  },
   "plugin:window|is_maximized": () => false,
   "plugin:window|is_fullscreen": () => false,
 };

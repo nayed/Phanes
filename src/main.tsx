@@ -24,6 +24,7 @@ import { registerAllCommands } from "./commands/definitions";
 import { setCommandErrorReporter } from "./commands/registry";
 import { showToast } from "./state/dialogs";
 import { initSettings } from "./state/settings";
+import { installWindowButtons } from "./state/windowButtons";
 
 async function start() {
   // In a plain browser (vite dev without Tauri), fake the backend for UI work.
@@ -38,7 +39,7 @@ async function start() {
   setCommandErrorReporter((err) => showToast(err instanceof Error ? err.message : String(err)));
   installKeybindings();
   installVim();
-  await Promise.all([installCloseHandler(), installMaximizeTracking(), installTitleBarStyle()]);
+  await Promise.all([installCloseHandler(), installMaximizeTracking(), installTitleBarStyle(), installWindowButtons()]);
 
   // No browser context menu (Reload, Inspect…) except inside text fields and the editor.
   window.addEventListener("contextmenu", (e) => {

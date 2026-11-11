@@ -51,6 +51,75 @@ pub fn title_bar_style() -> &'static str {
     }
 }
 
+/// The window buttons Phanes' own header bar shows, in order, on each side.
+#[derive(serde::Serialize, Clone, Debug, PartialEq, Eq)]
+pub struct ButtonLayout {
+    left: Vec<&'static str>,
+    right: Vec<&'static str>,
+}
+
+pub const BUTTON_LAYOUT_EVENT: &str = "window-button-layout";
+/// GTK's own default, used when the setting can't be read.
+const DEFAULT_BUTTON_LAYOUT: &str = "menu:minimize,maximize,close";
+
+/// Parse GTK's `gtk-decoration-layout` (GNOME's `button-layout`, changed in
+/// Tweaks): the names left of the colon go on the left, the others on the
+/// right, e.g. `close,minimize,maximize:appmenu`. Only the three window
+/// buttons are kept; `menu`, `appmenu`, `icon` and `spacer` are not drawn.
+fn parse_button_layout(layout: &str) -> ButtonLayout {
+    let side = |names: &str| -> Vec<&'static str> {
+        let mut buttons = Vec::new();
+        for name in names.split(',') {
+            let button = match name.trim() {
+                "minimize" => "minimize",
+                "maximize" => "maximize",
+                "close" => "close",
+                _ => continue,
+            };
+            if !buttons.contains(&button) {
+                buttons.push(button);
+            }
+        }
+        buttons
+    };
+    let (left, right) = layout.split_once(':').unwrap_or((layout, ""));
+    ButtonLayout { left: side(left), right: side(right) }
+}
+
+#[cfg(target_os = "linux")]
+fn gtk_button_layout(settings: &gtk::Settings) -> ButtonLayout {
+    use gtk::prelude::*;
+    let layout = settings.gtk_decoration_layout();
+    parse_button_layout(layout.as_deref().unwrap_or(DEFAULT_BUTTON_LAYOUT))
+}
+
+/// Where the desktop wants the window buttons. Synchronous, so it runs on
+/// the GTK main thread.
+#[tauri::command]
+pub fn window_button_layout() -> ButtonLayout {
+    #[cfg(target_os = "linux")]
+    if let Some(settings) = gtk::Settings::default() {
+        return gtk_button_layout(&settings);
+    }
+    parse_button_layout(DEFAULT_BUTTON_LAYOUT)
+}
+
+/// Emit `window-button-layout` whenever the setting changes. Call on the
+/// GTK main thread.
+pub fn watch_button_layout<R: Runtime>(app: &tauri::AppHandle<R>) {
+    #[cfg(target_os = "linux")]
+    if let Some(settings) = gtk::Settings::default() {
+        use gtk::prelude::*;
+        use tauri::Emitter;
+        let app = app.clone();
+        settings.connect_gtk_decoration_layout_notify(move |settings| {
+            let _ = app.emit(BUTTON_LAYOUT_EVENT, gtk_button_layout(settings));
+        });
+    }
+    #[cfg(not(target_os = "linux"))]
+    let _ = app;
+}
+
 #[cfg(target_os = "linux")]
 const GTK_CSS: &str = r#"
 window.phanes,
@@ -117,7 +186,27 @@ pub fn setup<R: Runtime>(_window: &WebviewWindow<R>) {}
 
 #[cfg(test)]
 mod tests {
-    use super::draws_own_title_bar;
+    use super::{draws_own_title_bar, parse_button_layout, ButtonLayout};
+
+    fn layout(left: &[&'static str], right: &[&'static str]) -> ButtonLayout {
+        ButtonLayout { left: left.to_vec(), right: right.to_vec() }
+    }
+
+    #[test]
+    fn button_layout_follows_the_setting() {
+        assert_eq!(
+            parse_button_layout("appmenu:minimize,maximize,close"),
+            layout(&[], &["minimize", "maximize", "close"])
+        );
+        assert_eq!(parse_button_layout("appmenu:close"), layout(&[], &["close"]));
+        assert_eq!(
+            parse_button_layout("close,minimize,maximize:appmenu"),
+            layout(&["close", "minimize", "maximize"], &[])
+        );
+        assert_eq!(parse_button_layout("close:icon, maximize ,spacer"), layout(&["close"], &["maximize"]));
+        assert_eq!(parse_button_layout("close,close"), layout(&["close"], &[]));
+        assert_eq!(parse_button_layout(""), layout(&[], &[]));
+    }
 
     #[test]
     fn gnome_like_desktops_keep_the_header_bar() {

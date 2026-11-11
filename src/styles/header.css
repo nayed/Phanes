@@ -67,6 +67,10 @@
   margin-left: 10px;
   margin-right: 2px;
 }
+.window-controls[data-side="left"] {
+  margin-left: 2px;
+  margin-right: 10px;
+}
 /* The desktop's title bar has the window buttons. */
 :root[data-title-bar="system"] .window-controls {
   display: none;

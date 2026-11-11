@@ -80,6 +80,7 @@ Optional: turn it on from the **Vim** toggle in the status bar or the main menu 
 
 ### At home on GNOME
 - A libadwaita-style header bar with rounded corners and the system shadow.
+- Window buttons follow GNOME's button layout (left or right, with or without minimize and maximize).
 - The window reopens with the size it had last time.
 - Outside GNOME (KDE Plasma, Xfce, Cinnamon…), the desktop's own title bar and window buttons, in your theme. `PHANES_TITLE_BAR=own` or `PHANES_TITLE_BAR=system` forces one or the other.
 - Follows GNOME's **light/dark preference**, or you can force Light or Dark from the menu. The icon at the bottom right of the status bar cycles through Follow System, Light and Dark in one click.
