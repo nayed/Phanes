@@ -88,7 +88,9 @@ phanes/
 
 GNOME/libadwaita look. Use a custom title bar (`decorations: false` with `data-tauri-drag-region` on the header) so the header bar matches the design. The window has rounded corners (12 px) and the system shadow.
 
-That is the window on GNOME (and Pantheon and Budgie, whose apps also use header bars). On every other desktop (KDE Plasma, Xfce, Cinnamon, MATE, tiling compositors…) Phanes uses the **system title bar**: the desktop's window manager draws the title bar, window buttons and borders in the user's theme, the header bar below it is a plain toolbar without window controls, and the window has square corners. The choice is made at startup from `XDG_CURRENT_DESKTOP` (`src-tauri/src/window.rs`); `PHANES_TITLE_BAR=own` or `PHANES_TITLE_BAR=system` overrides it. The window's title is `<file name> — Phanes`.
+That is the window on GNOME (and Pantheon and Budgie, whose apps also use header bars). On every other desktop (KDE Plasma, Xfce, Cinnamon, MATE, tiling compositors…) Phanes uses the **system title bar**: the desktop's window manager draws the title bar, window buttons and borders in the user's theme, the header bar below it is a plain toolbar without window controls, and the window has square corners. The choice is made at startup from `XDG_CURRENT_DESKTOP` (`src-tauri/src/window.rs`); `PHANES_TITLE_BAR=own` or `PHANES_TITLE_BAR=system` overrides it. The window's title is `<file name> — Phanes`. Under a system title bar the header bar's title shows only the second line (folder and save state), since the file name is already above it.
+
+The window reopens with the size it had last time, maximized if it was (`window.json` in the config folder; not its position, which Wayland doesn't let an app choose). A first launch opens at 1440 × 900, or 85 % of the screen if that is smaller.
 
 Header bar, 48 px tall, from left to right:
 

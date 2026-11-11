@@ -18,6 +18,11 @@ pub fn run() {
     // RUST_LOG=debug shows more. The clipboard library warns on every GNOME
     // Wayland start that it falls back to X11, which is expected: errors only.
     env_logger::Builder::from_env(env_logger::Env::default().default_filter_or("warn,arboard=error")).init();
+    // The window's app id on Wayland and its class on X11: the name of the
+    // launcher (Phanes.desktop), which is how a desktop finds the icon and
+    // name that go with the window (KDE shows a generic icon otherwise).
+    #[cfg(target_os = "linux")]
+    gtk::glib::set_prgname(Some("Phanes"));
     tauri::Builder::default()
         .manage(cli::parse())
         .plugin(tauri_plugin_dialog::init())

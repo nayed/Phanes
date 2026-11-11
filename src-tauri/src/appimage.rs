@@ -13,6 +13,12 @@
 //! So in an AppImage, Phanes puts small wrappers for those programs first on
 //! its PATH: each removes the AppImage's variables and starts the system's
 //! own program.
+//!
+//! An AppImage is also a lone file: nothing tells the desktop which icon and
+//! name go with its window, so KDE's title bar and task bar show a generic
+//! icon. On each start Phanes therefore keeps a launcher for itself in the
+//! user's data folder (`Phanes.desktop` and its icon), unless Phanes is also
+//! installed from a package or the user wrote a launcher of their own.
 
 use std::path::{Path, PathBuf};
 
@@ -60,6 +66,7 @@ fn install() -> std::io::Result<()> {
         return Ok(()); // Not running as an AppImage.
     };
     let appdir = PathBuf::from(appdir);
+    add_launcher(&appdir);
     let base = std::env::var_os("XDG_RUNTIME_DIR")
         .map(PathBuf::from)
         .unwrap_or_else(std::env::temp_dir);
@@ -90,6 +97,94 @@ fn install() -> std::io::Result<()> {
     let current = std::env::var("PATH").unwrap_or_default();
     std::env::set_var("PATH", format!("{}:{current}", dir.display()));
     Ok(())
+}
+
+/// The launcher's file name: the window's app id (`glib::set_prgname` in
+/// lib.rs) plus `.desktop`, which is how a desktop finds a window's icon.
+const LAUNCHER: &str = "Phanes.desktop";
+const ICON: &str = "icons/hicolor/scalable/apps/io.nayed.Phanes.svg";
+/// Marks a launcher as written by Phanes, so it is only ever Phanes' own
+/// that gets rewritten.
+const LAUNCHER_MARK: &str = "X-Phanes-AppImage=true";
+
+/// Keep a launcher for this AppImage in the user's data folder. Failing is
+/// harmless (the window only keeps a generic icon), so errors are dropped.
+#[cfg(target_os = "linux")]
+fn add_launcher(appdir: &Path) {
+    let Some(appimage) = std::env::var_os("APPIMAGE").map(PathBuf::from) else { return };
+    let Some(data_home) = std::env::var_os("XDG_DATA_HOME")
+        .map(PathBuf::from)
+        .filter(|dir| dir.is_absolute())
+        .or_else(|| std::env::var_os("HOME").map(|home| PathBuf::from(home).join(".local/share")))
+    else {
+        return;
+    };
+
+    // Installed from a package as well: that launcher already does the job.
+    let mut system_dirs = outside(appdir, "XDG_DATA_DIRS");
+    if system_dirs.is_empty() {
+        system_dirs = String::from("/usr/local/share:/usr/share");
+    }
+    let installed = system_dirs
+        .split(':')
+        .map(Path::new)
+        .any(|dir| dir != data_home && dir.join("applications").join(LAUNCHER).exists());
+    if installed {
+        return;
+    }
+
+    let launcher = data_home.join("applications").join(LAUNCHER);
+    let existing = std::fs::read_to_string(&launcher).ok();
+    if existing.as_ref().is_some_and(|text| !text.contains(LAUNCHER_MARK)) {
+        return; // The user's own.
+    }
+    let Ok(template) = std::fs::read_to_string(appdir.join("usr/share/applications").join(LAUNCHER)) else {
+        return;
+    };
+    let Some(entry) = launcher_entry(&template, &appimage) else { return };
+    if existing.as_deref() != Some(entry.as_str()) {
+        if let Some(dir) = launcher.parent() {
+            let _ = std::fs::create_dir_all(dir);
+        }
+        let _ = std::fs::write(&launcher, entry);
+    }
+
+    let icon = data_home.join(ICON);
+    let Ok(bundled) = std::fs::read(appdir.join("usr/share").join(ICON)) else { return };
+    if std::fs::read(&icon).ok().as_deref() != Some(bundled.as_slice()) {
+        if let Some(dir) = icon.parent() {
+            let _ = std::fs::create_dir_all(dir);
+        }
+        let _ = std::fs::write(&icon, bundled);
+    }
+}
+
+/// The bundled launcher, pointed at the AppImage file. `TryExec` makes
+/// desktops hide it once that file is moved or deleted.
+fn launcher_entry(template: &str, appimage: &Path) -> Option<String> {
+    let path = appimage.to_str().filter(|path| !path.contains('\n'))?;
+    // Quoting of the Desktop Entry Specification's Exec key.
+    let mut quoted = String::new();
+    for c in path.chars() {
+        match c {
+            '"' | '`' | '$' | '\\' => {
+                quoted.push('\\');
+                quoted.push(c);
+            }
+            '%' => quoted.push_str("%%"),
+            _ => quoted.push(c),
+        }
+    }
+    let mut entry = String::new();
+    for line in template.lines() {
+        if line.starts_with("Exec=") {
+            entry.push_str(&format!("Exec=\"{quoted}\" %F\nTryExec={path}\n{LAUNCHER_MARK}\n"));
+        } else if !line.starts_with("TryExec=") {
+            entry.push_str(line);
+            entry.push('\n');
+        }
+    }
+    entry.contains(LAUNCHER_MARK).then_some(entry)
 }
 
 /// Remove the wrapper folders of Phanes instances that are no longer running.
@@ -129,6 +224,18 @@ mod tests {
     #[test]
     fn quote_survives_single_quotes() {
         assert_eq!(quote("/a b/it's"), r"'/a b/it'\''s'");
+    }
+
+    #[test]
+    fn launcher_points_at_the_appimage() {
+        let template = "[Desktop Entry]\nName=Phanes\nExec=phanes %F\nIcon=io.nayed.Phanes\n";
+        let entry = launcher_entry(template, Path::new("/home/me/My Apps/Phanes $1.AppImage")).unwrap();
+        assert_eq!(
+            entry,
+            "[Desktop Entry]\nName=Phanes\nExec=\"/home/me/My Apps/Phanes \\$1.AppImage\" %F\n\
+             TryExec=/home/me/My Apps/Phanes $1.AppImage\nX-Phanes-AppImage=true\nIcon=io.nayed.Phanes\n"
+        );
+        assert!(launcher_entry("[Desktop Entry]\nName=Phanes\n", Path::new("/a")).is_none());
     }
 
     #[test]
