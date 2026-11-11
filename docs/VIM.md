@@ -70,7 +70,7 @@ Register in the command registry:
 
 ## What changes on screen
 
-See `07-vim-mode.png` for all of these.
+![Vim mode four states](./design/screens/07-vim-mode.png "Vim mode four states")
 
 ### 1. Mode pill in the status bar
 
