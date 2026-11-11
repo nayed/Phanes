@@ -256,6 +256,12 @@
 :root[data-scheme="everforest"][data-mode="dark"] .markdown-body .shiki span {
   color: var(--shiki-everforest-dark);
 }
+:root[data-scheme="horizon"][data-mode="light"] .markdown-body .shiki span {
+  color: var(--shiki-horizon-light);
+}
+:root[data-scheme="horizon"][data-mode="dark"] .markdown-body .shiki span {
+  color: var(--shiki-horizon-dark);
+}
 
 /* GitHub alerts */
 .markdown-body .markdown-alert {

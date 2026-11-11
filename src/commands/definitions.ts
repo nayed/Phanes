@@ -163,6 +163,7 @@ export function registerAllCommands(): void {
     schemeCommand("scheme.gruvbox", "Gruvbox", "gruvbox"),
     schemeCommand("scheme.catppuccin", "Catppuccin", "catppuccin"),
     schemeCommand("scheme.everforest", "Everforest", "everforest"),
+    schemeCommand("scheme.horizon", "Horizon", "horizon"),
     themeCommand("theme.system", "Follow System", "system"),
     themeCommand("theme.light", "Light", "light"),
     themeCommand("theme.dark", "Dark", "dark"),

@@ -84,7 +84,7 @@ Optional: turn it on from the **Vim** toggle in the status bar or the main menu 
 - The window reopens with the size it had last time.
 - Outside GNOME (KDE Plasma, Xfce, Cinnamon…), the desktop's own title bar and window buttons, in your theme. `PHANES_TITLE_BAR=own` or `PHANES_TITLE_BAR=system` forces one or the other.
 - Follows GNOME's **light/dark preference**, or you can force Light or Dark from the menu. The icon at the bottom right of the status bar cycles through Follow System, Light and Dark in one click.
-- Four color schemes, each in light and dark: **GitHub Default**, **Gruvbox**, **Catppuccin** (Latte and Mocha) and **Everforest**. Click the color scheme's name in the status bar for a searchable list: the arrow keys preview each scheme live on the whole window, in your current light or dark mode, Enter applies it and Escape goes back.
+- Five color schemes, each in light and dark: **GitHub Default**, **Gruvbox**, **Catppuccin** (Latte and Mocha), **Everforest** and **Horizon** (Horizon Bright and Horizon). Click the color scheme's name in the status bar for a searchable list: the arrow keys preview each scheme live on the whole window, in your current light or dark mode, Enter applies it and Escape goes back.
 - Opens and saves through **GNOME's own file chooser** (the desktop portal).
 - Fast startup: the window shows up in about a second, already in the right colors.
 - Installs a desktop entry, so Phanes appears in the app grid and Files can use it to open `.md` files.

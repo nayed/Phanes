@@ -32,6 +32,7 @@ export type CommandId =
   | "scheme.gruvbox"
   | "scheme.catppuccin"
   | "scheme.everforest"
+  | "scheme.horizon"
   | "theme.system"
   | "theme.light"
   | "theme.dark"

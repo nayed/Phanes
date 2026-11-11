@@ -24,6 +24,8 @@ const THEMES = {
   "catppuccin-dark": "catppuccin-mocha",
   "everforest-light": "everforest-light",
   "everforest-dark": "everforest-dark",
+  "horizon-light": "horizon-bright",
+  "horizon-dark": "horizon",
 } as const;
 
 type ThemeKey = keyof typeof THEMES;
@@ -38,6 +40,8 @@ const THEME_MODULES: Record<ThemeKey, () => Promise<{ default: unknown }>> = {
   "catppuccin-dark": () => import("shiki/themes/catppuccin-mocha.mjs"),
   "everforest-light": () => import("shiki/themes/everforest-light.mjs"),
   "everforest-dark": () => import("shiki/themes/everforest-dark.mjs"),
+  "horizon-light": () => import("shiki/themes/horizon-bright.mjs"),
+  "horizon-dark": () => import("shiki/themes/horizon.mjs"),
 };
 
 /**
@@ -53,6 +57,8 @@ const CODE_BACKGROUNDS: Record<ThemeKey, string> = {
   "catppuccin-dark": "#181825",
   "everforest-light": "#f4f0d9",
   "everforest-dark": "#232a2e",
+  "horizon-light": "#fadad1",
+  "horizon-dark": "#232530",
 };
 
 async function loadTheme(key: ThemeKey): Promise<ThemeRegistrationRaw> {

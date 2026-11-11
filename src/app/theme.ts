@@ -16,6 +16,7 @@ export const COLORSCHEMES: Record<SchemeId, { name: string; command: CommandId }
   gruvbox: { name: "Gruvbox", command: "scheme.gruvbox" },
   catppuccin: { name: "Catppuccin", command: "scheme.catppuccin" },
   everforest: { name: "Everforest", command: "scheme.everforest" },
+  horizon: { name: "Horizon", command: "scheme.horizon" },
 };
 
 /** Colorschemes in the order lists show them: alphabetical by name. */

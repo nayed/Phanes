@@ -196,7 +196,7 @@ A command-palette-style popover that opens above the colorscheme name, right-ali
 
 ### Theming
 
-- Four colorschemes: **GitHub Default**, **Gruvbox**, **Catppuccin** (Latte for light, Mocha for dark) and **Everforest**, each in light and dark variants (see [Design tokens](#design-tokens)). Pick one from the main menu's Color Scheme submenu or from the status bar.
+- Five colorschemes: **GitHub Default**, **Gruvbox**, **Catppuccin** (Latte for light, Mocha for dark), **Everforest** and **Horizon** (Horizon Bright for light), each in light and dark variants (see [Design tokens](#design-tokens)). Pick one from the main menu's Color Scheme submenu or from the status bar.
 - Default to following the system: GNOME's dark style preference arrives through `prefers-color-scheme` in WebKitGTK. The main menu can force Light or Dark. Remember the choice.
 - Structure the CSS so another colorscheme (Tokyo Night, Nord…) is one more set of variable values.
 
@@ -335,7 +335,7 @@ Register every one of these in the command registry. Shortcuts follow GNOME conv
 | `view.toggleSyncScroll` | Synced Scroll | |
 | `theme.system` / `theme.light` / `theme.dark` | Follow System / Light / Dark | |
 | `theme.cycle` | Switch Color Mode (Follow System → Light → Dark) | |
-| `scheme.githubDefault` / `scheme.gruvbox` / `scheme.catppuccin` / `scheme.everforest` | GitHub Default / Gruvbox / Catppuccin / Everforest | |
+| `scheme.githubDefault` / `scheme.gruvbox` / `scheme.catppuccin` / `scheme.everforest` / `scheme.horizon` | GitHub Default / Gruvbox / Catppuccin / Everforest / Horizon | |
 | `app.shortcuts` | Keyboard Shortcuts | `Ctrl+?` |
 | `app.about` | About Phanes | |
 | `app.quit` | Quit | `Ctrl+Q` |

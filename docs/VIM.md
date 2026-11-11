@@ -141,6 +141,8 @@ The values below come from each scheme's own palette. Where the scheme's origina
 | Catppuccin Mocha | `#1e1e2e` | `#9399b2` | `#a6e3a1` | `#cba6f7` | `#f38ba8` | `#fab387` |
 | Everforest Light | `#fdf6e3` | `#5c6a72` | `#657300` | `#ab4f8e` | `#be403d` | `#a95518` |
 | Everforest Dark | `#232a2e` | `#9da9a0` | `#a7c080` | `#d699b6` | `#e67e80` | `#e69875` |
+| Horizon Bright | `#fdf0ed` | `#504c50` | `#147e57` | `#8a31b9` | `#da103f` | `#b84c16` |
+| Horizon | `#1c1e26` | `#9ea0a3` | `#29d398` | `#b877db` | `#e95678` | `#fab795` |
 
 Any future colorscheme must define these too, and check the pill text contrast (4.5:1).
 

@@ -3,7 +3,7 @@
  * variables. A colorscheme is one `[data-scheme]` value with a light and a
  * dark block; adding Tokyo Night, Nord… means adding two more blocks.
  *
- * <html data-scheme="github-default|gruvbox|catppuccin|everforest" data-mode="light|dark">
+ * <html data-scheme="github-default|gruvbox|catppuccin|everforest|horizon" data-mode="light|dark">
  *
  * The blocks match any element, not only <html>: an element with its own
  * data-scheme and data-mode gets that palette (the colorscheme picker's
@@ -439,4 +439,109 @@
   --shadow-popover: 0 2px 6px rgba(0, 0, 0, 0.35), 0 12px 32px rgba(0, 0, 0, 0.5);
   --scrim: rgba(35, 42, 46, 0.6);
   --scrollbar: rgba(211, 198, 170, 0.28);
+}
+
+/* ---------- Horizon — Light ----------
+ * Jonathan Olaleye's Horizon Bright. Its accents are made for large code
+ * on a pale background; the ones used for text are darkened (toward black,
+ * keeping their hue) until they reach 4.5:1.
+ */
+[data-scheme="horizon"][data-mode="light"] {
+  color-scheme: light;
+
+  --desk: #f9cbbe;
+  --window: #fdf0ed;
+  --surface: #fadad1;
+  --button: #f7c5b8;
+  --fg: #1a1c23;
+  --muted: #504c50;
+  --border: #e4c7c0;
+  --link: #b30d34;
+  --active-bg: #f7c5b8;
+  --current-line: #fce5df;
+  --menu-bg: #fdf0ed;
+  --menu-hover: #fadad1;
+  --danger: #a92712;
+  --code-inline-bg: #fadad1;
+
+  /* Vim mode pill (docs/VIM.md): backgrounds, and the text on them. */
+  --vim-pill-fg: #fdf0ed;
+  --vim-normal: #504c50;
+  --vim-insert: #147e57;
+  --vim-visual: #8a31b9;
+  --vim-replace: #da103f;
+  --vim-command: #b84c16;
+
+  --syn-mark: #504c50;
+  --syn-heading: #d10f3c;
+  --syn-code: #a74514;
+  --syn-keyword: #8a31b9;
+  --syn-function: #19747b;
+  --syn-string: #137853;
+
+  --alert-note: #19747b;
+  --alert-tip: #137853;
+  --alert-important: #8a31b9;
+  --alert-warning: #a35219;
+  --alert-caution: #d10f3c;
+
+  --selection: rgba(232, 74, 114, 0.2);
+  --search-match: rgba(247, 125, 38, 0.3);
+  --shadow-raised: 0 1px 2px rgba(26, 28, 35, 0.2);
+  --shadow-tab: 0 1px 2px rgba(26, 28, 35, 0.18);
+  --shadow-popover: 0 2px 6px rgba(26, 28, 35, 0.12), 0 12px 32px rgba(26, 28, 35, 0.22);
+  --scrim: rgba(26, 28, 35, 0.32);
+  --scrollbar: rgba(26, 28, 35, 0.28);
+}
+
+/* ---------- Horizon — Dark ----------
+ * Horizon. The syntax accents are as published; the pink used for links and
+ * the red for errors are lightened to reach 4.5:1 on every surface.
+ */
+[data-scheme="horizon"][data-mode="dark"] {
+  color-scheme: dark;
+
+  --desk: #16161c;
+  --window: #1c1e26;
+  --surface: #232530;
+  --button: #2e303e;
+  --fg: #d5d8da;
+  --muted: #9ea0a3;
+  --border: #2e303e;
+  --link: #f0708d;
+  --active-bg: #2e303e;
+  --current-line: #242631;
+  --menu-bg: #232530;
+  --menu-hover: #2e303e;
+  --danger: #f65b74;
+  --code-inline-bg: #2e303e;
+
+  /* Vim mode pill (docs/VIM.md): backgrounds, and the text on them. */
+  --vim-pill-fg: #1c1e26;
+  --vim-normal: #9ea0a3;
+  --vim-insert: #29d398;
+  --vim-visual: #b877db;
+  --vim-replace: #e95678;
+  --vim-command: #fab795;
+
+  --syn-mark: #9ea0a3;
+  --syn-heading: #ea5b7c;
+  --syn-code: #fab795;
+  --syn-keyword: #b877db;
+  --syn-function: #25b0bc;
+  --syn-string: #29d398;
+
+  --alert-note: #26bbd9;
+  --alert-tip: #29d398;
+  --alert-important: #b877db;
+  --alert-warning: #fac29a;
+  --alert-caution: #ea5b7c;
+
+  --selection: rgba(233, 86, 120, 0.25);
+  --search-match: rgba(250, 183, 149, 0.3);
+  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-tab: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-popover: 0 2px 6px rgba(0, 0, 0, 0.35), 0 12px 32px rgba(0, 0, 0, 0.5);
+  --scrim: rgba(22, 22, 28, 0.6);
+  --scrollbar: rgba(213, 216, 218, 0.28);
 }
