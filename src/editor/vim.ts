@@ -242,6 +242,12 @@ export function clearVimStatus(view: EditorView | null): void {
   useVimStatus.setState({ mode: "NORMAL", pending: "", recording: null });
 }
 
+/** Back to Normal mode if the editor is in Insert or Replace mode, as Escape would (Ctrl+S does this). */
+export function leaveInsertMode(view: EditorView | null): void {
+  const cm = view && getCM(view);
+  if (cm && (cm.state.vim as VimState | undefined)?.insertMode) Vim.exitInsertMode(cm as Parameters<typeof Vim.exitInsertMode>[0]);
+}
+
 /**
  * Close Vim's command line or search prompt, if open, before the editor shows
  * another tab: swapping the state removes the Vim object the prompt belongs to,

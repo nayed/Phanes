@@ -195,6 +195,8 @@ Implementation: the app-level shortcut handler (in `src/commands/`) checks wheth
 
 These stay **app shortcuts** even in Vim mode, because Vim doesn't use them: `Ctrl+S`, `Shift+Ctrl+S`, `Ctrl+Tab`, `Shift+Ctrl+Tab`, `Ctrl+PageUp/PageDown`, `Ctrl+1/2/3`, `F9`, `Ctrl+Q`, `Ctrl+?`, `Shift+Ctrl+P` (future palette), `Ctrl+P` (future quick open).
 
+`Ctrl+S` in Insert or Replace mode also goes back to Normal mode, like `<Esc>:w`.
+
 When focus is outside the editor (sidebar, preview, menus), all app shortcuts work as usual, Vim on or off.
 
 The **Keyboard Shortcuts** dialog gets a "Vim mode" section listing the overridden keys and the ex commands above.

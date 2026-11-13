@@ -1,3 +1,5 @@
+import { getView } from "../editor/documents";
+import { leaveInsertMode } from "../editor/vim";
 import { useSettings } from "../state/settings";
 import {
   listCommands,
@@ -97,9 +99,13 @@ export function suspendShortcuts(): () => void {
  */
 const VIM_CTRL_KEYS = new Set(["w", "v", "r", "o", "n", "d", "u", "f", "b", "a", "x"]);
 
+function editorHasFocus(): boolean {
+  return !!document.activeElement?.closest(".cm-editor");
+}
+
 function vimClaims(e: KeyboardEvent): boolean {
   if (!useSettings.getState().vimMode) return false;
-  if (!document.activeElement?.closest(".cm-editor")) return false;
+  if (!editorHasFocus()) return false;
   if (e.key === "Escape") return true;
   return e.ctrlKey && !e.altKey && !e.shiftKey && !e.metaKey && VIM_CTRL_KEYS.has(e.key.toLowerCase());
 }
@@ -118,6 +124,10 @@ function onKeyDown(e: KeyboardEvent): void {
       if (!isActive(command, parsed, inTree)) continue;
       e.preventDefault();
       e.stopPropagation();
+      // Saving from Insert mode also leaves it, like `<Esc>:w` (docs/VIM.md).
+      if (command.id === "file.save" && useSettings.getState().vimMode && editorHasFocus()) {
+        leaveInsertMode(getView());
+      }
       void runCommand(command.id, inTree ? treeContext() : {});
       return;
     }
