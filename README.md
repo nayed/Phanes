@@ -60,6 +60,7 @@ Optional: turn it on from the **Vim** toggle in the status bar or the main menu 
 ### Workspace sidebar
 - Opens a folder as a **file tree**, with markdown files and images, folders first. Hidden files, `.git` and `node_modules` are left out.
 - Remembers which folders were expanded.
+- **Recent Folders** in the main menu switches back to the last 5 folders you opened.
 - **Right-click menu**:
   - New File and New Folder, with inline naming.
   - Rename (`F2`) and Duplicate.

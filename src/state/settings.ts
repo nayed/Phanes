@@ -31,6 +31,8 @@ export interface Settings {
   sidebarVisible: boolean;
   syncScroll: boolean;
   lastWorkspace: string | null;
+  /** Workspaces opened before, most recent first (main menu's Recent Folders). */
+  recentWorkspaces: string[];
   workspaces: Record<string, WorkspaceMemory>;
 }
 
@@ -44,6 +46,7 @@ const defaults: Settings = {
   sidebarVisible: true,
   syncScroll: true,
   lastWorkspace: null,
+  recentWorkspaces: [],
   workspaces: {},
 };
 
@@ -81,6 +84,7 @@ function snapshot(s: SettingsStore): Settings {
     sidebarVisible: s.sidebarVisible,
     syncScroll: s.syncScroll,
     lastWorkspace: s.lastWorkspace,
+    recentWorkspaces: s.recentWorkspaces,
     workspaces: s.workspaces,
   };
 }
@@ -92,7 +96,13 @@ export async function initSettings(): Promise<void> {
   const stored = await loadAppState<Settings>();
   // A colorscheme that no longer exists (e.g. the removed "gtk") falls back to the default.
   const scheme = SCHEME_IDS.includes(stored?.scheme as SchemeId) ? stored!.scheme : defaults.scheme;
-  useSettings.setState({ ...defaults, ...stored, scheme, loaded: true });
+  // Settings from before the recent list start it with the last workspace.
+  const recentWorkspaces = Array.isArray(stored?.recentWorkspaces)
+    ? stored!.recentWorkspaces
+    : stored?.lastWorkspace
+      ? [stored.lastWorkspace]
+      : [];
+  useSettings.setState({ ...defaults, ...stored, scheme, recentWorkspaces, loaded: true });
   useSettings.subscribe((s) => {
     window.clearTimeout(saveTimer);
     saveTimer = window.setTimeout(() => void saveAppState(snapshot(s)), 300);

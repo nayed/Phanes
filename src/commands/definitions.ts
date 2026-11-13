@@ -3,7 +3,7 @@ import { showPanel } from "../state/dialogs";
 import { useSettings, type ColorSchemePreference, type SchemeId, type ViewMode } from "../state/settings";
 import { copyPath, createItem, duplicateItem, revealItem, startRename, trashItem } from "../state/fileOps";
 import { activeTab, closeTab, cycleTab, newUntitledTab, saveTab, saveTabAs, useTabs } from "../state/tabs";
-import { chooseWorkspace, useWorkspace } from "../state/workspace";
+import { chooseWorkspace, clearRecentWorkspaces, openRecentWorkspace, useWorkspace } from "../state/workspace";
 import { registerCommands, type Command, type CommandContext } from "./registry";
 
 const settings = () => useSettings.getState();
@@ -45,6 +45,13 @@ function themeCommand(id: Command["id"], label: string, pref: ColorSchemePrefere
 export function registerAllCommands(): void {
   registerCommands([
     { id: "workspace.open", label: "Open Folder…", shortcut: "Ctrl+O", run: chooseWorkspace },
+    {
+      id: "workspace.openRecent",
+      label: "Open Recent Folder",
+      run: (ctx) => (ctx.path ? openRecentWorkspace(ctx.path) : undefined),
+      isEnabled: (ctx) => !!ctx.path,
+    },
+    { id: "workspace.clearRecent", label: "Clear Recent Folders", run: clearRecentWorkspaces },
     { id: "file.new", label: "New File", shortcut: "Ctrl+N", run: (ctx) => createItem("file", ctx) },
     {
       id: "folder.new",

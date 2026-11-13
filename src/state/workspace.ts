@@ -65,10 +65,36 @@ export async function openWorkspace(path: string): Promise<boolean> {
     menuTarget: null,
     renaming: null,
   });
-  useSettings.getState().set({ lastWorkspace: root });
+  useSettings.getState().set({ lastWorkspace: root, recentWorkspaces: withRecent(root) });
   await refreshTree();
   for (const listener of openListeners) await listener(root);
   return true;
+}
+
+/** How many folders the Recent Folders submenu lists, besides the open one. */
+export const RECENT_SHOWN = 5;
+
+/** The recent list with `root` moved to the front. */
+function withRecent(root: string): string[] {
+  const rest = useSettings.getState().recentWorkspaces.filter((p) => p !== root);
+  return [root, ...rest].slice(0, RECENT_SHOWN + 1);
+}
+
+/** Open a folder from the recent list; one that can't be opened anymore leaves the list. */
+export async function openRecentWorkspace(path: string): Promise<void> {
+  try {
+    await openWorkspace(path);
+  } catch (err) {
+    const s = useSettings.getState();
+    s.set({ recentWorkspaces: s.recentWorkspaces.filter((p) => p !== path) });
+    throw err;
+  }
+}
+
+/** Forget the recent folders, except the one open now. */
+export function clearRecentWorkspaces(): void {
+  const root = useWorkspace.getState().root;
+  useSettings.getState().set({ recentWorkspaces: root ? [root] : [] });
 }
 
 /** Ask for a folder with GNOME's folder chooser (through the desktop portal) and open it. */

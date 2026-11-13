@@ -97,7 +97,7 @@ Header bar, 48 px tall, from left to right:
 - **Sidebar toggle** (panel-left icon). Shows and hides the workspace sidebar. Shown in its pressed state while the sidebar is visible.
 - **Title**, centered: the active file's name in bold, and below it the workspace path and save state, e.g. `~/notes · Saved` or `~/notes · Unsaved changes`. Abbreviate the home directory as `~`.
 - **View switcher**: a segmented control with *Editor*, *Split*, *Preview*. The active segment is raised (window background, small shadow, semi-bold).
-- **Main menu** (hamburger). Items: Open Folder…, New File, Save, Save As…, Color scheme ▸ (Follow System / Light / Dark), Show Sidebar, Keyboard Shortcuts, About Phanes, Quit.
+- **Main menu** (hamburger). Items: Open Folder…, Recent Folders ▸ (the last 5 folders opened, other than the open one, shown with `~`; then Clear Recent Folders; hidden when empty; a folder that can't be opened anymore leaves the list), New File, Save, Save As…, Color scheme ▸ (Follow System / Light / Dark), Show Sidebar, Keyboard Shortcuts, About Phanes, Quit.
 - **Window controls**: minimize, maximize/restore, close. Round 24 px buttons with 12 px icons, 10 px apart, on the right. Which buttons show, and on which side, follows the desktop's button layout (GNOME Tweaks › Windows › Titlebar Buttons; GTK's `gtk-decoration-layout`), also while Phanes is running: buttons placed on the left come before the sidebar toggle.
 
 Dragging the header moves the window; double-clicking it toggles maximize.
@@ -319,6 +319,8 @@ Register every one of these in the command registry. Shortcuts follow GNOME conv
 | Id | Label | Shortcut |
 | --- | --- | --- |
 | `workspace.open` | Open Folder… | `Ctrl+O` |
+| `workspace.openRecent` | Open Recent Folder (one per folder in Recent Folders) | |
+| `workspace.clearRecent` | Clear Recent Folders | |
 | `file.new` | New File | `Ctrl+N` |
 | `folder.new` | New Folder | `Shift+Ctrl+N` |
 | `file.save` | Save | `Ctrl+S` |
@@ -356,7 +358,7 @@ Do not build these now. The foundations above are there so each one is an additi
 - Outline panel (document headings) as a second sidebar tab.
 - Paste or drop an image: save it to the workspace's `assets/` folder and insert the markdown link.
 - Focus mode: hide sidebar and tabs, dim everything but the current paragraph.
-- Search across the workspace (ripgrep), git status tints in the tree, recent workspaces in the main menu.
+- Search across the workspace (ripgrep), git status tints in the tree.
 - More colorschemes: Tokyo Night, Nord.
 - Single-instance: `phanes file.md` while Phanes is running opens a tab in the existing window.
 

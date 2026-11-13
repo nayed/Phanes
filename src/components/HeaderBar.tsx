@@ -5,6 +5,8 @@ import { runCommand, type CommandId } from "../commands/registry";
 import { useSettings, type ViewMode } from "../state/settings";
 import { useWindowButtons, type WindowButton } from "../state/windowButtons";
 import { COLORSCHEMES, SCHEMES_BY_NAME } from "../app/theme";
+import { tildify } from "../lib/path";
+import { RECENT_SHOWN, useWorkspace } from "../state/workspace";
 import { PopoverMenu, type MenuEntry } from "./PopoverMenu";
 
 interface Props {
@@ -12,8 +14,28 @@ interface Props {
   subtitle: string;
 }
 
-const mainMenu: MenuEntry[] = [
+/** Recent Folders: the folders opened before, except the open one, then Clear. Hidden when there are none. */
+function recentFolders(recent: string[], root: string | null): MenuEntry[] {
+  const others = recent.filter((p) => p !== root).slice(0, RECENT_SHOWN);
+  if (!others.length) return [];
+  return [
+    {
+      kind: "submenu",
+      label: "Recent Folders",
+      entries: [
+        ...others.map(
+          (path): MenuEntry => ({ kind: "command", id: "workspace.openRecent", ctx: { path }, label: tildify(path) }),
+        ),
+        { kind: "separator" },
+        { kind: "command", id: "workspace.clearRecent" },
+      ],
+    },
+  ];
+}
+
+const mainMenu = (recent: MenuEntry[]): MenuEntry[] => [
   { kind: "command", id: "workspace.open" },
+  ...recent,
   { kind: "command", id: "file.new" },
   { kind: "separator" },
   { kind: "command", id: "file.save" },
@@ -57,6 +79,8 @@ export function HeaderBar({ title, subtitle }: Props) {
   const menuButton = useRef<HTMLButtonElement>(null);
   const [menu, setMenu] = useState<{ rect: DOMRect; keyboard: boolean } | null>(null);
   const closeMenu = useCallback(() => setMenu(null), []);
+  const recent = useSettings((s) => s.recentWorkspaces);
+  const root = useWorkspace((s) => s.root);
 
   return (
     <header className="header-bar" data-tauri-drag-region>
@@ -111,7 +135,7 @@ export function HeaderBar({ title, subtitle }: Props) {
       </button>
       {menu && (
         <PopoverMenu
-          entries={mainMenu}
+          entries={mainMenu(recentFolders(recent, root))}
           label="Main menu"
           anchor={{ kind: "below", rect: menu.rect }}
           focusFirst={menu.keyboard}

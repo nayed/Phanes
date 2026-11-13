@@ -7,6 +7,8 @@
 
 export type CommandId =
   | "workspace.open"
+  | "workspace.openRecent"
+  | "workspace.clearRecent"
   | "file.new"
   | "folder.new"
   | "file.save"
@@ -52,6 +54,8 @@ export interface CommandContext {
   target?: TreeTarget;
   /** Explicitly the workspace root (right-click on empty tree space). */
   atRoot?: boolean;
+  /** A folder to open (Recent Folders in the main menu). */
+  path?: string;
 }
 
 /** Where a shortcut is active. */
