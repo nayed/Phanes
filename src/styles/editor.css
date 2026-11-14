@@ -298,8 +298,8 @@
 .editor-host .cm-vim-panel * {
   font-family: var(--font-mono) !important;
 }
-/* The prompt and the search match count side by side, the count on the right. */
-.editor-host .cm-vim-panel > div {
+/* The prompt and the search match count side by side, the count on the right. (Not the completion popup, a list.) */
+.editor-host .cm-vim-panel > div:not(.cm-vim-completion) {
   flex: 1;
   min-width: 0;
   display: flex;
@@ -355,6 +355,12 @@
   border-radius: 10px;
   background: var(--menu-bg);
   box-shadow: var(--shadow-popover);
+  /* A vertical list like Neovim's: 10 rows of 28 px, then it scrolls. */
+  display: flex;
+  flex-direction: column;
+  max-height: calc(10 * 28px + 10px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 .editor-host .cm-vim-completion[hidden] {
   display: none;
@@ -369,6 +375,7 @@
   color: var(--fg);
   font: 400 13px var(--font-mono);
   white-space: pre;
+  flex: none;
 }
 .editor-host .cm-vim-completion-row[aria-selected="true"] {
   background: var(--menu-hover);

@@ -15,7 +15,8 @@ import { activeTab } from "../state/tabs";
 import { useWorkspace } from "../state/workspace";
 import { onCommandPrompt } from "./vim";
 
-const MAX_ROWS = 8;
+/** Rows the popup shows before it scrolls (editor.css). */
+const VISIBLE_ROWS = 10;
 
 /**
  * The ex commands Tab offers: Phanes' own (vimCommands.ts) and the
@@ -115,18 +116,13 @@ function attach(input: HTMLInputElement, panel: HTMLElement): void {
   /** The row Tab put in, or -1 before the first Tab (row 0 is then highlighted as the next one). */
   let applied = -1;
   let request = 0;
-  /** The first row shown, when there are more than fit. */
-  let first = 0;
 
   const render = () => {
     popup.replaceChildren();
     popup.hidden = items.length === 0;
     const current = applied < 0 ? 0 : applied;
-    // A window of MAX_ROWS rows that follows the highlighted one.
-    if (current < first) first = current;
-    if (current >= first + MAX_ROWS) first = current - MAX_ROWS + 1;
-    items.slice(first, first + MAX_ROWS).forEach((item, offset) => {
-      const i = first + offset;
+    let selected: HTMLElement | null = null;
+    items.forEach((item, i) => {
       const row = document.createElement("div");
       row.className = "cm-vim-completion-row";
       row.setAttribute("role", "option");
@@ -140,11 +136,20 @@ function attach(input: HTMLInputElement, panel: HTMLElement): void {
       if (i === current) {
         const hint = document.createElement("span");
         hint.className = "cm-vim-completion-hint";
-        hint.textContent = items.length > MAX_ROWS ? `Tab  ${i + 1}/${items.length}` : "Tab";
+        hint.textContent = items.length > VISIBLE_ROWS ? `Tab  ${i + 1}/${items.length}` : "Tab";
         row.appendChild(hint);
+        selected = row;
       }
       popup.appendChild(row);
     });
+    // The list scrolls to keep the highlighted row in view (only the list: not the editor behind it).
+    const row = selected as HTMLElement | null;
+    if (row) {
+      const pad = 5;
+      if (row.offsetTop - pad < popup.scrollTop) popup.scrollTop = row.offsetTop - pad;
+      else if (row.offsetTop + row.offsetHeight + pad > popup.scrollTop + popup.clientHeight)
+        popup.scrollTop = row.offsetTop + row.offsetHeight + pad - popup.clientHeight;
+    }
   };
 
   /**
@@ -154,7 +159,6 @@ function attach(input: HTMLInputElement, panel: HTMLElement): void {
   const refresh = async (onTab = false) => {
     const id = ++request;
     applied = -1;
-    first = 0;
     const parsed = parse(input.value);
     let found: Candidate[] = [];
     if (parsed) {
