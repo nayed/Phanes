@@ -1,9 +1,9 @@
 /**
- * Completion in Vim's `:` command line (docs/VIM.md, "`:e` completion"):
- * paths after `:e`, `:tabe` and `:tabnew`, colorschemes and modes after
- * `:theme`. A popup above the command line lists them, the typed part in
- * bold; Tab puts the highlighted one in and moves to the next, Shift+Tab
- * goes back. Typing again starts over.
+ * Completion in Vim's `:` command line (docs/VIM.md, "Command line
+ * completion"): command names on Tab, paths after `:e`, `:tabe` and
+ * `:tabnew`, colorschemes and modes after `:theme`. A popup above the
+ * command line lists them, the typed part in bold; Tab puts the highlighted
+ * one in and moves to the next, Shift+Tab goes back. Typing again starts over.
  *
  * The extension has no completion hook, so this listens to the prompt's
  * input directly (vim.ts hands each `:` prompt over).
@@ -17,6 +17,22 @@ import { onCommandPrompt } from "./vim";
 
 const MAX_ROWS = 8;
 
+/**
+ * The ex commands Tab offers: Phanes' own (vimCommands.ts) and the
+ * extension's built-ins that do something here. (The extension doesn't
+ * expose its list, and some of its commands, like `:colorscheme`, do nothing
+ * in Phanes.) Full names; Vim's short forms (`:w`) still work when typed.
+ */
+const EX_COMMANDS = [
+  // Phanes
+  "write", "wall", "quit", "wq", "xit", "qall", "edit", "tabnew", "tabedit", "tabnext", "tabprevious",
+  "Explore", "theme",
+  // The extension
+  "set", "map", "nmap", "imap", "vmap", "noremap", "nnoremap", "inoremap", "vnoremap", "unmap", "mapclear",
+  "undo", "redo", "substitute", "global", "vglobal", "sort", "nohlsearch", "normal", "delete", "yank", "put",
+  "join", "marks", "delmarks", "registers",
+].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+
 interface Candidate {
   /** What goes into the command line after the command. */
   text: string;
@@ -26,7 +42,9 @@ interface Candidate {
 }
 
 /** The command typed so far, split into the part to keep and the part to complete. */
-function parse(value: string): { head: string; typed: string; kind: "path" | "scheme" | "mode" } | null {
+function parse(value: string): { head: string; typed: string; kind: "command" | "path" | "scheme" | "mode" } | null {
+  const command = /^(\s*)([A-Za-z]*)$/.exec(value);
+  if (command) return { head: command[1], typed: command[2], kind: "command" };
   const path = /^(\s*(?:e|ed|edi|edit|tabe|tabed|tabedi|tabedit|tabnew)\s+)(.*)$/.exec(value);
   if (path) return { head: path[1], typed: path[2], kind: "path" };
   const mode = /^(\s*theme\s+\S+\s+)(\S*)$/.exec(value);
@@ -71,6 +89,11 @@ async function pathCandidates(typed: string): Promise<Candidate[]> {
   return rank(names, namePart, folderPart);
 }
 
+/** Command names starting with what was typed (any case: `ex` finds `Explore`). */
+function commandCandidates(typed: string): Candidate[] {
+  return rank(EX_COMMANDS, typed).filter((c) => c.matchFrom === 0);
+}
+
 function schemeCandidates(typed: string): Candidate[] {
   return rank([...SCHEMES_BY_NAME], typed);
 }
@@ -92,12 +115,18 @@ function attach(input: HTMLInputElement, panel: HTMLElement): void {
   /** The row Tab put in, or -1 before the first Tab (row 0 is then highlighted as the next one). */
   let applied = -1;
   let request = 0;
+  /** The first row shown, when there are more than fit. */
+  let first = 0;
 
   const render = () => {
     popup.replaceChildren();
     popup.hidden = items.length === 0;
     const current = applied < 0 ? 0 : applied;
-    items.slice(0, MAX_ROWS).forEach((item, i) => {
+    // A window of MAX_ROWS rows that follows the highlighted one.
+    if (current < first) first = current;
+    if (current >= first + MAX_ROWS) first = current - MAX_ROWS + 1;
+    items.slice(first, first + MAX_ROWS).forEach((item, offset) => {
+      const i = first + offset;
       const row = document.createElement("div");
       row.className = "cm-vim-completion-row";
       row.setAttribute("role", "option");
@@ -111,30 +140,47 @@ function attach(input: HTMLInputElement, panel: HTMLElement): void {
       if (i === current) {
         const hint = document.createElement("span");
         hint.className = "cm-vim-completion-hint";
-        hint.textContent = "Tab";
+        hint.textContent = items.length > MAX_ROWS ? `Tab  ${i + 1}/${items.length}` : "Tab";
         row.appendChild(hint);
       }
       popup.appendChild(row);
     });
   };
 
-  const refresh = async () => {
+  /**
+   * Find the candidates for what's typed. Command names only on Tab: a popup
+   * at every letter of `:w` would be in the way.
+   */
+  const refresh = async (onTab = false) => {
     const id = ++request;
     applied = -1;
+    first = 0;
     const parsed = parse(input.value);
     let found: Candidate[] = [];
     if (parsed) {
       head = parsed.head;
       found =
-        parsed.kind === "path"
-          ? await pathCandidates(parsed.typed)
-          : parsed.kind === "scheme"
-            ? schemeCandidates(parsed.typed)
-            : modeCandidates(parsed.typed);
+        parsed.kind === "command"
+          ? onTab
+            ? commandCandidates(parsed.typed)
+            : []
+          : parsed.kind === "path"
+            ? await pathCandidates(parsed.typed)
+            : parsed.kind === "scheme"
+              ? schemeCandidates(parsed.typed)
+              : modeCandidates(parsed.typed);
     }
     if (id !== request) return; // a newer keystroke won
     // A single candidate equal to what's typed has nothing left to offer.
-    items = found.length === 1 && parsed && found[0].text === parsed.typed ? [] : found.slice(0, MAX_ROWS);
+    items = found.length === 1 && parsed && found[0].text === parsed.typed ? [] : found;
+    render();
+  };
+
+  /** Put the next (or previous) candidate in the command line. */
+  const step = (back: boolean) => {
+    const n = items.length;
+    applied = back ? (applied <= 0 ? n - 1 : applied - 1) : (applied + 1) % n;
+    input.value = head + items[applied].text;
     render();
   };
 
@@ -143,13 +189,21 @@ function attach(input: HTMLInputElement, panel: HTMLElement): void {
   input.addEventListener(
     "keydown",
     (e) => {
-      if (e.key !== "Tab" || items.length === 0) return;
+      if (e.key !== "Tab") return;
+      if (items.length) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        step(e.shiftKey);
+        return;
+      }
+      // Nothing listed yet (`:` or `:ta` then Tab): look now, then put in the first one.
+      if (!parse(input.value)) return;
       e.preventDefault();
       e.stopImmediatePropagation();
-      const n = Math.min(items.length, MAX_ROWS);
-      applied = e.shiftKey ? (applied <= 0 ? n - 1 : applied - 1) : (applied + 1) % n;
-      input.value = head + items[applied].text;
-      render();
+      const back = e.shiftKey;
+      void refresh(true).then(() => {
+        if (items.length) step(back);
+      });
     },
     true,
   );

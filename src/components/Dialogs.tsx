@@ -154,6 +154,7 @@ const VIM_KEYS: Array<[string, string]> = [
 
 /** Phanes' ex commands. */
 const VIM_EX: Array<[string, string]> = [
+  ["List the commands (after letters: those starting so)", ":  Tab"],
   ["Save (to a path: Save As)", ":w [path]"],
   ["Save all", ":wa"],
   ["Close tab (! discards changes)", ":q[!]"],
