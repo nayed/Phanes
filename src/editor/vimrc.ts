@@ -45,16 +45,21 @@ function applySetting(arg: string): boolean {
 
 /**
  * Vim waits for the next key when a key is both a command and the start of a
- * mapping; the extension doesn't, it runs the command. So a mapping such as
- * `<Space>w` (Space as leader) would never run: drop the built-in commands
- * on the keys a mapping starts with (`<Space>`, which moves right, or `,`).
+ * mapping; the extension doesn't, it runs the command. So a Normal or Visual
+ * mapping such as `<Space>w` (Space as leader) would never run: drop the
+ * built-in command on the keys it starts with (`<Space>`, which moves right,
+ * or `,`). Insert mappings (`imap kj <Esc>`) need nothing: there, `k` only
+ * types a letter, and Normal mode's `k` must stay. `mine` holds the keys the
+ * vimrc mapped itself, per mode, which are never removed.
  */
-function freePrefixes(lhs: string, mode: Context): void {
+function freePrefixes(lhs: string, mode: Context, mine: Set<string>): void {
+  if (mode === "insert") return;
   const keys = lhs.match(/<[^>]+>|./g) ?? [];
   for (let n = 1; n < keys.length; n++) {
     const prefix = keys.slice(0, n).join("");
-    Vim.unmap(prefix, undefined as unknown as string); // the built-in for every mode
-    Vim.unmap(prefix, mode);
+    if (mine.has(`${mode} ${prefix}`)) continue;
+    Vim.unmap(prefix, undefined as unknown as string); // a built-in for every mode
+    Vim.unmap(prefix, mode); // a built-in for this mode only
   }
 }
 
@@ -62,6 +67,7 @@ function freePrefixes(lhs: string, mode: Context): void {
 export function applyVimrc(text: string): { line: number; text: string }[] {
   const ignored: { line: number; text: string }[] = [];
   let leader = "\\";
+  const mine = new Set<string>();
   text.split(/\r?\n/).forEach((raw, i) => {
     const line = raw.trim();
     if (!line || line.startsWith('"')) return;
@@ -86,8 +92,9 @@ export function applyVimrc(text: string): { line: number; text: string }[] {
         const [lhs, rhs] = [match[1], match[2]].map((keys) => keys.replace(/<leader>/gi, leader));
         const { modes, noremap } = MAP_COMMANDS[command];
         for (const mode of modes) {
-          freePrefixes(lhs, mode);
+          freePrefixes(lhs, mode, mine);
           Vim[noremap ? "noremap" : "map"](lhs, rhs, mode);
+          mine.add(`${mode} ${lhs}`);
         }
         ok = true;
       }
