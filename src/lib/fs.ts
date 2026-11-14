@@ -31,6 +31,8 @@ async function call<T>(cmd: string, args?: Record<string, unknown>): Promise<T> 
 export const listDir = (path: string) => call<Entry[]>("list_dir", { path });
 export const pathInfo = (path: string) => call<PathInfo>("path_info", { path });
 export const readTextFile = (path: string) => call<string>("read_text_file", { path });
+/** `~/.config/phanes/vimrc`, or null when there is none. */
+export const readVimrc = () => call<string | null>("read_vimrc");
 export const writeTextFile = (path: string, contents: string) =>
   call<void>("write_text_file", { path, contents });
 export const createFile = (path: string) => call<void>("create_file", { path });

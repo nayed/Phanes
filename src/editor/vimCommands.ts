@@ -26,6 +26,7 @@ import {
 import { useWorkspace } from "../state/workspace";
 import { getEditorOptions, setEditorOptions } from "./documents";
 import { installVimCompletion } from "./vimCompletion";
+import { loadVimrc } from "./vimrc";
 
 type CM = NonNullable<ReturnType<typeof getCM>>;
 interface ExParams {
@@ -251,6 +252,7 @@ export function installVim(): void {
   defineOptions();
   setupClipboard();
   installVimCompletion();
+  void loadVimrc();
   // Keep the editor in step with the settings.
   const apply = () => {
     const s = useSettings.getState();

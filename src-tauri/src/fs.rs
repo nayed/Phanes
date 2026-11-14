@@ -124,6 +124,19 @@ pub fn read_text_file(path: String) -> Result<String> {
     Ok(text.strip_prefix('\u{feff}').map(str::to_string).unwrap_or(text))
 }
 
+/// The user's Vim settings, `~/.config/phanes/vimrc` (docs/VIM.md), or None
+/// when there is none.
+#[tauri::command]
+pub fn read_vimrc<R: Runtime>(app: AppHandle<R>) -> Result<Option<String>> {
+    let dir = app.path().config_dir().map_err(|e| e.to_string())?;
+    let p = dir.join("phanes").join("vimrc");
+    match fs::read_to_string(&p) {
+        Ok(text) => Ok(Some(text)),
+        Err(e) if e.kind() == ErrorKind::NotFound => Ok(None),
+        Err(e) => Err(err("Cannot read", &p, e)),
+    }
+}
+
 /// Write a text file, creating it if needed. Writes in place so permissions,
 /// symlinks and hard links of the existing file are kept.
 #[tauri::command]

@@ -9,7 +9,9 @@ interface VimStatus {
   pending: string;
   /** The register a macro is being recorded into, or null. */
   recording: string | null;
+  /** Lines of the vimrc Phanes couldn't apply, reported once in the status bar. */
+  vimrcIgnored: { line: number; text: string }[];
 }
 
 /** The Vim state of the editor view, which shows the active tab. */
-export const useVimStatus = create<VimStatus>(() => ({ mode: "NORMAL", pending: "", recording: null }));
+export const useVimStatus = create<VimStatus>(() => ({ mode: "NORMAL", pending: "", recording: null, vimrcIgnored: [] }));

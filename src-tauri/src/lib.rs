@@ -58,6 +58,7 @@ pub fn run() {
             fs::list_dir,
             fs::path_info,
             fs::read_text_file,
+            fs::read_vimrc,
             fs::write_text_file,
             fs::create_file,
             fs::create_dir,

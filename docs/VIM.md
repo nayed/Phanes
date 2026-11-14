@@ -213,6 +213,35 @@ The extension keeps its own registers, separate from the system clipboard.
 
 ---
 
+## vimrc
+
+`~/.config/phanes/vimrc` (`$XDG_CONFIG_HOME/phanes/vimrc`) is read once at startup (`src/editor/vimrc.ts`, read through `read_vimrc` in `fs.rs`). Edit it, then restart Phanes. Example:
+
+```vim
+" Space as leader
+let mapleader = " "
+imap jk <Esc>
+nnoremap <leader>w :w<CR>
+nnoremap j gj
+set rnu nowrap
+```
+
+Phanes applies:
+
+- **Mappings**: `map`, `noremap` (Normal and Visual), `nmap`, `nnoremap`, `imap`, `inoremap`, `vmap`, `vnoremap`, `xmap`, `xnoremap`, through `Vim.map` / `Vim.noremap`, the same as typing them after `:`. `<silent>`, `<buffer>`, `<nowait>` and `<unique>` are accepted and change nothing; `<expr>` mappings aren't supported.
+- **`let mapleader`** (default `\`), used for `<leader>` in the mappings after it.
+- **`set`**, with the options of `:set` (`wrap`, `number`, `relativenumber`, `clipboard`) and the extension's own: `name`, `noname`, `invname`, `name!`, `name=value`, several per line, with an optional `"` comment.
+- Full-line `"` comments and blank lines.
+
+Differences with Vim:
+
+- Vim waits for the next key when a key is both a command and the start of a mapping; the extension doesn't. So the built-in command on a key a mapping starts with is dropped: with Space as leader, Space no longer moves right; with `,`, `,` no longer repeats `f` backward.
+- `set` options are applied at startup like the menus would: `set rnu` turns on relative line numbers, also with Vim mode off, and the menu can still turn them off until the next start.
+
+Any other line (`syntax on`, `set expandtab`, functions, autocommands…) is ignored. When some are, the status bar shows **vimrc: N lines ignored** next to the mode pill, once: the tooltip lists them with their line numbers, and it goes away after 10 seconds or when clicked. A vimrc that can't be read shows **vimrc not read**, with the reason in the tooltip.
+
+---
+
 ## Unchanged
 
 - Synced scroll keeps working: Vim motions move the cursor and scroll the editor like any other movement.
@@ -223,7 +252,6 @@ The extension keeps its own registers, separate from the system clipboard.
 
 ## Later (not now)
 
-- **A `vimrc`**: read `~/.config/phanes/vimrc` at startup and apply `map`, `noremap`, `imap`, `nmap`, `vmap` and `set` lines with `Vim.map` / `Vim.noremap` / the options above (e.g. `imap jk <Esc>`). Ignore anything else, and report unsupported lines in the status bar once.
 - **Vim keys outside the editor**: `j` / `k` / `gg` / `G` / `Ctrl+D` / `Ctrl+U` to scroll the preview when it has focus, and `j` / `k` / `Enter` / `h` / `l` to move through and expand the sidebar tree.
 
 ---

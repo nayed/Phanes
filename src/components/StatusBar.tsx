@@ -1,5 +1,5 @@
 import { ArrowDownUp, ChevronUp, Keyboard, Monitor, Moon, Sun, type LucideIcon } from "lucide-react";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { COLORSCHEMES } from "../app/theme";
 import { runCommand } from "../commands/registry";
 import { useEditorStatus } from "../state/editorStatus";
@@ -15,6 +15,14 @@ const COLOR_MODES: Record<ColorSchemePreference, { icon: LucideIcon; label: stri
   light: { icon: Sun, label: "Light" },
   dark: { icon: Moon, label: "Dark" },
 };
+
+const VIMRC_NOTICE_MS = 10_000;
+
+/** The ignored vimrc lines, one per row, for the notice's tooltip. */
+function vimrcTitle(ignored: { line: number; text: string }[]): string {
+  if (ignored[0].line === 0) return ignored[0].text;
+  return ["Not supported, ignored (click to hide):", ...ignored.map((l) => `${l.line}: ${l.text}`)].join("\n");
+}
 
 /** [Vim mode pill] path · Ln, Col · words [· CRLF] … Vim toggle · synced-scroll toggle · colorscheme · color mode. */
 export function StatusBar() {
@@ -37,6 +45,15 @@ export function StatusBar() {
   const vimMode = useVimStatus((s) => s.mode);
   const pending = useVimStatus((s) => s.pending);
   const recording = useVimStatus((s) => s.recording);
+  const vimrcIgnored = useVimStatus((s) => s.vimrcIgnored);
+  const showVimrc = vimOn && vimrcIgnored.length > 0;
+  const dismissVimrc = useCallback(() => useVimStatus.setState({ vimrcIgnored: [] }), []);
+  // Reported once: it goes away by itself after a while, or when clicked.
+  useEffect(() => {
+    if (!showVimrc) return;
+    const timer = window.setTimeout(dismissVimrc, VIMRC_NOTICE_MS);
+    return () => window.clearTimeout(timer);
+  }, [showVimrc, dismissVimrc]);
   const selLines = useEditorStatus((s) => s.selLines);
   const selChars = useEditorStatus((s) => s.selChars);
   // In Visual modes, the selection size takes the word count's place.
@@ -60,6 +77,18 @@ export function StatusBar() {
           ) : recording !== null ? (
             <span className="vim-recording">recording @{recording}</span>
           ) : null}
+          {showVimrc && (
+            <button
+              type="button"
+              className="status-toggle vim-rc-notice"
+              title={vimrcTitle(vimrcIgnored)}
+              onClick={dismissVimrc}
+            >
+              {vimrcIgnored[0].line === 0
+                ? "vimrc not read"
+                : `vimrc: ${vimrcIgnored.length} ${vimrcIgnored.length === 1 ? "line" : "lines"} ignored`}
+            </button>
+          )}
         </>
       )}
       {hasTab && (
