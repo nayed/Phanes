@@ -150,6 +150,9 @@ const VIM_KEYS: Array<[string, string]> = [
   ["Half page down / up", "Ctrl+D Ctrl+U"],
   ["Page down / up, instead of Find", "Ctrl+F Ctrl+B"],
   ["Increment / decrement, instead of Select All / Cut", "Ctrl+A Ctrl+X"],
+  ["Preview: scroll, top / bottom, half page", "j k gg G Ctrl+D Ctrl+U"],
+  ["Sidebar: move, top / bottom", "j k gg G"],
+  ["Sidebar: expand or open / collapse or go up", "l h"],
 ];
 
 /** Phanes' ex commands. */

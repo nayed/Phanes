@@ -251,9 +251,15 @@ Any other line (`syntax on`, `set expandtab`, functions, autocommands…) is ign
 
 ---
 
-## Later (not now)
+## Vim keys outside the editor
 
-- **Vim keys outside the editor**: `j` / `k` / `gg` / `G` / `Ctrl+D` / `Ctrl+U` to scroll the preview when it has focus, and `j` / `k` / `Enter` / `h` / `l` to move through and expand the sidebar tree.
+With Vim mode on (`src/app/vimKeys.ts`; nothing changes with it off):
+
+- **Preview**, once it has focus (click it; it's focusable, so arrow keys and Page Up/Down work there too): `j` / `k` scroll one line (40 px), `gg` / `G` go to the top and bottom, `Ctrl+D` / `Ctrl+U` half a page.
+- **Sidebar tree**, when a row has focus: `j` / `k` move down and up, `gg` / `G` to the first and last row, `l` expands a folder (or moves into an expanded one) and opens a file, `h` collapses a folder or goes up to its parent. They act like the arrow keys, which keep working; `Enter` still opens.
+- `gg` needs its two `g`s within a second, like Vim's 'timeoutlen'.
+
+These are in the Keyboard Shortcuts dialog's Vim section.
 
 ---
 

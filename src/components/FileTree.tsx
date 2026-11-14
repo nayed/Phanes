@@ -1,6 +1,7 @@
 import { ChevronDown, ChevronRight, FileText, Folder, Image } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
+import { vimMove, type VimMove } from "../app/vimKeys";
 import { setTreeContextProvider } from "../commands/keybindings";
 import type { CommandContext } from "../commands/registry";
 import { dirname, extname } from "../lib/path";
@@ -95,7 +96,15 @@ export function FileTree({ activePath, onOpenFile }: Props) {
       const target = rows[Math.max(0, Math.min(rows.length - 1, to))];
       if (target) select(target.entry.path);
     };
-    switch (e.key) {
+    // With Vim mode on, like a file explorer in Vim: j / k move, gg / G jump to
+    // the ends, l expands a folder or opens a file, h collapses or goes up.
+    const vim = vimMove(e.nativeEvent);
+    const key = !vim
+      ? e.key
+      : vim === "right" && row.entry.kind !== "directory"
+        ? "Enter"
+        : (VIM_TREE_KEYS[vim] ?? e.key);
+    switch (key) {
       case "ArrowDown":
         return move(i + 1);
       case "ArrowUp":
@@ -270,3 +279,13 @@ function showFullNameIfCut(e: React.PointerEvent<HTMLElement>): void {
   if (el.scrollWidth > el.clientWidth) el.title = el.textContent ?? "";
   else el.removeAttribute("title");
 }
+
+/** The arrow key each Vim move stands for in the tree. */
+const VIM_TREE_KEYS: Partial<Record<VimMove, string>> = {
+  down: "ArrowDown",
+  up: "ArrowUp",
+  top: "Home",
+  bottom: "End",
+  left: "ArrowLeft",
+  right: "ArrowRight",
+};
