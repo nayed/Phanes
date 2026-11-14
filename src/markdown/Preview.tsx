@@ -1,5 +1,6 @@
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { forwardRef, useEffect, useState } from "react";
+import { vimMove } from "../app/vimKeys";
 import { pathInfo } from "../lib/fs";
 import { dirname, isMarkdown, resolve } from "../lib/path";
 import { showToast } from "../state/dialogs";
@@ -38,11 +39,41 @@ export const Preview = forwardRef<HTMLDivElement>(function Preview(_props, ref) 
   };
 
   return (
-    <div ref={ref} className="preview-scroll" onClick={onClick} onAuxClick={(e) => e.button === 1 && e.preventDefault()}>
+    <div
+      ref={ref}
+      className="preview-scroll"
+      // Focusable, so it can be scrolled from the keyboard once clicked (and with Vim keys).
+      tabIndex={0}
+      onClick={onClick}
+      onKeyDown={onVimKey}
+      onAuxClick={(e) => e.button === 1 && e.preventDefault()}
+    >
       <article className="markdown-body" aria-label="Preview" dangerouslySetInnerHTML={{ __html: html }} />
     </div>
   );
 });
+
+/** One line of `j` / `k`, like an arrow key. */
+const LINE_STEP = 40;
+
+/** With Vim mode on: `j` / `k` scroll, `gg` / `G` go to the top and bottom, `Ctrl+D` / `Ctrl+U` half a page. */
+function onVimKey(e: React.KeyboardEvent<HTMLDivElement>): void {
+  const move = vimMove(e);
+  if (!move || move === "left" || move === "right") return;
+  e.preventDefault();
+  e.stopPropagation();
+  const el = e.currentTarget;
+  const half = el.clientHeight / 2;
+  const top = {
+    down: el.scrollTop + LINE_STEP,
+    up: el.scrollTop - LINE_STEP,
+    halfDown: el.scrollTop + half,
+    halfUp: el.scrollTop - half,
+    top: 0,
+    bottom: el.scrollHeight,
+  }[move];
+  el.scrollTo({ top });
+}
 
 /**
  * Web links open in the default browser; relative links to markdown files
