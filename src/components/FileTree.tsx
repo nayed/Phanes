@@ -173,7 +173,9 @@ export function FileTree({ activePath, onOpenFile }: Props) {
             {renaming?.path === entry.path ? (
               <RenameInput name={entry.name} isDir={isDir} />
             ) : (
-              <span className="tree-name">{entry.name}</span>
+              <span className="tree-name" onPointerEnter={showFullNameIfCut}>
+                {entry.name}
+              </span>
             )}
           </div>
         );
@@ -260,4 +262,11 @@ function RenameInput({ name, isDir }: { name: string; isDir: boolean }) {
       onBlur={() => finish(true)}
     />
   );
+}
+
+/** A name cut off with "…" shows in full as a tooltip, like in GNOME Files; one that fits has none. */
+function showFullNameIfCut(e: React.PointerEvent<HTMLElement>): void {
+  const el = e.currentTarget;
+  if (el.scrollWidth > el.clientWidth) el.title = el.textContent ?? "";
+  else el.removeAttribute("title");
 }
