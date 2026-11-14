@@ -77,7 +77,7 @@ Optional: turn it on from the **Vim** toggle in the status bar or the main menu 
 - If a tab has unsaved changes, Phanes asks before closing it or quitting: **Save, Discard or Cancel**.
 
 ### Picks up where you left off
-- Reopens your last workspace and tabs on launch.
+- Reopens your last workspace and tabs on launch. Phanes keeps what it remembers in `~/.local/state/phanes`; `~/.config/phanes` is only for your own files, like the vimrc.
 - Remembers your view mode, sidebar and color scheme.
 
 ### At home on GNOME

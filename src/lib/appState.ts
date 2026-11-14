@@ -3,7 +3,7 @@ import { invoke } from "@tauri-apps/api/core";
 /**
  * Phanes' own persisted state (settings, last workspace, session tabs).
  * Stored by Rust as JSON in the app config directory
- * (~/.config/io.nayed.Phanes/state.json). This is not user-file access:
+ * (~/.local/state/phanes/state.json). This is not user-file access:
  * documents and folders go through `lib/fs.ts`.
  */
 export async function loadAppState<T>(): Promise<Partial<T>> {

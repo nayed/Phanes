@@ -3,6 +3,7 @@ mod appimage;
 mod cli;
 mod fs;
 mod gtk_theme;
+mod state_dir;
 mod system_theme;
 mod window;
 mod window_state;
@@ -23,6 +24,9 @@ pub fn run() {
     // name that go with the window (KDE shows a generic icon otherwise).
     #[cfg(target_os = "linux")]
     gtk::glib::set_prgname(Some("Phanes"));
+    // Before the window or the frontend read their saved state: files of an
+    // older Phanes move from ~/.config/io.nayed.Phanes to ~/.local/state/phanes.
+    state_dir::migrate();
     tauri::Builder::default()
         .manage(cli::parse())
         .plugin(tauri_plugin_dialog::init())

@@ -8,7 +8,7 @@ use std::sync::mpsc;
 use std::time::Duration;
 
 use serde::{Deserialize, Serialize};
-use tauri::{LogicalSize, Manager, Runtime, WebviewWindow, WindowEvent};
+use tauri::{LogicalSize, Runtime, WebviewWindow, WindowEvent};
 
 const FILE_NAME: &str = "window.json";
 
@@ -33,8 +33,8 @@ struct WindowState {
     maximized: bool,
 }
 
-fn state_path<R: Runtime>(window: &WebviewWindow<R>) -> Option<PathBuf> {
-    Some(window.path().app_config_dir().ok()?.join(FILE_NAME))
+fn state_path() -> Option<PathBuf> {
+    Some(crate::state_dir::dir()?.join(FILE_NAME))
 }
 
 fn load(path: &PathBuf) -> Option<WindowState> {
@@ -115,7 +115,7 @@ fn current<R: Runtime>(window: &WebviewWindow<R>, previous: Option<WindowState>)
 /// Give the (still hidden) window the size it had last time, then keep
 /// remembering it as it changes.
 pub fn restore_and_track<R: Runtime>(window: &WebviewWindow<R>) {
-    let Some(path) = state_path(window) else { return };
+    let Some(path) = state_path() else { return };
     let saved = load(&path);
 
     let (width, height) = opening_size(saved, screen_size(window));
