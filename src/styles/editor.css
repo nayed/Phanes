@@ -21,6 +21,8 @@
   font-family: var(--font-mono);
   line-height: 24px;
   overflow: auto;
+  /* The text cursor over the text, in every Vim mode too, like any text area (the window's default is the arrow). */
+  cursor: text;
 }
 .editor-host .cm-content {
   padding: 20px 0;
@@ -35,6 +37,7 @@
   background: var(--window);
   border: 0;
   color: var(--muted);
+  cursor: default;
 }
 .editor-host .cm-lineNumbers .cm-gutterElement {
   min-width: calc(var(--gutter-width) - 16px);
