@@ -21,8 +21,12 @@
   font-family: var(--font-mono);
   line-height: 24px;
   overflow: auto;
-  /* The text cursor over the text, in every Vim mode too, like any text area (the window's default is the arrow). */
+  /* The text cursor over the text, like any text area (the window's default is the arrow)… */
   cursor: text;
+}
+/* …but with Vim mode on, the arrow, whatever the mode: the keyboard drives the editor. */
+.editor-host[data-vim-mode] .cm-scroller {
+  cursor: default;
 }
 .editor-host .cm-content {
   padding: 20px 0;
