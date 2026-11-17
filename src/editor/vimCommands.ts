@@ -25,8 +25,9 @@ import {
 } from "../state/tabs";
 import { useWorkspace } from "../state/workspace";
 import { getEditorOptions, setEditorOptions } from "./documents";
+import type { EditorOptions } from "./extensions";
 import { installVimCompletion } from "./vimCompletion";
-import { loadVimrc } from "./vimrc";
+import { isApplyingVimrc, loadVimrc } from "./vimrc";
 
 type CM = NonNullable<ReturnType<typeof getCM>>;
 interface ExParams {
@@ -162,25 +163,59 @@ function findScheme(typed: string): SchemeId | undefined {
 
 /* ---------- :set options ---------- */
 
+type ViewOption = "wrap" | "lineNumbers" | "relativeLineNumbers";
+
+/** The app's own wrap and line numbers (relative numbers are a saved setting, the menu's). */
+const appOptions = { wrap: true, lineNumbers: true };
+
+/**
+ * What the vimrc's `set` lines asked for. It applies only while Vim mode is
+ * on: with Vim off, the editor is back to the app's own options, and the
+ * vimrc never changes a saved setting.
+ */
+const vimrcOptions: Partial<Pick<EditorOptions, ViewOption>> = {};
+
+/** Give the editor the app's options, with the vimrc's on top in Vim mode. */
+function applyEditorOptions(): void {
+  const s = useSettings.getState();
+  setEditorOptions({
+    vim: s.vimMode,
+    ...appOptions,
+    relativeLineNumbers: s.relativeLineNumbers,
+    ...(s.vimMode ? vimrcOptions : {}),
+  });
+}
+
+/**
+ * `:set wrap` and the like. From the vimrc, a Vim-mode-only value; typed in
+ * the editor, the app's own (relative numbers: the saved setting, like the
+ * menu), which also replaces the vimrc's value: the latest choice wins.
+ */
+function setViewOption(key: ViewOption, on: boolean): void {
+  if (isApplyingVimrc()) {
+    vimrcOptions[key] = on;
+  } else {
+    delete vimrcOptions[key];
+    if (key === "relativeLineNumbers") useSettings.getState().set({ relativeLineNumbers: on });
+    else appOptions[key] = on;
+  }
+  applyEditorOptions();
+}
+
 /**
  * Options call back with the new value, or with `undefined` to read the
  * current one (`:set wrap?`). No default value: defining one would apply it
  * at startup over the saved settings.
  */
 function defineOptions(): void {
-  const boolOption = (name: string, aliases: string[], get: () => boolean, set: (on: boolean) => void) =>
+  const viewOption = (name: string, aliases: string[], key: ViewOption) =>
     Vim.defineOption(name, undefined, "boolean", aliases, (value?: boolean) => {
-      if (value === undefined) return get();
-      if (value !== get()) set(value);
+      if (value === undefined) return getEditorOptions()[key];
+      setViewOption(key, value);
     });
-  boolOption("wrap", [], () => getEditorOptions().wrap, (on) => setEditorOptions({ wrap: on }));
-  boolOption("number", ["nu"], () => getEditorOptions().lineNumbers, (on) => setEditorOptions({ lineNumbers: on }));
-  boolOption(
-    "relativenumber",
-    ["rnu"],
-    () => useSettings.getState().relativeLineNumbers,
-    () => void runCommand("editor.toggleRelativeNumbers"),
-  );
+  viewOption("wrap", [], "wrap");
+  viewOption("number", ["nu"], "lineNumbers");
+  viewOption("relativenumber", ["rnu"], "relativeLineNumbers");
   Vim.defineOption("clipboard", undefined, "string", [], (value?: string) => {
     if (value === undefined) return useSettings.getState().vimSystemClipboard ? "unnamedplus" : "";
     useSettings.getState().set({ vimSystemClipboard: value === "unnamedplus" || value === "unnamed" });
@@ -254,12 +289,10 @@ export function installVim(): void {
   installVimCompletion();
   void loadVimrc();
   // Keep the editor in step with the settings.
-  const apply = () => {
-    const s = useSettings.getState();
-    setEditorOptions({ vim: s.vimMode, relativeLineNumbers: s.relativeLineNumbers });
-  };
-  apply();
+  applyEditorOptions();
   useSettings.subscribe((s, prev) => {
-    if (s.vimMode !== prev.vimMode || s.relativeLineNumbers !== prev.relativeLineNumbers) apply();
+    // The menu's Relative Line Numbers replaces the vimrc's choice, like a typed :set.
+    if (s.relativeLineNumbers !== prev.relativeLineNumbers) delete vimrcOptions.relativeLineNumbers;
+    if (s.vimMode !== prev.vimMode || s.relativeLineNumbers !== prev.relativeLineNumbers) applyEditorOptions();
   });
 }

@@ -237,7 +237,7 @@ Phanes applies:
 Differences with Vim:
 
 - Vim waits for the next key when a key is both a command and the start of a mapping; the extension doesn't. So for Normal and Visual mappings, the built-in command on a key the mapping starts with is dropped: with Space as leader, Space no longer moves right; with `,`, `,` no longer repeats `f` backward. Insert mappings (`imap kj <Esc>`) drop nothing, and a key the vimrc mapped itself is never dropped.
-- `set` options are applied at startup like the menus would: `set rnu` turns on relative line numbers, also with Vim mode off, and the menu can still turn them off until the next start.
+- The vimrc's `set wrap`, `number` and `relativenumber` apply **only while Vim mode is on**: with it off, the editor is back to its own options (wrapping on, the menu's Relative Line Numbers), and the vimrc never changes a saved setting. The latest choice wins: `:set` typed in the editor or the Relative Line Numbers menu item replaces the vimrc's value for that option (and those change the app's own options, as before).
 
 Any other line (`syntax on`, `set expandtab`, functions, autocommands…) is ignored. When some are, the status bar shows **vimrc: N lines ignored** next to the mode pill, once: the tooltip lists them with their line numbers, and it goes away after 10 seconds or when clicked. A vimrc that can't be read shows **vimrc not read**, with the reason in the tooltip.
 

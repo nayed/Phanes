@@ -94,7 +94,7 @@ export function installMockFs(add: (handlers: Handlers) => void): void {
       return f?.text ?? fail(`Cannot open ${path}: not found`);
     },
     // A sample vimrc, to see mappings and the ignored-lines notice in the browser.
-    read_vimrc: () => 'let mapleader = " "\nimap jk <Esc>\nnnoremap <leader>w :w<CR>\nset rnu\nsyntax on\n',
+    read_vimrc: () => 'let mapleader = " "\nimap jk <Esc>\nnnoremap <leader>w :w<CR>\nset rnu nowrap\nsyntax on\n',
     write_text_file: ({ path, contents }) => {
       files.set(String(path), { text: String(contents) });
     },

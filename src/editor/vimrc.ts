@@ -63,8 +63,24 @@ function freePrefixes(lhs: string, mode: Context, mine: Set<string>): void {
   }
 }
 
+let applying = false;
+
+/** Whether a `set` is coming from the vimrc (its options apply only in Vim mode, see vimCommands.ts). */
+export function isApplyingVimrc(): boolean {
+  return applying;
+}
+
 /** Apply a vimrc's text; returns the lines that weren't applied. */
 export function applyVimrc(text: string): { line: number; text: string }[] {
+  applying = true;
+  try {
+    return applyLines(text);
+  } finally {
+    applying = false;
+  }
+}
+
+function applyLines(text: string): { line: number; text: string }[] {
   const ignored: { line: number; text: string }[] = [];
   let leader = "\\";
   const mine = new Set<string>();
